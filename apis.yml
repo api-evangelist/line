@@ -1,0 +1,137 @@
+aid: line
+name: LINE
+description: >-
+  LINE is a Japan-based messaging platform with over 200 million monthly active
+  users across Japan, Taiwan, Thailand, and Indonesia, offering messaging,
+  payments, news, and a broad ecosystem of services. The LINE Developers
+  platform exposes public APIs for building chatbots, mini-apps, social login,
+  and audience marketing, all documented as OpenAPI specifications. APIs use
+  Bearer token authentication with channel access tokens issued per LINE
+  channel.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Messaging
+  - Chatbots
+  - Social Login
+  - Mini Apps
+  - Marketing
+  - Japan
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/apis.yml
+created: '2026-05-11'
+modified: '2026-05-11'
+specificationVersion: '0.19'
+apis:
+  - aid: line:messaging-api
+    name: LINE Messaging API
+    description: >-
+      Send and receive messages, manage rich menus, broadcast and narrowcast
+      content, and handle webhooks for LINE chatbots and Official Accounts.
+      Uses Bearer channel access tokens against api.line.me and
+      api-data.line.me.
+    humanURL: https://developers.line.biz/en/docs/messaging-api/
+    baseURL: https://api.line.me
+    tags:
+      - Messaging
+      - Chatbots
+      - Webhooks
+      - Rich Menus
+    properties:
+      - type: Documentation
+        url: https://developers.line.biz/en/reference/messaging-api/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/line/line-openapi/main/messaging-api.yml
+      - type: Webhook OpenAPI
+        url: https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml
+  - aid: line:liff
+    name: LINE Front-end Framework (LIFF) Server API
+    description: >-
+      Server API for managing LINE Front-end Framework (LIFF) apps which embed
+      web applications inside the LINE client. Authenticated with Bearer
+      channel access tokens.
+    humanURL: https://developers.line.biz/en/docs/liff/
+    baseURL: https://api.line.me
+    tags:
+      - LIFF
+      - Web Apps
+      - Channels
+    properties:
+      - type: Documentation
+        url: https://developers.line.biz/en/reference/liff-server/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/line/line-openapi/main/liff.yml
+  - aid: line:channel-access-token
+    name: LINE Channel Access Token API
+    description: >-
+      Issue, verify, and revoke channel access tokens used to authenticate
+      requests to other LINE APIs.
+    humanURL: https://developers.line.biz/en/docs/messaging-api/channel-access-tokens/
+    baseURL: https://api.line.me
+    tags:
+      - Authentication
+      - Tokens
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/line/line-openapi/main/channel-access-token.yml
+  - aid: line:insight
+    name: LINE Insight API
+    description: >-
+      Retrieve analytics and engagement metrics for LINE Official Accounts,
+      including message delivery, follower demographics, and reach statistics.
+    humanURL: https://developers.line.biz/en/reference/messaging-api/#get-insight
+    baseURL: https://api.line.me/v2/bot/insight
+    tags:
+      - Analytics
+      - Insights
+      - Metrics
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/line/line-openapi/main/insight.yml
+  - aid: line:manage-audience
+    name: LINE Manage Audience API
+    description: >-
+      Create and manage audience groups for targeted narrowcast messaging on
+      LINE Official Accounts.
+    humanURL: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+    baseURL: https://api.line.me/v2/bot/audienceGroup
+    tags:
+      - Audiences
+      - Marketing
+      - Targeting
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/line/line-openapi/main/manage-audience.yml
+  - aid: line:shop
+    name: LINE Shop (Mission Stickers) API
+    description: >-
+      Mission Stickers API for distributing LINE stickers to users who complete
+      specific missions, integrated with LINE Official Accounts.
+    humanURL: https://developers.line.biz/en/docs/messaging-api/mission-stickers/
+    baseURL: https://api.line.me/shop
+    tags:
+      - Stickers
+      - Promotions
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/line/line-openapi/main/shop.yml
+
+common:
+  - type: Website
+    url: https://line.me
+  - type: Developer Portal
+    url: https://developers.line.biz/en/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/
+  - type: OpenAPI Repository
+    url: https://github.com/line/line-openapi
+  - type: GitHub Organization
+    url: https://github.com/line
+  - type: Sign Up
+    url: https://developers.line.biz/console/
+  - type: Pricing
+    url: https://www.linebiz.com/jp-en/service/line-account-connect/
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
