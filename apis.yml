@@ -125,9 +125,9 @@ common:
     url: https://developers.line.biz/en/docs/
   - type: OpenAPI Repository
     url: https://github.com/line/line-openapi
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/line
-  - type: Sign Up
+  - type: SignUp
     url: https://developers.line.biz/console/
   - type: Pricing
     url: https://www.linebiz.com/jp-en/service/line-account-connect/
