@@ -117,6 +117,8 @@ apis:
         url: https://raw.githubusercontent.com/line/line-openapi/main/shop.yml
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/linecorp
   - type: Website
     url: https://line.me
   - type: Developer Portal
