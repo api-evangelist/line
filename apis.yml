@@ -137,6 +137,8 @@ common:
   - name: MCP Server
     url: https://github.com/line/line-bot-mcp-server
     type: MCPServer
+  - type: LLMsTxt
+    url: https://developers.line.biz/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
