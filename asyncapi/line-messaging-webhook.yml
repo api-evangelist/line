@@ -1,0 +1,753 @@
+asyncapi: '2.6.0'
+id: 'urn:line:messaging:webhook'
+info:
+  title: LINE Messaging Webhook Event Surface
+  version: '1.0.0'
+  description: >-
+    AsyncAPI description of the webhook event surface published by the LINE
+    Messaging API to bot servers. The Messaging API delivers webhook events as
+    HTTPS POST requests to the configured webhook URL of a LINE channel. Each
+    request body is a CallbackRequest envelope that carries the destination
+    user ID and an array of Event objects sharing common envelope properties
+    (type, mode, timestamp, source, webhookEventId, deliveryContext, and an
+    optional replyToken on replyable events). Requests are signed with an
+    HMAC-SHA256 signature over the raw request body using the channel secret
+    and delivered in the x-line-signature request header for verification.
+    This document is derived from the public LINE Messaging API reference and
+    the line/line-openapi webhook specification; no fields have been invented.
+  contact:
+    name: LINE Developers
+    url: https://developers.line.biz/en/docs/messaging-api/
+  license:
+    name: LINE Developer Agreement
+    url: https://terms.line.me/LINE_Developer_Agreement
+  termsOfService: https://terms.line.me/LINE_Developer_Agreement
+  x-source-references:
+    - https://developers.line.biz/en/reference/messaging-api/
+    - https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml
+
+defaultContentType: application/json
+
+servers:
+  bot-webhook:
+    url: '{webhookUrl}'
+    protocol: https
+    description: >-
+      Bot-operated HTTPS endpoint configured in the LINE Developers Console
+      for a Messaging API channel. LINE delivers webhook events to this URL
+      via HTTPS POST requests.
+    variables:
+      webhookUrl:
+        description: >-
+          The fully-qualified HTTPS URL of the bot's webhook endpoint as
+          configured in the LINE Developers Console for the channel.
+        default: https://example.com/callback
+
+channels:
+  /callback:
+    description: >-
+      Webhook callback endpoint operated by the bot. LINE POSTs a
+      CallbackRequest envelope containing one or more events. The endpoint
+      must return 2xx within a short timeout; LINE may redeliver events.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+    publish:
+      operationId: receiveWebhookEvents
+      summary: Receive a batch of webhook events from LINE.
+      description: >-
+        LINE Messaging platform publishes a CallbackRequest envelope to the
+        bot's webhook URL. The envelope's events array contains one or more
+        Event objects whose type discriminator identifies the specific event.
+      bindings:
+        http:
+          bindingVersion: '0.3.0'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/CallbackRequestMessage'
+
+components:
+  messages:
+    CallbackRequestMessage:
+      name: CallbackRequest
+      title: LINE Webhook Callback Request
+      summary: Signed envelope carrying a batch of webhook events.
+      contentType: application/json
+      headers:
+        type: object
+        required:
+          - x-line-signature
+          - content-type
+        properties:
+          x-line-signature:
+            type: string
+            description: >-
+              Base64-encoded HMAC-SHA256 digest of the raw request body
+              computed with the channel secret. The bot MUST verify this
+              signature before processing the payload.
+          content-type:
+            type: string
+            enum:
+              - application/json
+            description: Always application/json for LINE webhook requests.
+          user-agent:
+            type: string
+            description: LINE-issued User-Agent string identifying the webhook delivery.
+      bindings:
+        http:
+          bindingVersion: '0.3.0'
+      payload:
+        $ref: '#/components/schemas/CallbackRequest'
+      examples:
+        - name: SingleMessageEvent
+          summary: A CallbackRequest carrying a single text message event.
+          payload:
+            destination: U00000000000000000000000000000000
+            events:
+              - type: message
+                mode: active
+                timestamp: 1748534400000
+                webhookEventId: 01H000000000000000000000000000
+                deliveryContext:
+                  isRedelivery: false
+                source:
+                  type: user
+                  userId: U00000000000000000000000000000000
+                replyToken: 00000000000000000000000000000000
+                message:
+                  id: '1234567890123'
+                  type: text
+                  text: Hello, LINE.
+
+  schemas:
+    CallbackRequest:
+      type: object
+      description: >-
+        Top-level webhook request body. Carries the destination user ID of
+        the bot channel and a batch of one or more Event objects.
+      required:
+        - destination
+        - events
+      properties:
+        destination:
+          type: string
+          description: >-
+            User ID of the bot that should receive webhook events. Format
+            U[0-9a-f]{32}.
+          pattern: '^U[0-9a-f]{32}$'
+        events:
+          type: array
+          description: Array of webhook event objects.
+          items:
+            $ref: '#/components/schemas/Event'
+
+    Event:
+      type: object
+      description: >-
+        Base webhook event envelope. The type property is the discriminator
+        that selects the concrete event schema.
+      discriminator: type
+      required:
+        - type
+        - mode
+        - timestamp
+        - webhookEventId
+        - deliveryContext
+      properties:
+        type:
+          type: string
+          description: Event type discriminator.
+          enum:
+            - message
+            - unsend
+            - follow
+            - unfollow
+            - join
+            - leave
+            - memberJoined
+            - memberLeft
+            - postback
+            - videoPlayComplete
+            - beacon
+            - accountLink
+            - membership
+            - module
+            - activated
+            - deactivated
+            - botSuspended
+            - botResumed
+            - delivery
+        mode:
+          type: string
+          description: Channel state at the time of event delivery.
+          enum:
+            - active
+            - standby
+        timestamp:
+          type: integer
+          format: int64
+          description: Event timestamp in UNIX milliseconds.
+        webhookEventId:
+          type: string
+          description: Unique ULID identifier for the webhook event.
+        deliveryContext:
+          $ref: '#/components/schemas/DeliveryContext'
+        source:
+          $ref: '#/components/schemas/Source'
+        replyToken:
+          type: string
+          description: >-
+            Reply token used to respond to replyable events. Present on
+            message, follow, join, postback, beacon, accountLink, and
+            videoPlayComplete events.
+
+    DeliveryContext:
+      type: object
+      required:
+        - isRedelivery
+      properties:
+        isRedelivery:
+          type: boolean
+          description: >-
+            True when the platform is redelivering an event previously
+            delivered to the webhook URL.
+
+    Source:
+      type: object
+      description: >-
+        Origin of the event. Discriminated by the source type field with
+        values user, group, or room.
+      discriminator: type
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - user
+            - group
+            - room
+      oneOf:
+        - $ref: '#/components/schemas/UserSource'
+        - $ref: '#/components/schemas/GroupSource'
+        - $ref: '#/components/schemas/RoomSource'
+
+    UserSource:
+      type: object
+      required:
+        - type
+        - userId
+      properties:
+        type:
+          type: string
+          enum: [user]
+        userId:
+          type: string
+          description: ID of the source user.
+
+    GroupSource:
+      type: object
+      required:
+        - type
+        - groupId
+      properties:
+        type:
+          type: string
+          enum: [group]
+        groupId:
+          type: string
+        userId:
+          type: string
+          description: >-
+            ID of the source user. Included only on message events from a
+            group chat.
+
+    RoomSource:
+      type: object
+      required:
+        - type
+        - roomId
+      properties:
+        type:
+          type: string
+          enum: [room]
+        roomId:
+          type: string
+        userId:
+          type: string
+          description: >-
+            ID of the source user. Included only on message events from a
+            multi-person chat (room).
+
+    MessageEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          required:
+            - message
+          properties:
+            type:
+              type: string
+              enum: [message]
+            message:
+              $ref: '#/components/schemas/MessageContent'
+
+    MessageContent:
+      type: object
+      description: >-
+        Discriminated message content. The type property selects one of
+        text, image, video, audio, file, location, or sticker.
+      discriminator: type
+      required:
+        - id
+        - type
+      properties:
+        id:
+          type: string
+          description: Message ID.
+        type:
+          type: string
+          enum:
+            - text
+            - image
+            - video
+            - audio
+            - file
+            - location
+            - sticker
+      oneOf:
+        - $ref: '#/components/schemas/TextMessageContent'
+        - $ref: '#/components/schemas/ImageMessageContent'
+        - $ref: '#/components/schemas/VideoMessageContent'
+        - $ref: '#/components/schemas/AudioMessageContent'
+        - $ref: '#/components/schemas/FileMessageContent'
+        - $ref: '#/components/schemas/LocationMessageContent'
+        - $ref: '#/components/schemas/StickerMessageContent'
+
+    TextMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [text]
+        text:
+          type: string
+        emojis:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              length:
+                type: integer
+              productId:
+                type: string
+              emojiId:
+                type: string
+        mention:
+          type: object
+          properties:
+            mentionees:
+              type: array
+              items:
+                type: object
+                properties:
+                  index:
+                    type: integer
+                  length:
+                    type: integer
+                  type:
+                    type: string
+                  userId:
+                    type: string
+        quotedMessageId:
+          type: string
+        quoteToken:
+          type: string
+        markAsReadToken:
+          type: string
+
+    ImageMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [image]
+        contentProvider:
+          $ref: '#/components/schemas/ContentProvider'
+        imageSet:
+          type: object
+          properties:
+            id:
+              type: string
+            index:
+              type: integer
+            total:
+              type: integer
+
+    VideoMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [video]
+        duration:
+          type: integer
+          description: Length of video file in milliseconds.
+        contentProvider:
+          $ref: '#/components/schemas/ContentProvider'
+
+    AudioMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [audio]
+        duration:
+          type: integer
+          description: Length of audio file in milliseconds.
+        contentProvider:
+          $ref: '#/components/schemas/ContentProvider'
+
+    FileMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [file]
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+
+    LocationMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [location]
+        title:
+          type: string
+        address:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+
+    StickerMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [sticker]
+        packageId:
+          type: string
+        stickerId:
+          type: string
+        stickerResourceType:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+        text:
+          type: string
+
+    ContentProvider:
+      type: object
+      properties:
+        type:
+          type: string
+          description: line when LINE hosts the content, external otherwise.
+        originalContentUrl:
+          type: string
+        previewImageUrl:
+          type: string
+
+    UnsendEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [unsend]
+            unsend:
+              type: object
+              properties:
+                messageId:
+                  type: string
+
+    FollowEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [follow]
+            follow:
+              type: object
+              properties:
+                isUnblocked:
+                  type: boolean
+                  description: >-
+                    True when the user re-added the bot after blocking it.
+
+    UnfollowEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [unfollow]
+
+    JoinEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [join]
+
+    LeaveEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [leave]
+
+    MemberJoinedEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [memberJoined]
+            joined:
+              type: object
+              properties:
+                members:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/UserSource'
+
+    MemberLeftEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [memberLeft]
+            left:
+              type: object
+              properties:
+                members:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/UserSource'
+
+    PostbackEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          required:
+            - postback
+          properties:
+            type:
+              type: string
+              enum: [postback]
+            postback:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: string
+                  description: Postback data string defined in the action.
+                params:
+                  type: object
+                  description: >-
+                    Object populated for datetime picker actions and rich
+                    menu switch actions.
+                  properties:
+                    date:
+                      type: string
+                    time:
+                      type: string
+                    datetime:
+                      type: string
+                    newRichMenuAliasId:
+                      type: string
+                    status:
+                      type: string
+
+    VideoPlayCompleteEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [videoPlayComplete]
+            videoPlayComplete:
+              type: object
+              properties:
+                trackingId:
+                  type: string
+
+    BeaconEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          required:
+            - beacon
+          properties:
+            type:
+              type: string
+              enum: [beacon]
+            beacon:
+              type: object
+              required:
+                - hwid
+                - type
+              properties:
+                hwid:
+                  type: string
+                  description: Hardware ID of the beacon that was detected.
+                type:
+                  type: string
+                  enum:
+                    - enter
+                    - banner
+                    - stay
+                dm:
+                  type: string
+                  description: Device message of beacon, hex-encoded.
+
+    AccountLinkEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          required:
+            - link
+          properties:
+            type:
+              type: string
+              enum: [accountLink]
+            link:
+              type: object
+              required:
+                - result
+                - nonce
+              properties:
+                result:
+                  type: string
+                  enum:
+                    - ok
+                    - failed
+                nonce:
+                  type: string
+
+    MembershipEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [membership]
+            membership:
+              type: object
+              required:
+                - type
+                - membershipId
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - joined
+                    - left
+                    - renewed
+                membershipId:
+                  type: integer
+
+    ModuleEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [module]
+            module:
+              type: object
+              description: Module channel event payload.
+
+    ActivatedEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [activated]
+
+    DeactivatedEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [deactivated]
+
+    BotSuspendedEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [botSuspended]
+
+    BotResumedEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [botResumed]
+
+    DeliveryEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [delivery]
+            delivery:
+              type: object
+              description: Delivery confirmation event payload.
+
+  securitySchemes:
+    LINESignature:
+      type: httpApiKey
+      in: header
+      name: x-line-signature
+      description: >-
+        Base64-encoded HMAC-SHA256 of the raw request body computed with the
+        LINE channel secret. Bots MUST verify this signature against a
+        recomputed digest before trusting the payload.

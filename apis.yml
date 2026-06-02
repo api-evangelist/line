@@ -20,7 +20,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-19'
+modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
   - aid: line:messaging-api
@@ -44,6 +44,8 @@ apis:
         url: https://raw.githubusercontent.com/line/line-openapi/main/messaging-api.yml
       - type: Webhook OpenAPI
         url: https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml
+      - type: AsyncAPI
+        url: https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/asyncapi/line-messaging-webhook.yml
   - aid: line:liff
     name: LINE Front-end Framework (LIFF) Server API
     description: >-
