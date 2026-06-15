@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LINE Messaging API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Send reply messages",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.line.me/v2/bot/message/reply",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Sends reply messages to a user, group, or room in response to a webhook event using a reply token."
+    },
+    {
+      "info": {
+        "name": "Send push messages",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.line.me/v2/bot/message/push",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Sends push messages to a user, group, or room at any time."
+    },
+    {
+      "info": {
+        "name": "Send multicast messages",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.line.me/v2/bot/message/multicast",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Sends push messages to multiple users at once."
+    },
+    {
+      "info": {
+        "name": "Send broadcast messages",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.line.me/v2/bot/message/broadcast",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Sends push messages to all users who have added the LINE Official Account as a friend."
+    },
+    {
+      "info": {
+        "name": "Get user profile",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.line.me/v2/bot/profile/:userId",
+        "params": [
+          {
+            "name": "userId",
+            "value": "",
+            "type": "path",
+            "description": "User ID returned in a webhook event source."
+          }
+        ]
+      },
+      "docs": "Returns the profile information of a user who has added the LINE Official Account as a friend."
+    },
+    {
+      "info": {
+        "name": "Get webhook endpoint information",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.line.me/v2/bot/channel/webhook/endpoint"
+      },
+      "docs": "Returns the webhook endpoint URL configured for the channel."
+    },
+    {
+      "info": {
+        "name": "Set webhook endpoint URL",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "https://api.line.me/v2/bot/channel/webhook/endpoint",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Set webhook endpoint URL"
+    },
+    {
+      "info": {
+        "name": "Get bot info",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.line.me/v2/bot/info"
+      },
+      "docs": "Returns basic information about the bot associated with the channel access token."
+    }
+  ],
+  "bundled": true
+}
