@@ -123,7 +123,7 @@ common:
     url: https://www.linkedin.com/company/linecorp
   - type: Website
     url: https://line.me
-  - type: Developer Portal
+  - type: DeveloperPortal
     url: https://developers.line.biz/en/
   - type: Documentation
     url: https://developers.line.biz/en/docs/
@@ -131,7 +131,7 @@ common:
     url: https://github.com/line/line-openapi
   - type: GitHubOrganization
     url: https://github.com/line
-  - type: SignUp
+  - type: Signup
     url: https://developers.line.biz/console/
   - type: Pricing
     url: https://www.linebiz.com/jp-en/service/line-account-connect/
@@ -139,7 +139,7 @@ common:
   - name: MCP Server
     url: https://github.com/line/line-bot-mcp-server
     type: MCPServer
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://developers.line.biz/llms.txt
 maintainers:
   - FN: Kin Lane
