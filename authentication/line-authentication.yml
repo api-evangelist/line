@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/line-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: ChannelAccessToken
+  type: http
+  scheme: bearer
+  bearerFormat: ChannelAccessToken
+  description: LINE channel access token passed as a Bearer token in the Authorization header.
+  sources:
+  - openapi/line-openapi.yml

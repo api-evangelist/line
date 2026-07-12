@@ -119,6 +119,12 @@ apis:
         url: https://raw.githubusercontent.com/line/line-openapi/main/shop.yml
 
 common:
+  - type: VulnerabilityDisclosure
+    url: security/line-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/line-domain-security.yml
+  - type: Authentication
+    url: authentication/line-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/linecorp
   - type: Website
