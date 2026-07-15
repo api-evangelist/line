@@ -119,6 +119,8 @@ apis:
         url: https://raw.githubusercontent.com/line/line-openapi/main/shop.yml
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/line-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/line-vulnerability-disclosure.yml
   - type: DomainSecurity
