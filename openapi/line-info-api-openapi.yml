@@ -1,0 +1,75 @@
+openapi: 3.1.0
+info:
+  title: LINE Messaging Channel Info API
+  description: 'Partial OpenAPI 3.1 representation of the LINE Messaging API. LINE provides
+
+    public APIs for chatbots and Official Accounts. Authentication uses Bearer
+
+    channel access tokens issued per LINE channel. The authoritative OpenAPI
+
+    documents are maintained by LINE at
+
+    https://github.com/line/line-openapi (messaging-api.yml, webhook.yml,
+
+    channel-access-token.yml, liff.yml, insight.yml, manage-audience.yml,
+
+    shop.yml).
+
+    '
+  version: 1.0.0
+  contact:
+    name: LINE Developers
+    url: https://developers.line.biz/en/reference/messaging-api/
+servers:
+- url: https://api.line.me/v2/bot
+  description: LINE Messaging API host.
+- url: https://api-data.line.me/v2/bot
+  description: LINE Messaging Data API host (binary content fetch).
+security:
+- ChannelAccessToken: []
+tags:
+- name: Info
+paths:
+  /info:
+    get:
+      summary: Get bot info
+      description: Returns basic information about the bot associated with the channel access token.
+      operationId: getBotInfo
+      responses:
+        '200':
+          description: Bot info.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  basicId:
+                    type: string
+                  premiumId:
+                    type: string
+                  displayName:
+                    type: string
+                  pictureUrl:
+                    type: string
+                    format: uri
+                  chatMode:
+                    type: string
+                    enum:
+                    - chat
+                    - bot
+                  markAsReadMode:
+                    type: string
+                    enum:
+                    - auto
+                    - manual
+      tags:
+      - Info
+components:
+  securitySchemes:
+    ChannelAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: ChannelAccessToken
+      description: LINE channel access token passed as a Bearer token in the Authorization header.

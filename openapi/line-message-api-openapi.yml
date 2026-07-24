@@ -1,25 +1,34 @@
 openapi: 3.1.0
 info:
-  title: LINE Messaging API
-  description: |
-    Partial OpenAPI 3.1 representation of the LINE Messaging API. LINE provides
+  title: LINE Messaging Channel Message API
+  description: 'Partial OpenAPI 3.1 representation of the LINE Messaging API. LINE provides
+
     public APIs for chatbots and Official Accounts. Authentication uses Bearer
+
     channel access tokens issued per LINE channel. The authoritative OpenAPI
+
     documents are maintained by LINE at
+
     https://github.com/line/line-openapi (messaging-api.yml, webhook.yml,
+
     channel-access-token.yml, liff.yml, insight.yml, manage-audience.yml,
+
     shop.yml).
-  version: "1.0.0"
+
+    '
+  version: 1.0.0
   contact:
     name: LINE Developers
     url: https://developers.line.biz/en/reference/messaging-api/
 servers:
-  - url: https://api.line.me/v2/bot
-    description: LINE Messaging API host.
-  - url: https://api-data.line.me/v2/bot
-    description: LINE Messaging Data API host (binary content fetch).
+- url: https://api.line.me/v2/bot
+  description: LINE Messaging API host.
+- url: https://api-data.line.me/v2/bot
+  description: LINE Messaging Data API host (binary content fetch).
 security:
-  - ChannelAccessToken: []
+- ChannelAccessToken: []
+tags:
+- name: Message
 paths:
   /message/reply:
     post:
@@ -32,7 +41,9 @@ paths:
           application/json:
             schema:
               type: object
-              required: [replyToken, messages]
+              required:
+              - replyToken
+              - messages
               properties:
                 replyToken:
                   type: string
@@ -51,6 +62,8 @@ paths:
           description: Reply accepted.
         '400':
           description: Invalid request.
+      tags:
+      - Message
   /message/push:
     post:
       summary: Send push messages
@@ -62,7 +75,9 @@ paths:
           application/json:
             schema:
               type: object
-              required: [to, messages]
+              required:
+              - to
+              - messages
               properties:
                 to:
                   type: string
@@ -78,6 +93,8 @@ paths:
       responses:
         '200':
           description: Push accepted.
+      tags:
+      - Message
   /message/multicast:
     post:
       summary: Send multicast messages
@@ -89,7 +106,9 @@ paths:
           application/json:
             schema:
               type: object
-              required: [to, messages]
+              required:
+              - to
+              - messages
               properties:
                 to:
                   type: array
@@ -107,6 +126,8 @@ paths:
       responses:
         '200':
           description: Multicast accepted.
+      tags:
+      - Message
   /message/broadcast:
     post:
       summary: Send broadcast messages
@@ -118,7 +139,8 @@ paths:
           application/json:
             schema:
               type: object
-              required: [messages]
+              required:
+              - messages
               properties:
                 messages:
                   type: array
@@ -131,123 +153,35 @@ paths:
       responses:
         '200':
           description: Broadcast accepted.
-  /profile/{userId}:
-    get:
-      summary: Get user profile
-      description: Returns the profile information of a user who has added the LINE Official Account as a friend.
-      operationId: getUserProfile
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: User ID returned in a webhook event source.
-          schema:
-            type: string
-      responses:
-        '200':
-          description: User profile.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserProfile'
-        '404':
-          description: User not found.
-  /channel/webhook/endpoint:
-    get:
-      summary: Get webhook endpoint information
-      description: Returns the webhook endpoint URL configured for the channel.
-      operationId: getWebhookEndpoint
-      responses:
-        '200':
-          description: Webhook endpoint information.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  endpoint:
-                    type: string
-                    format: uri
-                  active:
-                    type: boolean
-    put:
-      summary: Set webhook endpoint URL
-      operationId: setWebhookEndpoint
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: [endpoint]
-              properties:
-                endpoint:
-                  type: string
-                  format: uri
-      responses:
-        '200':
-          description: Endpoint updated.
-  /info:
-    get:
-      summary: Get bot info
-      description: Returns basic information about the bot associated with the channel access token.
-      operationId: getBotInfo
-      responses:
-        '200':
-          description: Bot info.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  userId:
-                    type: string
-                  basicId:
-                    type: string
-                  premiumId:
-                    type: string
-                  displayName:
-                    type: string
-                  pictureUrl:
-                    type: string
-                    format: uri
-                  chatMode:
-                    type: string
-                    enum: [chat, bot]
-                  markAsReadMode:
-                    type: string
-                    enum: [auto, manual]
+      tags:
+      - Message
 components:
+  schemas:
+    Message:
+      type: object
+      description: A LINE message object. Concrete subtypes include text, image, video, audio, location, sticker, imagemap, template, and flex.
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          - image
+          - video
+          - audio
+          - location
+          - sticker
+          - imagemap
+          - template
+          - flex
+        text:
+          type: string
+        quickReply:
+          type: object
   securitySchemes:
     ChannelAccessToken:
       type: http
       scheme: bearer
       bearerFormat: ChannelAccessToken
       description: LINE channel access token passed as a Bearer token in the Authorization header.
-  schemas:
-    Message:
-      type: object
-      description: A LINE message object. Concrete subtypes include text, image, video, audio, location, sticker, imagemap, template, and flex.
-      required: [type]
-      properties:
-        type:
-          type: string
-          enum: [text, image, video, audio, location, sticker, imagemap, template, flex]
-        text:
-          type: string
-        quickReply:
-          type: object
-    UserProfile:
-      type: object
-      properties:
-        userId:
-          type: string
-        displayName:
-          type: string
-        pictureUrl:
-          type: string
-          format: uri
-        statusMessage:
-          type: string
-        language:
-          type: string
