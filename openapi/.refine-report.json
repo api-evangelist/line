@@ -1,0 +1,20 @@
+{
+  "provider": "line",
+  "sources": [
+    "line-channel-api-openapi.yml",
+    "line-info-api-openapi.yml",
+    "line-message-api-openapi.yml",
+    "line-profile-api-openapi.yml"
+  ],
+  "outputs": [
+    "line-channel-api-openapi.yml",
+    "line-info-api-openapi.yml",
+    "line-message-api-openapi.yml",
+    "line-profile-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
