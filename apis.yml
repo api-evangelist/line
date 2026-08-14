@@ -1,26 +1,33 @@
 aid: line
 name: LINE
 description: >-
-  LINE is a Japan-based messaging platform with over 200 million monthly active
-  users across Japan, Taiwan, Thailand, and Indonesia, offering messaging,
-  payments, news, and a broad ecosystem of services. The LINE Developers
-  platform exposes public APIs for building chatbots, mini-apps, social login,
-  and audience marketing, all documented as OpenAPI specifications. APIs use
-  Bearer token authentication with channel access tokens issued per LINE
-  channel.
+  LINE is a Japan-based messaging platform operated by LY Corporation, with
+  over 200 million monthly active users across Japan, Taiwan, Thailand and
+  Indonesia, offering messaging, payments, news and a broad ecosystem of
+  services. The LINE Developers platform exposes public APIs for building
+  chatbots and Official Accounts (Messaging API), issuing and rotating
+  credentials (Channel Access Token API), reading delivery and audience
+  analytics (Insight API), building marketing audiences (Manage Audience API),
+  running web apps inside the LINE client (LIFF), and social login via LINE
+  Login v2.1 over OAuth 2.0 and OpenID Connect. LINE publishes nine
+  first-party OpenAPI documents covering 111 operations at
+  github.com/line/line-openapi and generates all six official server SDKs from
+  them. Server API calls authenticate with a channel access token presented as
+  an HTTP Bearer credential and scoped to a single LINE channel.
 type: Index
 accessModel:
-  pricing: unknown
+  pricing: freemium
   onboarding: self-serve
-  trial: false
+  trial: true
   try_now: false
-  public: false
-  label: Self-serve signup
-  confidence: medium
+  public: true
+  label: Self-serve signup, free tier metered on messages sent
+  confidence: high
   source:
-  - authentication
-  generated: '2026-07-22'
-  method: derived
+  - plans/line-plans-pricing.yml
+  - authentication/line-authentication.yml
+  generated: '2026-08-13'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/line.png
 tags:
   - Messaging
@@ -28,98 +35,319 @@ tags:
   - Social Login
   - Mini Apps
   - Marketing
+  - Webhooks
+  - OpenID Connect
+  - Audience
+  - Analytics
   - Japan
 url: >-
   https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-29'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
-- aid: line:line-channel-api
-  name: LINE Channel API
-  description: The Channel API from LINE — 1 operation(s) for channel.
+- aid: line:line-messaging-api
+  name: LINE Messaging API
+  description: >-
+    The core LINE bot API — 73 operations for replying, pushing, multicasting,
+    broadcasting and narrowcasting messages to LINE users, plus rich menus,
+    Flex messages, group and room membership, profiles, followers, message
+    quota, delivery statistics, coupons, memberships and webhook endpoint
+    configuration. Supports idempotent retries via the X-Line-Retry-Key header
+    on the four metered send operations. Binary content (message media, rich
+    menu images) is served from api-data.line.me rather than api.line.me.
   humanURL: https://developers.line.biz/en/docs/messaging-api/
   baseURL: https://api.line.me
   tags:
-  - Channel
+  - Messaging
+  - Chatbots
+  - Rich Menu
+  - Webhooks
   properties:
   - type: OpenAPI
-    url: openapi/line-channel-api-openapi.yml
+    url: openapi/line-messaging-api-openapi.yml
+  - type: Overlay
+    url: overlays/line-messaging-api-overlay.yaml
   - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
     url: https://developers.line.biz/en/reference/messaging-api/
-  - type: Webhook OpenAPI
-    url: https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
   - type: AsyncAPI
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/asyncapi/line-messaging-webhook.yml
-  - type: Documentation
-    url: https://developers.line.biz/en/reference/liff-server/
-- aid: line:line-info-api
-  name: LINE Info API
-  description: The Info API from LINE — 1 operation(s) for info.
-  humanURL: https://developers.line.biz/en/docs/messaging-api/
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+- aid: line:line-webhook
+  name: LINE Messaging API Webhook
+  description: >-
+    The inbound event surface of the Messaging API, published by LINE as an
+    OpenAPI type-definition document. LINE delivers CallbackRequest envelopes
+    to the bot server's configured HTTPS endpoint, carrying an events[] array
+    of 20+ polymorphic event types (message, follow, unfollow, join, leave,
+    postback, beacon, accountLink, membership, videoPlayComplete and others)
+    over 60 component schemas. Every delivery is signed with a Base64
+    HMAC-SHA256 of the raw body in the x-line-signature header.
+  humanURL: https://developers.line.biz/en/reference/messaging-api/#webhooks
   baseURL: https://api.line.me
   tags:
-  - Info
+  - Webhooks
+  - Events
   properties:
   - type: OpenAPI
-    url: openapi/line-info-api-openapi.yml
-  - type: Documentation
-    url: https://developers.line.biz/en/reference/messaging-api/
-  - type: Webhook OpenAPI
-    url: https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml
+    url: openapi/line-webhook-openapi.yml
   - type: AsyncAPI
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/asyncapi/line-messaging-webhook.yml
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Overlay
+    url: overlays/line-webhook-overlay.yaml
   - type: Documentation
-    url: https://developers.line.biz/en/reference/liff-server/
-- aid: line:line-message-api
-  name: LINE Message API
-  description: The Message API from LINE — 4 operation(s) for message.
-  humanURL: https://developers.line.biz/en/docs/messaging-api/
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  note: >-
+    baseURL records the platform host that originates the delivery. The
+    published spec declares servers[] as https://example.com because the
+    receiving endpoint is owned by the bot developer, not by LINE.
+- aid: line:line-channel-access-token-api
+  name: LINE Channel Access Token API
+  description: >-
+    Issues, verifies and revokes the channel access tokens every other LINE
+    server API consumes. Four generations run concurrently: long-lived tokens
+    from the Developers Console, v2.0 short-lived tokens, v2.1 JWT-assertion
+    tokens that support concurrent validity and zero-downtime rotation, and v3
+    stateless 15-minute tokens. Eight operations.
+  humanURL: https://developers.line.biz/en/docs/basics/channel-access-token/
   baseURL: https://api.line.me
   tags:
-  - Message
+  - Authentication
+  - Tokens
   properties:
   - type: OpenAPI
-    url: openapi/line-message-api-openapi.yml
+    url: openapi/line-channel-access-token-openapi.yml
+  - type: Overlay
+    url: overlays/line-channel-access-token-overlay.yaml
   - type: Documentation
-    url: https://developers.line.biz/en/reference/messaging-api/
-  - type: Webhook OpenAPI
-    url: https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml
-  - type: AsyncAPI
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/asyncapi/line-messaging-webhook.yml
-  - type: Documentation
-    url: https://developers.line.biz/en/reference/liff-server/
-- aid: line:line-profile-api
-  name: LINE Profile API
-  description: The Profile API from LINE — 1 operation(s) for profile.
-  humanURL: https://developers.line.biz/en/docs/messaging-api/
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+- aid: line:line-insight-api
+  name: LINE Insight API
+  description: >-
+    Seven read operations returning analytics for a LINE Official Account —
+    friend demographics, number of followers, number of message deliveries by
+    day, per-request message event statistics (impressions, clicks, per-link
+    breakdown), statistics per aggregation unit, and rich menu insight totals
+    and daily series.
+  humanURL: https://developers.line.biz/en/reference/messaging-api/#get-insight
   baseURL: https://api.line.me
   tags:
-  - Profile
+  - Analytics
+  - Insight
   properties:
   - type: OpenAPI
-    url: openapi/line-profile-api-openapi.yml
-  - type: Documentation
-    url: https://developers.line.biz/en/reference/messaging-api/
-  - type: Webhook OpenAPI
-    url: https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml
-  - type: AsyncAPI
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/asyncapi/line-messaging-webhook.yml
-  - type: Documentation
+    url: openapi/line-insight-openapi.yml
+  - type: Overlay
+    url: overlays/line-insight-overlay.yaml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+- aid: line:line-manage-audience-api
+  name: LINE Manage Audience API
+  description: >-
+    Twelve operations for building and managing the marketing audiences a
+    narrowcast targets — creating audiences from uploaded user IDs by JSON or
+    by file, click-based and impression-based audiences derived from earlier
+    sends, renaming, deleting, and reading audience data and shared Business
+    Manager audiences. Uploads are asynchronous jobs limited to ten concurrent
+    operations per audience.
+  humanURL: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  baseURL: https://api.line.me
+  tags:
+  - Marketing
+  - Audience
+  properties:
+  - type: OpenAPI
+    url: openapi/line-manage-audience-openapi.yml
+  - type: Overlay
+    url: overlays/line-manage-audience-overlay.yaml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  note: >-
+    The by-file variants (createAudienceForUploadingUserIds,
+    addUserIdsToAudience) must be sent to https://api-data.line.me, not
+    api.line.me.
+- aid: line:line-liff-api
+  name: LIFF Server API
+  description: >-
+    Four operations for managing LINE Front-end Framework apps on a LINE Login
+    channel — add, list, update and delete LIFF apps. LIFF apps are web
+    applications that run inside the LINE client's in-app browser and can read
+    the logged-in user's profile, obtain an ID token, send messages into the
+    current chat and open the scanner.
+  humanURL: https://developers.line.biz/en/reference/liff-server/
+  baseURL: https://api.line.me
+  tags:
+  - Mini Apps
+  - LIFF
+  properties:
+  - type: OpenAPI
+    url: openapi/line-liff-openapi.yml
+  - type: Overlay
+    url: overlays/line-liff-overlay.yaml
+  - type: APIReference
     url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+- aid: line:line-module-api
+  name: LINE Module API
+  description: >-
+    Four operations for the module feature, which lets a partner-operated
+    module channel take and release chat control on behalf of a LINE Official
+    Account — detach a module, acquire chat initiative, release it, and list
+    the bots a module is attached to.
+  humanURL: https://developers.line.biz/en/docs/partner-docs/module/
+  baseURL: https://api.line.me
+  tags:
+  - Modules
+  - Partner
+  properties:
+  - type: OpenAPI
+    url: openapi/line-module-openapi.yml
+  - type: Overlay
+    url: overlays/line-module-overlay.yaml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+- aid: line:line-module-attach-api
+  name: LINE Module Attach API
+  description: >-
+    A single operation that attaches a module channel to a LINE Official
+    Account and returns the resulting bot and scope grant. The only operation
+    across LINE's nine published specifications that uses HTTP Basic
+    authentication, and the only one served from manager.line.biz rather than
+    api.line.me.
+  humanURL: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  baseURL: https://manager.line.biz
+  tags:
+  - Modules
+  - Partner
+  properties:
+  - type: OpenAPI
+    url: openapi/line-module-attach-openapi.yml
+  - type: Overlay
+    url: overlays/line-module-attach-overlay.yaml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+- aid: line:line-shop-api
+  name: LINE Mission Sticker API
+  description: >-
+    A single operation for the Mission Sticker programme, granting a user a
+    sticker reward after they complete a defined mission with a corporate LINE
+    Official Account. Available only to corporate customers who have submitted
+    the required application.
+  humanURL: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+  baseURL: https://api.line.me
+  tags:
+  - Stickers
+  - Partner
+  properties:
+  - type: OpenAPI
+    url: openapi/line-shop-openapi.yml
+  - type: Overlay
+    url: overlays/line-shop-overlay.yaml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-login-api
+  name: LINE Login v2.1
+  description: >-
+    End-user authentication and authorization over OAuth 2.0 authorization code
+    grant and OpenID Connect. Authorization runs at access.line.me; token,
+    userinfo, revocation and JWKS endpoints are on api.line.me. ID tokens are
+    ES256-signed JWTs with pairwise subject identifiers, PKCE is supported with
+    S256 only, and JARM response modes (jwt, query.jwt, form_post.jwt) are
+    accepted. Scopes are openid, profile and email. LINE publishes no OpenAPI
+    for this surface — the machine-readable contract is the OIDC discovery
+    document.
+  humanURL: https://developers.line.biz/en/docs/line-login/
+  baseURL: https://api.line.me
+  tags:
+  - Social Login
+  - OpenID Connect
+  - OAuth
+  properties:
+  - type: OpenIDConnect
+    url: well-known/line-openid-configuration.json
+  - type: OAuthScopes
+    url: scopes/line-scopes.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/line-login/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/line-login/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/line-login/integrate-line-login/
 common:
   - type: AgenticAccess
     url: agentic-access/line-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/line-vulnerability-disclosure.yml
+  - type: Security
+    url: security/line-vulnerability-disclosure.yml
   - type: DomainSecurity
     url: security/line-domain-security.yml
   - type: Authentication
     url: authentication/line-authentication.yml
+  - type: OAuthScopes
+    url: scopes/line-scopes.yml
+  - type: Packages
+    url: packages/line-packages.yml
+  - type: SDKs
+    url: packages/line-packages.yml
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Components
+    url: components/line-components.yml
+  - type: Sandbox
+    url: sandbox/line-sandbox.yml
+  - type: Conventions
+    url: conventions/line-conventions.yml
+  - type: Idempotency
+    url: conventions/line-conventions.yml
+  - type: ErrorCatalog
+    url: errors/line-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/line-rate-limits.yml
+  - type: Plans
+    url: plans/line-plans-pricing.yml
+  - type: Lifecycle
+    url: lifecycle/line-lifecycle.yml
+  - type: StatusPage
+    url: https://api.line-status.info/
+  - type: Deprecation
+    url: lifecycle/line-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/line-changelog.yml
+  - type: Conformance
+    url: conformance/line-conformance.yml
+  - type: DataModel
+    url: data-model/line-data-model.yml
+  - type: WellKnown
+    url: well-known/line-well-known.yml
+  - type: SecurityTxt
+    url: well-known/line-security.txt
+  - type: MCPServer
+    name: MCP Server
+    url: https://github.com/line/line-bot-mcp-server
+  - type: MCPServer
+    name: MCP Server manifest
+    url: mcp/line-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/line-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/line-llms.txt
+  - type: LlmsText
+    url: https://developers.line.biz/llms.txt
   - type: LinkedIn
     url: https://www.linkedin.com/company/linecorp
   - type: Website
@@ -128,20 +356,31 @@ common:
     url: https://developers.line.biz/en/
   - type: Documentation
     url: https://developers.line.biz/en/docs/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: Support
+    url: https://developers.line.biz/en/faq/
+  - type: Blog
+    url: https://techblog.lycorp.co.jp/en/
   - type: OpenAPI Repository
     url: https://github.com/line/line-openapi
   - type: GitHubOrganization
     url: https://github.com/line
-  - type: Signup
+  - type: SignUp
     url: https://developers.line.biz/console/
   - type: Pricing
-    url: https://www.linebiz.com/jp-en/service/line-account-connect/
-
-  - name: MCP Server
-    url: https://github.com/line/line-bot-mcp-server
-    type: MCPServer
-  - type: LlmsText
-    url: https://developers.line.biz/llms.txt
+    url: https://developers.line.biz/en/docs/messaging-api/pricing/
+  - type: TermsOfService
+    url: https://developers.line.biz/en/terms-and-policies/
+  - type: PrivacyPolicy
+    url: https://www.lycorp.co.jp/en/company/privacypolicy/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 42
+  pass: local-v1
