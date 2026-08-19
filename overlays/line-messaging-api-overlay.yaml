@@ -1,0 +1,69 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — LINE Messaging API
+  version: 1.0.0
+extends: openapi/line-messaging-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: Enhancements authored by API Evangelist over the verbatim LINE specification. The original document
+  in openapi/ is never mutated.
+actions:
+- target: $.info
+  description: Attach the publisher contact, licence and terms LINE publishes on the LINE Developers site
+    but omits from the specification document.
+  update:
+    contact:
+      name: LINE Developers
+      url: https://developers.line.biz/en/
+    termsOfService: https://developers.line.biz/en/terms-and-policies/
+    license:
+      name: LINE Developer Agreement
+      url: https://developers.line.biz/en/terms-and-policies/
+    x-api-reference: https://developers.line.biz/en/reference/messaging-api/
+    x-specification-source: https://github.com/line/line-openapi
+- target: $.servers[0]
+  description: Name the production host so a generated client shows which LINE host this document targets.
+  update:
+    description: LINE production API host for the LINE Messaging API.
+- target: $.components.securitySchemes.Bearer
+  description: State the credential format. The published document declares only 'Channel access token'
+    with no bearerFormat, so a generated client cannot tell which of the four token generations is expected.
+  update:
+    bearerFormat: ChannelAccessToken
+    description: 'Channel access token issued by the LINE Channel Access Token API. Four generations are
+      valid concurrently: long-lived (Console), v2.0 short-lived (30 days), v2.1 JWT-assertion (rotatable,
+      up to 30 days) and v3 stateless (15 minutes). Scoped to a single LINE channel; carries no OAuth
+      scope.'
+    x-issuing-api: openapi/line-channel-access-token-openapi.yml
+    x-docs: https://developers.line.biz/en/docs/basics/channel-access-token/
+- target: $.info
+  description: 'Record the runtime semantics LINE documents in prose but does not encode in the specification:
+    idempotency, rate-limit signalling and the error envelope.'
+  update:
+    x-idempotency:
+      header: X-Line-Retry-Key
+      value: client-generated hexadecimal UUID
+      retention: 24 hours
+      conflict-status: 409
+      correlation-header: x-line-accepted-request-id
+      operations:
+      - pushMessage
+      - multicast
+      - narrowcast
+      - broadcast
+      docs: https://developers.line.biz/en/docs/messaging-api/retrying-api-request/
+    x-rate-limits:
+      algorithm: token bucket
+      scope: per endpoint, per channel
+      exhaustion-status: 429
+      response-headers: null
+      artifact: rate-limits/line-rate-limits.yml
+    x-error-envelope:
+      rfc9457: false
+      shape:
+        message: string
+        details: array of {message, property}
+      artifact: errors/line-problem-types.yml
+    x-data-hosts:
+      api.line.me: all endpoints except the binary ones
+      api-data.line.me: getMessageContent, getMessageContentPreview, setRichMenuImage, getRichMenuImage

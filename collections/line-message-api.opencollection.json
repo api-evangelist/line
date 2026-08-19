@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LINE Messaging Channel Message API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Message",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send reply messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.line.me/v2/bot/message/reply",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends reply messages to a user, group, or room in response to a webhook event using a reply token."
+        },
+        {
+          "info": {
+            "name": "Send push messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.line.me/v2/bot/message/push",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends push messages to a user, group, or room at any time."
+        },
+        {
+          "info": {
+            "name": "Send multicast messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.line.me/v2/bot/message/multicast",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends push messages to multiple users at once."
+        },
+        {
+          "info": {
+            "name": "Send broadcast messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.line.me/v2/bot/message/broadcast",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends push messages to all users who have added the LINE Official Account as a friend."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

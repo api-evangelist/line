@@ -1,0 +1,461 @@
+{
+  "item": [
+    {
+      "id": "b6d0984f-d949-45be-b47a-7970cd900e73",
+      "name": "Message",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f05c96d2-e334-4042-957d-b5127c7370ba",
+          "name": "Send reply messages",
+          "request": {
+            "name": "Send reply messages",
+            "description": {
+              "content": "Sends reply messages to a user, group, or room in response to a webhook event using a reply token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "message",
+                "reply"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"replyToken\": \"<string>\",\n  \"messages\": [\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2efb0bc4-8bc0-4686-983e-ce7daa42ced3",
+              "name": "Reply accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "message",
+                    "reply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"replyToken\": \"<string>\",\n  \"messages\": [\n    {\n      \"type\": \"video\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    },\n    {\n      \"type\": \"imagemap\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c71c684a-8061-44bb-93c7-887120180b0e",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "message",
+                    "reply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"replyToken\": \"<string>\",\n  \"messages\": [\n    {\n      \"type\": \"video\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    },\n    {\n      \"type\": \"imagemap\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72ccc222-253b-4ef6-9a61-3ebb1ecf08f7",
+          "name": "Send push messages",
+          "request": {
+            "name": "Send push messages",
+            "description": {
+              "content": "Sends push messages to a user, group, or room at any time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "message",
+                "push"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"<string>\",\n  \"messages\": [\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06064cb0-d15b-4fb3-b66c-acf346862b5c",
+              "name": "Push accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "message",
+                    "push"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"<string>\",\n  \"messages\": [\n    {\n      \"type\": \"location\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    },\n    {\n      \"type\": \"location\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02fb24b4-16f6-40db-9c6d-e8ae89599952",
+          "name": "Send multicast messages",
+          "request": {
+            "name": "Send multicast messages",
+            "description": {
+              "content": "Sends push messages to multiple users at once.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "message",
+                "multicast"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messages\": [\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91a64a05-b0de-4ef7-870d-e8714c2d1884",
+              "name": "Multicast accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "message",
+                    "multicast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messages\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    },\n    {\n      \"type\": \"sticker\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67ca2625-6556-402f-bb36-5fa07d682045",
+          "name": "Send broadcast messages",
+          "request": {
+            "name": "Send broadcast messages",
+            "description": {
+              "content": "Sends push messages to all users who have added the LINE Official Account as a friend.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "message",
+                "broadcast"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messages\": [\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"text\": \"<string>\",\n      \"quickReply\": \"<object>\"\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c23f9187-da55-4e7d-b265-4ee67eb2759b",
+              "name": "Broadcast accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "message",
+                    "broadcast"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"type\": \"sticker\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    },\n    {\n      \"type\": \"text\",\n      \"text\": \"string\",\n      \"quickReply\": {}\n    }\n  ],\n  \"notificationDisabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.line.me/v2/bot",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7377cf17-1bf5-4e0b-8721-d71411cf533c",
+    "name": "LINE Messaging Channel Message API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Partial OpenAPI 3.1 representation of the LINE Messaging API. LINE provides\npublic APIs for chatbots and Official Accounts. Authentication uses Bearer\nchannel access tokens issued per LINE channel. The authoritative OpenAPI\ndocuments are maintained by LINE at\nhttps://github.com/line/line-openapi (messaging-api.yml, webhook.yml,\nchannel-access-token.yml, liff.yml, insight.yml, manage-audience.yml,\nshop.yml).\n\n\nContact Support:\n Name: LINE Developers",
+      "type": "text/plain"
+    }
+  }
+}

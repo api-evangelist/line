@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LINE Messaging Channel Profile API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.line.me/v2/bot/profile/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID returned in a webhook event source."
+              }
+            ]
+          },
+          "docs": "Returns the profile information of a user who has added the LINE Official Account as a friend."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,204 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Public package registries (registry.npmjs.org, pypi.org, rubygems.org,
+  packagist.org, proxy.golang.org, repo1.maven.org) plus the first-party
+  repositories under https://github.com/line
+note: >-
+  LINE (LY Corporation) publishes first-party Messaging API SDKs for Node.js,
+  Python, Ruby, PHP, Go and Java, all generated from the same
+  https://github.com/line/line-openapi specifications this repo harvests. The
+  Node/Python/Ruby/PHP/Go SDKs are released in lockstep (2026-07-07 for the
+  current cycle). The Java artifacts on Maven Central under com.linecorp.bot
+  are the notable decay signal: last published 2023-02-06, while the
+  line-bot-sdk-java repository itself is still actively pushed — the released
+  artifact trails the source by more than three years.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@line/bot-sdk"
+    url: https://www.npmjs.com/package/@line/bot-sdk
+    install: npm install @line/bot-sdk
+    repository: https://github.com/line/line-bot-sdk-nodejs
+    official: true
+    version: 11.2.0
+    published: '2026-07-07'
+    covers: Messaging API, webhook signature validation, Channel Access Token
+  - language: python
+    registry: pypi
+    name: line-bot-sdk
+    url: https://pypi.org/project/line-bot-sdk/
+    install: pip install line-bot-sdk
+    repository: https://github.com/line/line-bot-sdk-python
+    official: true
+    version: 3.25.0
+    published: '2026-07-07'
+    covers: Messaging API, Insight, Manage Audience, LIFF, Module, Shop
+  - language: ruby
+    registry: rubygems
+    name: line-bot-api
+    url: https://rubygems.org/gems/line-bot-api
+    install: gem install line-bot-api
+    repository: https://github.com/line/line-bot-sdk-ruby
+    official: true
+    version: 2.10.0
+    published: '2026-07-07'
+  - language: php
+    registry: packagist
+    name: linecorp/line-bot-sdk
+    url: https://packagist.org/packages/linecorp/line-bot-sdk
+    install: composer require linecorp/line-bot-sdk
+    repository: https://github.com/line/line-bot-sdk-php
+    official: true
+    version: v12.7.0
+    published: '2026-07-07'
+  - language: go
+    registry: go
+    name: github.com/line/line-bot-sdk-go/v8
+    url: https://pkg.go.dev/github.com/line/line-bot-sdk-go/v8
+    install: go get github.com/line/line-bot-sdk-go/v8
+    repository: https://github.com/line/line-bot-sdk-go
+    official: true
+    version: v8.22.0
+    published: '2026-07-07'
+  - language: java
+    registry: maven
+    name: com.linecorp.bot:line-bot-api-client
+    url: https://central.sonatype.com/artifact/com.linecorp.bot/line-bot-api-client
+    install: "implementation 'com.linecorp.bot:line-bot-api-client:6.0.0'"
+    repository: https://github.com/line/line-bot-sdk-java
+    official: true
+    version: 6.0.0
+    published: '2023-02-06'
+    note: >-
+      Last Maven Central release 2023-02-06 (maven-metadata lastUpdated
+      20230206055650), while line-bot-sdk-java is still actively pushed. The
+      published artifact trails the API and the other five SDKs by three years.
+  - language: java
+    registry: maven
+    name: com.linecorp.bot:line-bot-spring-boot
+    url: https://central.sonatype.com/artifact/com.linecorp.bot/line-bot-spring-boot
+    install: "implementation 'com.linecorp.bot:line-bot-spring-boot:6.0.0'"
+    repository: https://github.com/line/line-bot-sdk-java
+    official: true
+    version: 6.0.0
+    published: '2023-02-06'
+  - language: java
+    registry: maven
+    name: com.linecorp.bot:line-bot-model
+    url: https://central.sonatype.com/artifact/com.linecorp.bot/line-bot-model
+    install: "implementation 'com.linecorp.bot:line-bot-model:6.0.0'"
+    repository: https://github.com/line/line-bot-sdk-java
+    official: true
+    version: 6.0.0
+    published: '2023-02-06'
+  - language: javascript
+    registry: npm
+    name: "@line/liff"
+    url: https://www.npmjs.com/package/@line/liff
+    install: npm install @line/liff
+    repository: https://github.com/line/liff-playground
+    official: true
+    version: 2.29.2
+    published: '2026-07-30'
+    covers: LINE Front-end Framework (LIFF) client SDK
+  - language: javascript
+    registry: cdn
+    name: LIFF SDK (sdk.js) — CDN edge path
+    url: https://static.line-scdn.net/liff/edge/2/sdk.js
+    official: true
+    version: null
+    published: null
+    note: >-
+      The CDN "edge" path is deliberately unpinned and always floats to the
+      latest LIFF v2 MINOR/PATCH, so no version can be read from the URL. LINE
+      also publishes a pinned "fixed" path —
+      https://static.line-scdn.net/liff/edge/versions/2.29.2/sdk.js — where the
+      version is in the URL. Recorded as null because a consumer of the edge
+      path cannot tell what they are getting either.
+  - language: javascript
+    registry: npm
+    name: "@line/liff-mock"
+    url: https://www.npmjs.com/package/@line/liff-mock
+    install: npm install --save-dev @line/liff-mock
+    repository: https://github.com/line/liff-mock
+    official: true
+    version: 1.0.4
+    published: '2025-11-17'
+    covers: LIFF plugin that mocks LIFF APIs for local testing
+  - language: javascript
+    registry: npm
+    name: "@line/liff-inspector"
+    url: https://www.npmjs.com/package/@line/liff-inspector
+    install: npm install --save-dev @line/liff-inspector
+    repository: https://github.com/line/liff-inspector
+    official: true
+    version: 1.0.3
+    published: '2025-11-17'
+    covers: DevTools for the LIFF (WebView) browser
+  - language: javascript
+    registry: npm
+    name: "@line/liff-cli"
+    url: https://www.npmjs.com/package/@line/liff-cli
+    install: npm install -g @line/liff-cli
+    repository: https://github.com/line/liff-cli
+    official: true
+    version: 0.5.0
+    published: '2026-07-30'
+    covers: First-party CLI for managing LIFF apps — see cli/line-cli.yml
+  - language: javascript
+    registry: npm
+    name: "@line/line-bot-mcp-server"
+    url: https://www.npmjs.com/package/@line/line-bot-mcp-server
+    install: npx @line/line-bot-mcp-server
+    repository: https://github.com/line/line-bot-mcp-server
+    official: true
+    version: 0.5.0
+    published: '2026-05-29'
+    covers: >-
+      Local-stdio MCP server over the Messaging API — see mcp/line-mcp.yml.
+      LINE labels the repository a preview version.
+mobile_sdks:
+  - platform: ios
+    name: LineSDKSwift
+    repository: https://github.com/line/line-sdk-ios-swift
+    official: true
+    registry: cocoapods
+    version: null
+    note: >-
+      Distributed via CocoaPods/SwiftPM from the first-party repository; no
+      unauthenticated registry metadata endpoint was queried for a version.
+  - platform: android
+    name: LINE SDK for Android
+    repository: https://github.com/line/line-sdk-android
+    official: true
+    registry: maven
+    version: null
+    note: >-
+      Published to Maven Central under com.linecorp.linesdk; version not read
+      from a registry metadata endpoint in this pass.
+  - platform: flutter
+    name: flutter_line_sdk
+    repository: https://github.com/line/flutter_line_sdk
+    official: true
+    registry: pub.dev
+    version: null
+    note: Version not read from pub.dev in this pass.
+  - platform: unity
+    name: LINE SDK for Unity
+    repository: https://github.com/line/line-sdk-unity
+    official: true
+    registry: null
+    version: null
+    note: Distributed as a Unity package from the repository; no registry.
+summary:
+  official_packages: 15
+  registries:
+    - npm
+    - pypi
+    - rubygems
+    - packagist
+    - go
+    - maven
+    - cdn
+  stalest_first_party: com.linecorp.bot:line-bot-api-client (2023-02-06)

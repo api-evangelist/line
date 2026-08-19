@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LINE Messaging Channel API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channel",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get webhook endpoint information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.line.me/v2/bot/channel/webhook/endpoint"
+          },
+          "docs": "Returns the webhook endpoint URL configured for the channel."
+        },
+        {
+          "info": {
+            "name": "Set webhook endpoint URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.line.me/v2/bot/channel/webhook/endpoint",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set webhook endpoint URL"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,104 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.line.biz/en/docs/basics/line-api-status/,
+  https://developers.line.biz/en/docs/liff/versioning-policy/, and
+  https://developers.line.biz/en/reference/messaging-api/ — cross-checked
+  against the version segments in the harvested OpenAPI paths.
+status_page:
+  url: https://api.line-status.info/
+  name: LINE API Status
+  provider: Statuspage
+  operator: LY Corporation
+  machine_readable:
+    status_json: https://api.line-status.info/api/v2/status.json
+    rss: https://api.line-status.info/history.rss
+    atom: available via SUBSCRIBE TO UPDATES
+  probed:
+    url: https://api.line-status.info/api/v2/status.json
+    status: 200
+    observed: '{"status":{"indicator":"none","description":"All Systems Operational"}}'
+    date: '2026-08-13'
+  note: >-
+    LINE states availability information is provided in English and is not a
+    guarantee of immediate, accurate or comprehensive reporting; incident
+    detail is published separately under the outage-report news tag at
+    https://developers.line.biz/en/news/tags/outage-report/.
+versioning:
+  scheme: mixed
+  api_scheme: uri-path
+  detail: >-
+    Server APIs are versioned in the URI path, per-API rather than
+    platform-wide: /v2/bot (Messaging, Insight, Manage Audience, Module),
+    /oauth2/v2.1 (JWT-assertion channel tokens and LINE Login), /oauth2/v3
+    (stateless channel token), /v2/oauth (legacy channel token), /liff/v1
+    (LIFF server API), /shop/v3 (Mission Sticker). Four version generations run
+    concurrently on api.line.me.
+  client_scheme: semver
+  client_detail: >-
+    The LIFF client SDK follows Semantic Versioning from v2.2.0 onward — MAJOR
+    for backwards-incompatible public API changes, MINOR for backwards-
+    compatible functionality, PATCH for backwards-compatible bug fixes.
+  current_versions:
+    messaging_api: v2
+    channel_access_token: v2.0 / v2.1 / v3
+    liff_server_api: v1
+    liff_sdk: 2.29.2 (released 2026-07-31)
+  policy_url: https://developers.line.biz/en/docs/liff/versioning-policy/
+deprecation:
+  policy_published: true
+  scope: >-
+    A formal, dated lifecycle policy exists for the LIFF SDK MAJOR versions. No
+    equivalent written deprecation policy is published for the server APIs
+    (Messaging, Insight, Manage Audience); server-side changes and removals are
+    announced through the LINE Developers news feed instead.
+  policy_url: https://developers.line.biz/en/docs/liff/versioning-policy/#life-cycle
+  stages:
+    - stage: Active
+      support: New features added and existing features improved.
+      period: From the MAJOR release date to the release of the next MAJOR version.
+    - stage: Maintaining
+      support: Bug fixes and security improvements only.
+      period: 12 months after the Active period.
+    - stage: Deprecated
+      support: No longer updated, still served.
+      period: 6 months after the Maintaining period.
+    - stage: End-of-life
+      support: >-
+        CDN edge and fixed paths are invalidated without notice; apps using that
+        MAJOR version stop opening.
+      period: n/a
+  worked_example:
+    version: LIFF v1
+    released: '2018-06-06'
+    active_until: '2019-10-15'
+    maintenance_until: '2021-04-01'
+    deprecated_until: '2021-09-30'
+    end_of_life: '2021-10-01'
+  current_status:
+    - version: LIFF v1
+      status: End-of-life
+      since: '2021-10-01'
+    - version: LIFF v2
+      status: Active
+      since: '2019-10-16'
+    - version: LIFF v3
+      status: TBD
+  sunset_headers:
+    rfc8594: false
+    note: >-
+      No Sunset or Deprecation response headers are documented or observed. The
+      harvested OpenAPI declares no `deprecated: true` operations across any of
+      the nine specs.
+  deprecated_operations: []
+sla:
+  published: false
+  note: >-
+    No public uptime SLA. The LINE Developer Agreement and the LINE API Policy
+    Handbook govern usage; availability commitments are not stated for
+    self-serve accounts.
+  terms: https://developers.line.biz/en/terms-and-policies/
+announcements:
+  news: https://developers.line.biz/en/news/
+  outage_reports: https://developers.line.biz/en/news/tags/outage-report/
+  see: changelog/line-changelog.yml

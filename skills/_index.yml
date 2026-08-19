@@ -1,0 +1,64 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  Authored by API Evangelist from the nine OpenAPI documents harvested verbatim
+  from github.com/line/line-openapi, plus conventions/line-conventions.yml,
+  errors/line-problem-types.yml, rate-limits/line-rate-limits.yml and the LINE
+  Developers reference. Every operationId referenced was verified present in
+  the specs. LINE publishes no AGENTS.md or first-party Agent Skills.
+description: >-
+  Packaged operating instructions for the marquee LINE platform flows — the
+  webhook reply loop, safe idempotent sending, credential issuance and
+  rotation, and audience-targeted campaign delivery.
+skills:
+  - name: line-reply-to-webhook-event
+    file: line-reply-to-webhook-event.md
+    api: LINE Messaging API
+    summary: >-
+      Verify the x-line-signature HMAC, read the event envelope, and reply with
+      the single-use reply token — the only send that does not consume quota.
+    operations: [callback, replyMessage, validateReply, getProfile]
+  - name: line-push-message-idempotently
+    file: line-push-message-idempotently.md
+    api: LINE Messaging API
+    summary: >-
+      Check the monthly quota, send with X-Line-Retry-Key, and decide correctly
+      on 409 / 429 / 500.
+    operations:
+      - getMessageQuota
+      - getMessageQuotaConsumption
+      - pushMessage
+      - multicast
+      - broadcast
+      - validatePush
+  - name: line-issue-channel-access-token
+    file: line-issue-channel-access-token.md
+    api: LINE Channel Access Token API
+    summary: >-
+      Pick among the four token generations and rotate a v2.1 JWT-assertion
+      token with zero downtime.
+    operations:
+      - issueChannelTokenByJWT
+      - verifyChannelTokenByJWT
+      - revokeChannelTokenByJWT
+      - getsAllValidChannelAccessTokenKeyIds
+      - issueStatelessChannelToken
+      - issueChannelToken
+      - verifyChannelToken
+      - revokeChannelToken
+  - name: line-narrowcast-to-audience
+    file: line-narrowcast-to-audience.md
+    api: LINE Manage Audience API + Messaging API + Insight API
+    summary: >-
+      Build an audience, poll it to READY, validate, narrowcast, then track
+      progress and measure the result.
+    operations:
+      - createAudienceGroup
+      - addAudienceToAudienceGroup
+      - getAudienceData
+      - getAudienceGroups
+      - narrowcast
+      - getNarrowcastProgress
+      - validateNarrowcast
+      - getNumberOfMessageDeliveries
+      - deleteAudienceGroup

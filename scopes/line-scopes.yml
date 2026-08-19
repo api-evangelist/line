@@ -1,0 +1,80 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://access.line.me/.well-known/openid-configuration (probed 2026-08-13,
+  HTTP 200) and
+  https://developers.line.biz/en/docs/line-login/integrate-line-login/
+docs: https://developers.line.biz/en/docs/line-login/integrate-line-login/
+description: >-
+  Scopes apply to LINE Login v2.1 — the end-user OAuth 2.0 / OpenID Connect
+  surface — not to the Messaging API. Messaging API calls carry a channel
+  access token, which is scoped to a channel and carries no scope claim at all;
+  entitlement there is a property of the channel and the Official Account plan.
+  Consequently no scope is derivable from the harvested OpenAPI documents,
+  which declare only an HTTP Bearer scheme.
+provider: LINE Login v2.1
+authorization_server: https://access.line.me
+discovery: https://access.line.me/.well-known/openid-configuration
+flows:
+  authorization_code:
+    authorization_endpoint: https://access.line.me/oauth2/v2.1/authorize
+    token_endpoint: https://api.line.me/oauth2/v2.1/token
+    revocation_endpoint: https://api.line.me/oauth2/v2.1/revoke
+    userinfo_endpoint: https://api.line.me/oauth2/v2.1/userinfo
+    jwks_uri: https://api.line.me/oauth2/v2.1/certs
+    response_types_supported: [code]
+    subject_types_supported: [pairwise]
+    id_token_signing_alg_values_supported: [ES256]
+    code_challenge_methods_supported: [S256]
+    pkce: >-
+      Supported and optional. Only S256 is accepted — the `plain` method is not
+      supported. A request without code_challenge simply does not use PKCE.
+scopes:
+  - name: profile
+    description: >-
+      Permission to get the user's profile — user ID, display name, profile
+      image URL and status message. Displayed as a required permission on the
+      consent screen when requested.
+    grants:
+      - GET https://api.line.me/v2/profile
+      - Access to userId, displayName, pictureUrl, statusMessage
+  - name: openid
+    description: >-
+      Permission to obtain an ID token (JWT, ES256-signed) alongside the access
+      token, turning the OAuth flow into an OpenID Connect authentication.
+      Required for the userinfo endpoint.
+    grants:
+      - ID token issuance
+      - GET https://api.line.me/oauth2/v2.1/userinfo
+  - name: email
+    description: >-
+      Permission to receive the user's email address in the ID token. Requires
+      the openid scope and requires the channel to have applied for and been
+      granted the email permission in the LINE Developers Console.
+    grants:
+      - email claim in the ID token
+    note: >-
+      Gated — the channel must submit an application before the scope can be
+      requested.
+combinations_documented:
+  - scope: profile
+    id_token: false
+  - scope: profile openid
+    id_token: true
+  - scope: profile openid email
+    id_token: true
+    email_claim: true
+  - scope: openid
+    id_token: true
+  - scope: openid email
+    id_token: true
+    email_claim: true
+channel_access_tokens:
+  scoped: false
+  note: >-
+    The Channel Access Token API issues four token types — long-lived,
+    short-lived v2.0, JWT-assertion v2.1 and stateless v3 — none of which
+    carries an OAuth scope. Authorization is channel-level and plan-level:
+    corporate/partner-only endpoints return 403 "Access to this API is not
+    available for your account" rather than an insufficient_scope error.
+  see: authentication/line-authentication.yml

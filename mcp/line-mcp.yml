@@ -1,0 +1,113 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://github.com/line/line-bot-mcp-server
+name: LINE Bot MCP Server
+description: >-
+  First-party Model Context Protocol server published by LY Corporation that
+  wraps the LINE Messaging API so an AI agent can drive a LINE Official
+  Account — pushing and broadcasting text and Flex messages, reading a user
+  profile, checking the monthly message quota, and managing rich menus. LINE
+  labels the repository a preview version and notes it may not include complete
+  functionality or comprehensive support.
+vendor: LY Corporation (LINE)
+license: Apache-2.0
+deployment:
+  mode: local-stdio
+  install: npx @line/line-bot-mcp-server
+  package: https://www.npmjs.com/package/@line/line-bot-mcp-server
+  auth: api-key
+  verified: searched
+  note: >-
+    There is no hosted/remote MCP endpoint. LINE ships only a locally-run stdio
+    server: a human installs it (npx, or the published Docker image
+    line/line-bot-mcp-server run with `docker run -i --rm`) and supplies
+    CHANNEL_ACCESS_TOKEN and DESTINATION_USER_ID as environment variables. An
+    agent cannot reach LINE over MCP without that local install step. The
+    "api-key" auth mode is a LINE channel access token, not an OAuth flow.
+alternate_deployment:
+  - mode: local-stdio
+    install: docker run -i --rm -e CHANNEL_ACCESS_TOKEN -e DESTINATION_USER_ID line/line-bot-mcp-server
+    package: https://github.com/line/line-bot-mcp-server
+    auth: api-key
+configuration:
+  env:
+    - name: CHANNEL_ACCESS_TOKEN
+      required: true
+      description: Channel access token for the LINE Official Account's Messaging API channel.
+    - name: DESTINATION_USER_ID
+      required: false
+      description: >-
+        Default user ID for tools that take an optional userId. Either userId
+        per call or DESTINATION_USER_ID must be set.
+    - name: NPM_CONFIG_IGNORE_SCRIPTS
+      required: false
+      description: Set to "true" in the npx configuration published in the README.
+tools:
+  - name: push_text_message
+    description: Push a simple text message to a user via LINE.
+    inputs: [userId (optional), message.text]
+  - name: push_flex_message
+    description: Push a highly customizable Flex message to a user via LINE.
+    inputs: [userId (optional), message.altText, message.contents, message.contents.type]
+  - name: broadcast_text_message
+    description: >-
+      Broadcast a simple text message to all users who have followed the LINE
+      Official Account.
+    inputs: [message.text]
+  - name: broadcast_flex_message
+    description: Broadcast a Flex message to all users who added the LINE Official Account.
+    inputs: [message.altText, message.contents, message.contents.type]
+  - name: get_profile
+    description: >-
+      Get detailed profile information of a LINE user — display name, picture
+      URL, status message and language.
+    inputs: [userId (optional)]
+  - name: get_message_quota
+    description: >-
+      Get the message quota and consumption of the LINE Official Account —
+      monthly limit and current usage.
+    inputs: []
+  - name: get_rich_menu_list
+    description: Get the list of rich menus associated with the LINE Official Account.
+    inputs: []
+  - name: delete_rich_menu
+    description: Delete a rich menu from the LINE Official Account.
+    inputs: [richMenuId]
+  - name: set_rich_menu_default
+    description: Set a rich menu as the default rich menu.
+    inputs: [richMenuId]
+  - name: cancel_rich_menu_default
+    description: Cancel the default rich menu.
+    inputs: []
+  - name: create_rich_menu
+    description: >-
+      Create a rich menu from 1–6 actions, generate and upload an image, and set
+      it as default.
+    inputs: [chatBarText, actions]
+  - name: rich_menu_actions_supported
+    description: >-
+      Not a tool — the action types create_rich_menu accepts: postback,
+      message, uri, datetimepicker, camera, cameraRoll, location,
+      richmenuswitch, clipboard.
+    inputs: []
+  - name: get_follower_ids
+    description: >-
+      Get user IDs of users who added the LINE Official Account as a friend, so
+      messages can be sent without manually preparing IDs.
+    inputs: [start (optional), limit (optional)]
+summary:
+  tool_count: 12
+  note: >-
+    Tool names and descriptions are transcribed from the first-party README at
+    github.com/line/line-bot-mcp-server. Because the server is stdio-only there
+    is no endpoint to POST tools/list against, so full JSON Schema inputSchema
+    bodies were not introspected; the inputs listed are the README's documented
+    parameters. See mcp/line-tool-crosswalk.yml for the binding of each tool to
+    the backing Messaging API operationId.
+x-evidence:
+  fetched: '2026-08-13'
+  readme: https://github.com/line/line-bot-mcp-server/raw/main/README.md
+  npm: https://registry.npmjs.org/@line/line-bot-mcp-server
+  npm_latest: 0.5.0
+  npm_published: '2026-05-29'

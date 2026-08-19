@@ -1,0 +1,179 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.line.biz/en/docs/line-login/integrate-line-login/,
+  https://access.line.me/.well-known/openid-configuration (probed 200),
+  https://line.me/.well-known/security.txt (probed 200), and the specs
+  harvested verbatim from https://github.com/line/line-openapi
+description: >-
+  Standards and cross-cutting conventions the LINE platform asserts or
+  measurably implements. Each entry records whether LINE conforms and the
+  evidence for it — an absence is recorded as conforms:false rather than
+  omitted.
+standards:
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: true
+    versions: ['3.0.0', '3.0.2', '3.0.3', '3.1.0']
+    evidence: >-
+      Nine first-party OpenAPI documents published and maintained at
+      https://github.com/line/line-openapi (messaging-api, webhook,
+      channel-access-token, liff, insight, manage-audience, module,
+      module-attach, shop) covering 111 operations. The repository CI validates
+      them with Spectral (.spectral.yaml) and generates all six official SDKs
+      from them.
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence: >-
+      LINE Login v2.1 implements the authorization code grant with
+      authorization endpoint https://access.line.me/oauth2/v2.1/authorize and
+      token endpoint https://api.line.me/oauth2/v2.1/token. Documented against
+      RFC 6749 in the LINE Login integration guide.
+  - id: oidc
+    name: OpenID Connect Core 1.0
+    conforms: true
+    evidence: >-
+      Discovery document served at
+      https://access.line.me/.well-known/openid-configuration (HTTP 200,
+      2026-08-13): issuer, authorization/token/userinfo/revocation endpoints,
+      jwks_uri, scopes_supported [openid, profile, email],
+      subject_types_supported [pairwise], id_token_signing_alg ES256.
+      max_age, ui_locales, nonce and response_mode are documented against the
+      OIDC Core Authentication Request section.
+    caveat: >-
+      No OpenID Foundation certification is claimed on the LINE Developers
+      site; conformance here is measured from the served discovery document and
+      the documented parameters, not from a certification listing.
+  - id: oidc-discovery
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence: /.well-known/openid-configuration served at access.line.me, HTTP 200.
+  - id: pkce
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence: >-
+      code_challenge / code_challenge_method documented for LINE Login;
+      code_challenge_methods_supported ["S256"] in the discovery document. The
+      `plain` method is explicitly not supported.
+  - id: jarm
+    name: 'JWT Secured Authorization Response Mode (JARM)'
+    conforms: true
+    evidence: >-
+      LINE Login accepts response_mode values query.jwt, form_post.jwt and jwt,
+      documented against the JARM Response Encoding section.
+  - id: form-post-response-mode
+    name: OAuth 2.0 Form Post Response Mode
+    conforms: true
+    evidence: response_mode=form_post documented for LINE Login.
+  - id: jws
+    name: 'JSON Web Signature / JWT (RFC 7515, RFC 7519)'
+    conforms: true
+    evidence: >-
+      ID tokens are ES256-signed JWTs; JWKS published at
+      https://api.line.me/oauth2/v2.1/certs (HTTP 200). Channel access tokens
+      v2.1 are issued against a client-signed JWT assertion.
+  - id: rfc9116
+    name: security.txt (RFC 9116)
+    conforms: true
+    evidence: >-
+      https://line.me/.well-known/security.txt served HTTP 200 with Contact,
+      Policy, Terms, Privacy Policy, Preferred-Languages and Canonical fields.
+    caveat: >-
+      No Expires field, which RFC 9116 requires. Not served on the API host
+      api.line.me.
+  - id: rfc9457
+    name: 'Problem Details for HTTP APIs (RFC 9457 / 7807)'
+    conforms: false
+    evidence: >-
+      Errors use a proprietary JSON envelope {message, details[]} with
+      Content-Type application/json. No type/title/status/detail/instance
+      members, no application/problem+json.
+    see: errors/line-problem-types.yml
+  - id: idempotency
+    name: Idempotent request retry
+    conforms: true
+    evidence: >-
+      X-Line-Retry-Key request header, client-generated hexadecimal UUID, 24h
+      retention, 409 Conflict on replay with x-line-accepted-request-id
+      correlating to the original. Supported on pushMessage, multicast,
+      narrowcast and broadcast.
+    caveat: >-
+      Not the IETF idempotency-key draft header name, and coverage is limited
+      to the four send operations — no idempotency on rich menu, audience or
+      coupon mutations.
+    see: conventions/line-conventions.yml
+  - id: pagination
+    name: Cursor pagination
+    conforms: true
+    evidence: >-
+      Continuation-token paging via `start` request parameter and `next`
+      response field on getFollowers, getGroupMembersIds, getRoomMembersIds,
+      getRichMenuAliasList, getAudienceGroups, getJoinedMembershipUsers and
+      listCoupon. Manage Audience list endpoints use page/size + totalCount
+      instead.
+  - id: rate-limit-headers
+    name: 'RateLimit header fields for HTTP (draft-ietf-httpapi-ratelimit-headers)'
+    conforms: false
+    evidence: >-
+      Per-endpoint limits are published in the reference but no RateLimit-*,
+      X-RateLimit-* or Retry-After response header is returned on any endpoint.
+    see: rate-limits/line-rate-limits.yml
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      LINE publishes the webhook event surface as an OpenAPI type-definition
+      document (webhook.yml), not as AsyncAPI. The AsyncAPI 2.6.0 description
+      in this repo is derived by API Evangelist from that published surface,
+      not published by LINE.
+    see: asyncapi/line-messaging-webhook.yml
+  - id: hmac-webhook-signature
+    name: HMAC-signed webhook delivery
+    conforms: true
+    evidence: >-
+      x-line-signature header carries a Base64-encoded HMAC-SHA256 of the raw
+      request body keyed with the channel secret; verification procedure
+      documented and implemented in all six first-party SDKs.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence: >-
+      First-party MCP server published at
+      https://github.com/line/line-bot-mcp-server and
+      npm @line/line-bot-mcp-server (0.5.0, 2026-05-29), stdio transport.
+    caveat: Local-stdio only; no hosted remote endpoint.
+    see: mcp/line-mcp.yml
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json probed on
+      line.me, api.line.me, api-data.line.me, manager.line.biz (404) and
+      developers.line.biz (403 HTML shell). No card served.
+  - id: llmstxt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      https://developers.line.biz/llms.txt served HTTP 200 (48KB), with
+      per-page markdown twins at <path>/index.html.md across the documentation.
+compliance:
+  programs_published: false
+  note: >-
+    No developer-facing trust center or certification listing (SOC 2, ISO
+    27001, PCI DSS) is published on developers.line.biz. LY Corporation
+    corporate security and compliance pages returned 403 to an unauthenticated
+    fetch during this pass, so no certification is asserted here. What LINE
+    does publish for developers is the LINE API Policy Handbook and the LINE
+    Developer Agreement, plus a public bug bounty at
+    https://bugbounty.linecorp.com/en.
+  published_artifacts:
+    - name: LINE Developer Agreement and API policies
+      url: https://developers.line.biz/en/terms-and-policies/
+    - name: LINE API Policy Handbook
+      url: https://developers.line.biz/en/docs/partner-docs/api-policy-handbook/
+    - name: LY Corporation Bug Bounty Program
+      url: https://bugbounty.linecorp.com/en
+    - name: LY Corporation Privacy Policy
+      url: https://www.lycorp.co.jp/en/company/privacypolicy/
+  see: security/line-vulnerability-disclosure.yml

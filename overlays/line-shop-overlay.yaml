@@ -1,0 +1,38 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — LINE Mission Sticker API
+  version: 1.0.0
+extends: openapi/line-shop-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: Enhancements authored by API Evangelist over the verbatim LINE specification. The original document
+  in openapi/ is never mutated.
+actions:
+- target: $.info
+  description: Attach the publisher contact, licence and terms LINE publishes on the LINE Developers site
+    but omits from the specification document.
+  update:
+    contact:
+      name: LINE Developers
+      url: https://developers.line.biz/en/
+    termsOfService: https://developers.line.biz/en/terms-and-policies/
+    license:
+      name: LINE Developer Agreement
+      url: https://developers.line.biz/en/terms-and-policies/
+    x-api-reference: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+    x-specification-source: https://github.com/line/line-openapi
+- target: $.servers[0]
+  description: Name the production host so a generated client shows which LINE host this document targets.
+  update:
+    description: LINE production API host for the LINE Mission Sticker API.
+- target: $.components.securitySchemes.Bearer
+  description: State the credential format. The published document declares only 'Channel access token'
+    with no bearerFormat, so a generated client cannot tell which of the four token generations is expected.
+  update:
+    bearerFormat: ChannelAccessToken
+    description: 'Channel access token issued by the LINE Channel Access Token API. Four generations are
+      valid concurrently: long-lived (Console), v2.0 short-lived (30 days), v2.1 JWT-assertion (rotatable,
+      up to 30 days) and v3 stateless (15 minutes). Scoped to a single LINE channel; carries no OAuth
+      scope.'
+    x-issuing-api: openapi/line-channel-access-token-openapi.yml
+    x-docs: https://developers.line.biz/en/docs/basics/channel-access-token/

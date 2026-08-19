@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.line.biz/en/docs/liff/release-notes/
+description: >-
+  LINE publishes no single platform-wide API changelog. Change is announced
+  across three surfaces: the LINE Developers news feed (all platform APIs, not
+  version-tagged), per-SDK release notes pages, and GitHub releases on the
+  first-party SDK repositories. The LIFF release notes are the only dated,
+  versioned, machine-readable changelog LINE maintains on the developer site,
+  so they are the structured record captured here.
+surfaces:
+  - name: LINE Developers news
+    url: https://developers.line.biz/en/news/
+    dated: true
+    versioned: false
+    covers: All LINE Platform APIs, including outage reports and policy changes.
+    note: >-
+      Tag-filtered views exist (e.g. /en/news/tags/outage-report/). Returned
+      403 to an unauthenticated non-browser fetch during this pass; the
+      individual documentation pages under /en/docs/ serve fine.
+  - name: LIFF release notes
+    url: https://developers.line.biz/en/docs/liff/release-notes/
+    dated: true
+    versioned: true
+    covers: LIFF client SDK (sdk.js and @line/liff)
+  - name: LINE SDK for iOS release notes
+    url: https://developers.line.biz/en/docs/line-login-sdks/ios-sdk/release-notes/
+    dated: true
+    versioned: true
+  - name: LINE SDK for Android release notes
+    url: https://developers.line.biz/en/docs/line-login-sdks/android-sdk/release-notes/
+    dated: true
+    versioned: true
+  - name: LINE SDK for Unity release notes
+    url: https://developers.line.biz/en/docs/line-login-sdks/unity-sdk/release-notes/
+    dated: true
+    versioned: true
+  - name: LINE Social Plugins release notes
+    url: https://developers.line.biz/en/docs/line-social-plugins/resources/release-notes/
+    dated: true
+    versioned: true
+  - name: line-openapi commit history
+    url: https://github.com/line/line-openapi/commits/main
+    dated: true
+    versioned: false
+    note: >-
+      The specification repository is the de facto contract changelog — it
+      carries no tagged releases (GitHub releases list is empty), so contract
+      change must be read from commits.
+scheme: semver
+current_version:
+  component: LIFF SDK
+  version: 2.29.2
+  released: '2026-07-31'
+  cdn_edge: https://static.line-scdn.net/liff/edge/2/sdk.js
+  cdn_pinned: https://static.line-scdn.net/liff/edge/versions/2.29.2/sdk.js
+entries:
+  - version: 2.29.2
+    date: '2026-07-31'
+    component: LIFF SDK
+    breaking: false
+    highlights:
+      - Internal behavior changes to the LIFF SDK; no feature changes.
+  - version: 2.29.1
+    date: '2026-06-29'
+    component: LIFF SDK
+    breaking: false
+    highlights:
+      - Internal behavior changes to the LIFF SDK; no feature changes.
+  - version: 2.29.0
+    date: '2026-05-13'
+    component: LIFF SDK
+    breaking: false
+  - version: 2.28.0
+    date: '2026-03-24'
+    component: LIFF SDK
+    breaking: false
+  - version: 2.27.3
+    date: '2025-11-17'
+    component: LIFF SDK
+    breaking: false
+  - version: 2.27.2
+    date: '2025-09-08'
+    component: LIFF SDK
+    breaking: false
+  - version: 2.27.1
+    date: '2025-07-24'
+    component: LIFF SDK
+    breaking: false
+  - version: 2.27.0
+    date: '2025-06-25'
+    component: LIFF SDK
+    breaking: false
+  - version: 2.26.1
+    date: '2025-05-26'
+    component: LIFF SDK
+    breaking: false
+  - version: 2.26.0
+    date: '2025-04-22'
+    component: LIFF SDK
+    breaking: false
+note: >-
+  Only version, date and the publisher's own summary are recorded. Where the
+  release notes describe internal behavior changes with no feature change, that
+  is what is stated — nothing has been inferred about what changed inside.
+related:
+  - lifecycle/line-lifecycle.yml
+  - packages/line-packages.yml

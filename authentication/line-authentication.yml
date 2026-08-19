@@ -1,14 +1,118 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/line-openapi.yml
+generated: '2026-08-13'
+method: searched
+docs: https://developers.line.biz/en/docs/basics/channel-access-token/
+source: >-
+  Derived from the securitySchemes of the nine OpenAPI documents harvested from
+  https://github.com/line/line-openapi, then upgraded from
+  https://developers.line.biz/en/docs/basics/channel-access-token/,
+  https://developers.line.biz/en/docs/line-login/integrate-line-login/ and the
+  OIDC discovery document at
+  https://access.line.me/.well-known/openid-configuration (probed 200).
 summary:
   types:
-  - http
+    - http
+    - oauth2
+    - openIdConnect
+  primary: Bearer channel access token, scoped to a LINE channel
+  end_user_auth: LINE Login v2.1 (OAuth 2.0 authorization code + OpenID Connect)
 schemes:
-- name: ChannelAccessToken
-  type: http
-  scheme: bearer
-  bearerFormat: ChannelAccessToken
-  description: LINE channel access token passed as a Bearer token in the Authorization header.
-  sources:
-  - openapi/line-openapi.yml
+  - name: Bearer
+    type: http
+    scheme: bearer
+    bearerFormat: ChannelAccessToken
+    description: >-
+      Channel access token presented as an HTTP Bearer credential in the
+      Authorization header. Scoped to a single LINE channel — rate limits and
+      message quota are counted per channel, and endpoint entitlement is a
+      property of the channel and the Official Account plan rather than of a
+      scope claim.
+    applies_to:
+      - openapi/line-messaging-api-openapi.yml
+      - openapi/line-insight-openapi.yml
+      - openapi/line-manage-audience-openapi.yml
+      - openapi/line-liff-openapi.yml
+      - openapi/line-module-openapi.yml
+      - openapi/line-shop-openapi.yml
+    token_types:
+      - name: long-lived channel access token
+        issued_by: LINE Developers Console
+        ttl: no expiry until reissued
+        note: Reissuing invalidates the previous token.
+      - name: short-lived channel access token (v2.0)
+        operation: issueChannelToken
+        endpoint: POST https://api.line.me/v2/oauth/accessToken
+        ttl: 30 days
+        credentials: channel ID + channel secret (client_credentials style)
+        verify: verifyChannelToken (POST /v2/oauth/verify)
+        revoke: revokeChannelToken (POST /v2/oauth/revoke)
+      - name: channel access token v2.1 (JWT assertion)
+        operation: issueChannelTokenByJWT
+        endpoint: POST https://api.line.me/oauth2/v2.1/token
+        ttl: configurable, up to 30 days
+        credentials: >-
+          JWT assertion signed with an assertion signing key registered in the
+          LINE Developers Console (RS256), exchanged via
+          urn:ietf:params:oauth:grant-type:jwt-bearer.
+        verify: verifyChannelTokenByJWT (GET /oauth2/v2.1/verify)
+        revoke: revokeChannelTokenByJWT (POST /oauth2/v2.1/revoke)
+        list: getsAllValidChannelAccessTokenKeyIds (GET /oauth2/v2.1/tokens/kid)
+        note: >-
+          The only token type that supports issuing multiple valid tokens
+          concurrently and rotating them without invalidating the others.
+      - name: stateless channel access token (v3)
+        operation: issueStatelessChannelToken
+        endpoint: POST https://api.line.me/oauth2/v3/token
+        ttl: 15 minutes
+        credentials: client_credentials with channel ID + channel secret
+        revoke: not revocable — expiry only
+        rate_limit: 370 requests per second
+  - name: basicAuth
+    type: http
+    scheme: basic
+    description: >-
+      HTTP Basic authentication used only by the Module Attach API on
+      manager.line.biz — the module channel presents its channel ID and secret
+      to attach a module channel to a LINE Official Account.
+    applies_to:
+      - openapi/line-module-attach-openapi.yml
+    host: https://manager.line.biz
+  - name: LINE Login (OAuth 2.0 / OpenID Connect)
+    type: openIdConnect
+    openIdConnectUrl: https://access.line.me/.well-known/openid-configuration
+    description: >-
+      End-user authentication and authorization. Authorization code grant with
+      optional PKCE (S256 only); ID tokens are ES256-signed JWTs verified
+      against the JWKS at https://api.line.me/oauth2/v2.1/certs. Subject
+      identifiers are pairwise, so a user ID is stable per channel and not
+      portable across channels.
+    endpoints:
+      authorization: https://access.line.me/oauth2/v2.1/authorize
+      token: https://api.line.me/oauth2/v2.1/token
+      userinfo: https://api.line.me/oauth2/v2.1/userinfo
+      revocation: https://api.line.me/oauth2/v2.1/revoke
+      jwks: https://api.line.me/oauth2/v2.1/certs
+    scopes: [openid, profile, email]
+    not_in_spec: >-
+      This scheme is documented and machine-discoverable via OIDC discovery but
+      is not represented in any of the nine published OpenAPI documents — the
+      specs cover the bot/server surface only.
+    see: scopes/line-scopes.yml
+inbound_authentication:
+  webhook_signature:
+    header: x-line-signature
+    algorithm: Base64(HMAC-SHA256(channel secret, raw request body))
+    docs: https://developers.line.biz/en/docs/messaging-api/verify-webhook-signature/
+    note: >-
+      The bot server authenticates LINE, not the other way round. Signature
+      must be computed over raw bytes before JSON parsing.
+gaps:
+  - >-
+    The published OpenAPI documents declare the Bearer scheme with only the
+    description "Channel access token" and no bearerFormat, so a generated
+    client cannot tell which of the four token flavours is expected.
+  - >-
+    No securityScheme at all is declared in channel-access-token.yml or
+    webhook.yml.
+  - >-
+    LINE Login is absent from the OpenAPI surface entirely; only OIDC discovery
+    describes it machine-readably.

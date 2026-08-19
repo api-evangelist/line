@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.line.biz/en/reference/messaging-api/,
+  https://developers.line.biz/en/docs/liff/,
+  https://github.com/line/liff-mock and the validate* operations declared in
+  openapi/line-messaging-api-openapi.yml
+description: >-
+  LINE publishes no separate test-mode environment, no sandbox host and no test
+  credentials. There is one set of hosts (api.line.me), one kind of credential
+  (a real channel access token for a real LINE Official Account), and a message
+  sent in development is a message actually delivered to a real LINE user.
+  What LINE does publish instead is a dry-run and simulation layer: server-side
+  validators that check a payload without spending message quota, a webhook
+  test trigger, a client-side mock for LIFF, and a hosted design simulator.
+test_environment:
+  separate_host: false
+  test_mode_keys: false
+  note: >-
+    The nearest thing to a sandbox is an unverified LINE Official Account with
+    a free Communication Plan (200 free messages per month) and a small set of
+    friend accounts — LINE's documented getting-started path. There are no
+    published test user IDs, test tokens or magic identifiers.
+dry_run_validators:
+  description: >-
+    Server-side validation endpoints that accept the same body as the real send
+    and return 200 or a 400 with details[], without sending anything and
+    without consuming the monthly message quota.
+  operations:
+    - operationId: validateReply
+      path: POST /v2/bot/message/validate/reply
+    - operationId: validatePush
+      path: POST /v2/bot/message/validate/push
+    - operationId: validateMulticast
+      path: POST /v2/bot/message/validate/multicast
+    - operationId: validateNarrowcast
+      path: POST /v2/bot/message/validate/narrowcast
+    - operationId: validateBroadcast
+      path: POST /v2/bot/message/validate/broadcast
+    - operationId: validateRichMenuObject
+      path: POST /v2/bot/richmenu/validate
+    - operationId: validateRichMenuBatchRequest
+      path: POST /v2/bot/richmenu/validate/batch
+webhook_testing:
+  operation: testWebhookEndpoint
+  path: POST /v2/bot/channel/webhook/test
+  description: >-
+    Makes LINE send a test request to the channel's configured webhook URL and
+    returns the observed HTTP status, reason and timestamp — the way to verify
+    signature handling and reachability without waiting for a real user event.
+  rate_limit: 60 requests per hour
+client_side_mocks:
+  - name: "@line/liff-mock"
+    repository: https://github.com/line/liff-mock
+    version: 1.0.4
+    published: '2025-11-17'
+    description: >-
+      LIFF plugin that mocks the LIFF API surface so a LIFF app can be
+      developed and tested in a normal browser, outside the LINE client.
+  - name: "@line/liff-inspector"
+    repository: https://github.com/line/liff-inspector
+    version: 1.0.3
+    published: '2025-11-17'
+    description: DevTools for inspecting a LIFF app running in the LINE WebView.
+  - name: "@line/liff-cli serve"
+    repository: https://github.com/line/liff-cli
+    description: Serves a local LIFF app over HTTPS with a public URL for in-app testing.
+hosted_simulators:
+  - name: Flex Message Simulator
+    url: https://developers.line.biz/flex-simulator/
+    description: >-
+      Hosted designer and previewer for Flex Message JSON, producing the exact
+      contents object the send operations accept.
+  - name: LINE Bot Designer
+    docs: https://developers.line.biz/en/services/bot-designer/
+    description: >-
+      Desktop tool for prototyping a bot conversation flow without writing
+      code.
+quota_observability:
+  operations:
+    - getMessageQuota
+    - getMessageQuotaConsumption
+  description: >-
+    Because development consumes the same quota as production, these two
+    operations are the practical guard rail — read them before a broadcast.
+gaps:
+  - No sandbox host or test-mode credentials.
+  - No published test user IDs or magic identifiers.
+  - No time simulation or fixture/trigger tooling.
+  - >-
+    Every development send is a live delivery to a real LINE account and counts
+    against the monthly plan quota.

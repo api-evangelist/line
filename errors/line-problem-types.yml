@@ -1,0 +1,157 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.line.biz/en/reference/messaging-api/#status-codes and
+  #error-responses and #error-messages, cross-checked against the 4xx/5xx
+  responses declared in openapi/line-messaging-api-openapi.yml and the sibling
+  specs harvested from github.com/line/line-openapi
+format: proprietary-json
+rfc9457: false
+content_type: application/json
+envelope:
+  message: String — human-readable error summary. The only stable discriminator.
+  details: Array — omitted entirely when empty.
+  details[].message: String — detail of an individual error. Not always present.
+  details[].property: >-
+    String — JSON field name or query parameter where the error occurred. Not
+    always present.
+example: |
+  {
+    "message": "The request body has 2 error(s)",
+    "details": [
+      {"message": "May not be empty", "property": "messages[0].text"},
+      {"message": "Must be one of the following values: [text, image, video, audio, location, sticker, template, imagemap]",
+       "property": "messages[1].type"}
+    ]
+  }
+note: >-
+  LINE publishes no numeric or symbolic error code. Callers and agents must
+  string-match on `message`, which is documented as a fixed catalogue but is
+  not typed in the OpenAPI (every 4xx response schema is the same ErrorResponse
+  object). This is the platform's main error-semantics weakness.
+status_codes:
+  - status: 200
+    title: OK
+    meaning: Request successful.
+  - status: 202
+    title: Accepted
+    meaning: >-
+      Asynchronous job accepted — used by the audience-upload and rich-menu
+      batch operations. Poll for completion rather than assuming success.
+  - status: 400
+    title: Bad Request
+    meaning: Problem with the request.
+    remediation: >-
+      Read details[].property to locate the offending field. Also returned when
+      X-Line-Retry-Key is sent to an operation that does not support it.
+  - status: 401
+    title: Unauthorized
+    meaning: Valid channel access token is not specified.
+    remediation: >-
+      Re-issue via the Channel Access Token API; confirm the token belongs to
+      the channel that owns the resource.
+  - status: 403
+    title: Forbidden
+    meaning: >-
+      Not authorized to access the resource. Account or plan is not entitled —
+      several endpoints are corporate/partner-only.
+  - status: 404
+    title: Not Found
+    meaning: >-
+      Commonly a profile that cannot be returned: the user ID does not exist,
+      the user has not consented to profile retrieval, has not added the
+      Official Account as a friend, or blocked it after adding.
+    remediation: See the Consent on getting user profile information guide.
+  - status: 409
+    title: Conflict
+    meaning: >-
+      An API request with the same X-Line-Retry-Key has already been accepted.
+    remediation: >-
+      Do not retry. Read x-line-accepted-request-id to correlate with the
+      request that succeeded. For push, the body repeats sentMessages[].id and
+      quoteToken.
+  - status: 410
+    title: Gone
+    meaning: The resource is no longer available.
+  - status: 413
+    title: Payload Too Large
+    meaning: Request exceeds the maximum size of 2MB.
+    remediation: Split the request below 2MB.
+  - status: 415
+    title: Unsupported Media Type
+    meaning: Media type of the uploaded file is unsupported.
+  - status: 422
+    title: Unprocessable Entity
+    meaning: >-
+      Declared on the coupon operations in the Messaging API spec; semantic
+      validation failure on an otherwise well-formed body.
+  - status: 429
+    title: Too Many Requests
+    meaning: >-
+      Three distinct conditions share this code — endpoint rate limit exceeded,
+      concurrent-operation limit exceeded, or the monthly message quota
+      (free plus purchased additional messages) exhausted.
+    remediation: >-
+      Discriminate on the `message` string: "The API rate limit has been
+      exceeded. Try again later." vs "You have reached your monthly limit."
+      Back off exponentially for the former; check getMessageQuotaConsumption
+      for the latter.
+  - status: 500
+    title: Internal Server Error
+    meaning: Error on the internal server.
+    remediation: >-
+      Safe to retry — but only with X-Line-Retry-Key set on the original
+      request, or the retry may duplicate the message.
+error_messages:
+  - message: The request body has X error(s)
+    meaning: >-
+      JSON body validation failed. X is the error count; details[] carries the
+      per-field breakdown.
+    status: 400
+  - message: Invalid reply token
+    meaning: >-
+      The replyToken passed to replyMessage is expired or already used. Reply
+      tokens are single-use and short-lived.
+    status: 400
+  - message: "The property, XXX, in the request body is invalid (line: XXX, column: XXX)"
+    meaning: An invalid property was specified in the request body.
+    status: 400
+  - message: "The request body could not be parsed as JSON (line: XXX, column: XXX)"
+    meaning: Malformed JSON.
+    status: 400
+  - message: The content type, XXX, is not supported
+    meaning: Unsupported Content-Type on the request.
+    status: 415
+  - message: "Authentication failed due to the following reason: XXX"
+    meaning: Channel access token rejected; the reason is appended.
+    status: 401
+  - message: Access to this API is not available for your account
+    meaning: >-
+      Calling an endpoint the account or plan is not entitled to — typically a
+      corporate/partner-only endpoint.
+    status: 403
+  - message: Failed to send messages
+    meaning: >-
+      Send failed; a common cause is a user ID that does not exist.
+    status: 400
+  - message: You have reached your monthly limit.
+    meaning: >-
+      Free message allowance exhausted, or the configured maximum for
+      additional (paid) messages was reached.
+    status: 429
+    remediation: >-
+      Raise the plan or the additional-message cap in LINE Official Account
+      Manager. Note LINE's own FAQ documents cases where this fires while
+      messages appear to remain.
+  - message: The API rate limit has been exceeded. Try again later.
+    meaning: Endpoint rate limit exceeded.
+    status: 429
+    remediation: Exponential backoff; see rate-limits/line-rate-limits.yml.
+  - message: Not found
+    meaning: >-
+      Profile information unavailable — user does not exist, has not consented,
+      is not a friend, or blocked the Official Account.
+    status: 404
+related:
+  - conventions/line-conventions.yml
+  - rate-limits/line-rate-limits.yml

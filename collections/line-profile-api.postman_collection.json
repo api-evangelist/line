@@ -1,0 +1,185 @@
+{
+  "item": [
+    {
+      "id": "0ec4bd41-e466-4450-8d05-7af0665e4145",
+      "name": "Profile",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5d9e0e60-fce9-4a0d-8204-2117f2f4c04f",
+          "name": "Get user profile",
+          "request": {
+            "name": "Get user profile",
+            "description": {
+              "content": "Returns the profile information of a user who has added the LINE Official Account as a friend.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profile",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) User ID returned in a webhook event source."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4960f08-ba94-4016-8a09-fd16a93114da",
+              "name": "User profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) User ID returned in a webhook event source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": \"string\",\n  \"displayName\": \"string\",\n  \"pictureUrl\": \"https://vILmkZktZAKaFrRUqeEhOjPZerNTR.tnqTxFUhafWcwI7Oy.\",\n  \"statusMessage\": \"string\",\n  \"language\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "027bbd9e-a059-42ae-bd56-2b7628542c74",
+              "name": "User not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) User ID returned in a webhook event source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.line.me/v2/bot",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5a0f9b4e-3cbe-4238-ae5e-759c3ae4152a",
+    "name": "LINE Messaging Channel Profile API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Partial OpenAPI 3.1 representation of the LINE Messaging API. LINE provides\npublic APIs for chatbots and Official Accounts. Authentication uses Bearer\nchannel access tokens issued per LINE channel. The authoritative OpenAPI\ndocuments are maintained by LINE at\nhttps://github.com/line/line-openapi (messaging-api.yml, webhook.yml,\nchannel-access-token.yml, liff.yml, insight.yml, manage-audience.yml,\nshop.yml).\n\n\nContact Support:\n Name: LINE Developers",
+      "type": "text/plain"
+    }
+  }
+}

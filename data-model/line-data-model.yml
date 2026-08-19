@@ -1,0 +1,222 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/line-messaging-api-openapi.yml,
+  openapi/line-manage-audience-openapi.yml,
+  openapi/line-insight-openapi.yml, openapi/line-liff-openapi.yml,
+  openapi/line-webhook-openapi.yml — all harvested verbatim from
+  github.com/line/line-openapi. Entities and relationships are read from
+  components.schemas $ref links and id-reference fields; nothing is inferred
+  beyond what the specs declare.
+description: >-
+  The LINE platform data model is anchored on the Channel, not on an account or
+  an organization. A channel owns the credential, the quota, the rate-limit
+  bucket, the webhook endpoint and every object below it. User identity is
+  pairwise-scoped to the channel, which is the single most consequential fact
+  in the model: the same human has a different userId in every channel, so user
+  records cannot be joined across channels.
+summary:
+  entities: 18
+  schema_count_messaging_api: 203
+  schema_count_webhook: 60
+  schema_count_total: 343
+entities:
+  - name: Channel
+    description: >-
+      The unit of API access. Issues the channel access token, owns the message
+      quota and rate-limit buckets, and holds the webhook endpoint
+      configuration. Not represented as a schema — it is the implicit root
+      every operation is scoped to.
+    identifier: channel ID (with channel secret)
+    represented_by: BotInfoResponse
+    surfaced_by: [getBotInfo, getWebhookEndpoint, setWebhookEndpoint]
+  - name: User
+    schema: UserProfileResponse
+    identifier: userId
+    fields: [userId, displayName, pictureUrl, statusMessage, language]
+    note: >-
+      userId is pairwise per channel. A user only becomes addressable after
+      adding the Official Account as a friend or sending a message.
+    surfaced_by: [getProfile, getFollowers]
+  - name: Group
+    schema: GroupSummaryResponse
+    identifier: groupId
+    fields: [groupId, groupName, pictureUrl]
+    surfaced_by: [getGroupSummary, getGroupMemberCount, getGroupMembersIds, leaveGroup]
+  - name: Room
+    identifier: roomId
+    note: Multi-person chat without a group identity; no summary schema is published.
+    surfaced_by: [getRoomMemberCount, getRoomMembersIds, getRoomMemberProfile, leaveRoom]
+  - name: GroupMemberProfile
+    schema: GroupUserProfileResponse
+    identifier: userId
+    fields: [userId, displayName, pictureUrl]
+  - name: RoomMemberProfile
+    schema: RoomUserProfileResponse
+    identifier: userId
+  - name: Message
+    schema: Message (polymorphic — text, sticker, image, video, audio, location, imagemap, template, flex)
+    note: >-
+      A request-side value object, not a stored entity. Discriminated on `type`;
+      the send operations accept up to five per request.
+  - name: SentMessage
+    schema: SentMessage
+    identifier: id
+    fields: [id, quoteToken]
+    note: >-
+      The only server-assigned message identity returned to the caller. The
+      quoteToken is what makes a later message a reply-quote of this one.
+  - name: RichMenu
+    schema: RichMenuResponse
+    identifier: richMenuId
+    fields: [richMenuId, size, selected, name, chatBarText, areas]
+    surfaced_by: [createRichMenu, getRichMenu, getRichMenuList, deleteRichMenu]
+  - name: RichMenuAlias
+    schema: RichMenuAliasResponse
+    identifier: richMenuAliasId
+    fields: [richMenuAliasId, richMenuId]
+  - name: AudienceGroup
+    schema: AudienceGroup (manage-audience)
+    identifier: audienceGroupId
+    fields: [audienceGroupId, type, description, status, audienceCount, created, permission, isIfaAudience]
+    surfaced_by: [createAudienceGroup, getAudienceData, getAudienceGroups, deleteAudienceGroup]
+  - name: AudienceGroupJob
+    schema: AudienceGroupJob
+    identifier: audienceGroupJobId
+    fields: [audienceGroupJobId, audienceGroupId, type, jobStatus, failedType, audienceCount, created]
+    note: >-
+      Jobs in QUEUED or WORKING state count against the per-audience
+      concurrency limit of 10.
+  - name: Membership
+    schema: Membership
+    identifier: membershipId
+    surfaced_by: [getMembershipList, getMembershipSubscription, getJoinedMembershipUsers]
+  - name: Coupon
+    schema: CouponResponse
+    identifier: couponId
+    surfaced_by: [createCoupon, getCouponDetail, listCoupon, closeCoupon]
+  - name: LiffApp
+    schema: LiffApp (liff)
+    identifier: liffId
+    fields: [liffId, view, description, features, permanentLinkPattern, scope, botPrompt]
+    surfaced_by: [addLIFFApp, getAllLIFFApps, updateLIFFApp, deleteLIFFApp]
+  - name: Module
+    schema: Bot (module)
+    identifier: basicId / channel
+    surfaced_by: [getModules, detachModule, acquireChatControl, releaseChatControl]
+  - name: WebhookEvent
+    schema: Event (webhook — polymorphic across 20+ event types)
+    identifier: webhookEventId
+    fields: [type, mode, timestamp, source, webhookEventId, deliveryContext, replyToken]
+    note: >-
+      Inbound only. The replyToken is single-use and short-lived; it is the
+      link between an inbound event and replyMessage.
+    see: asyncapi/line-messaging-webhook.yml
+  - name: Emoji
+    schema: Emoji
+    identifier: productId + emojiId
+    note: Composite key — LINE emoji are addressed by product set plus member ID.
+relationships:
+  - from: Channel
+    to: User
+    type: has_many
+    via: getFollowers → userIds[]
+    note: Only friends of the Official Account are enumerable.
+  - from: Channel
+    to: RichMenu
+    type: has_many
+    via: getRichMenuList
+  - from: Channel
+    to: AudienceGroup
+    type: has_many
+    via: getAudienceGroups
+  - from: Channel
+    to: LiffApp
+    type: has_many
+    via: getAllLIFFApps
+    note: LIFF apps belong to a LINE Login channel, not a Messaging API channel.
+  - from: Channel
+    to: Coupon
+    type: has_many
+    via: listCoupon
+  - from: Channel
+    to: Membership
+    type: has_many
+    via: getMembershipList
+  - from: RichMenuAlias
+    to: RichMenu
+    type: belongs_to
+    via: richMenuId
+  - from: User
+    to: RichMenu
+    type: has_one
+    via: getRichMenuIdOfUser → richMenuId
+    note: >-
+      Per-user override of the channel default; linked and unlinked
+      individually or in bulk.
+  - from: Group
+    to: User
+    type: has_many
+    via: getGroupMembersIds → memberIds[]
+  - from: Room
+    to: User
+    type: has_many
+    via: getRoomMembersIds → memberIds[]
+  - from: AudienceGroup
+    to: AudienceGroupJob
+    type: has_many
+    via: getAudienceData → jobs[]
+  - from: AudienceGroupJob
+    to: AudienceGroup
+    type: belongs_to
+    via: audienceGroupId
+  - from: Membership
+    to: User
+    type: has_many
+    via: getJoinedMembershipUsers → userIds[]
+  - from: User
+    to: Membership
+    type: has_one
+    via: getMembershipSubscription → subscriptions[].membershipId
+  - from: WebhookEvent
+    to: User
+    type: belongs_to
+    via: source.userId
+  - from: WebhookEvent
+    to: Group
+    type: belongs_to
+    via: source.groupId
+  - from: WebhookEvent
+    to: Room
+    type: belongs_to
+    via: source.roomId
+  - from: SentMessage
+    to: Message
+    type: belongs_to
+    via: request body messages[] index
+  - from: Narrowcast
+    to: AudienceGroup
+    type: references
+    via: recipient.audienceGroupId
+    note: >-
+      The join that makes Manage Audience worth having — a narrowcast targets
+      an audienceGroupId built by the Manage Audience API.
+  - from: Insight
+    to: RichMenu
+    type: references
+    via: getRichMenuInsightSummary/{richMenuId}
+id_conventions:
+  user_id: >-
+    Opaque string, pairwise per channel, prefixed "U" in LINE's own examples.
+    Not portable across channels or between LINE Login and the Messaging API
+    unless the channels are in the same provider with account linking.
+  group_id: Opaque string, prefixed "C" in LINE's examples.
+  room_id: Opaque string, prefixed "R" in LINE's examples.
+  rich_menu_id: Opaque string, prefixed "richmenu-".
+  audience_group_id: Numeric (int64).
+  liff_id: Composite "{channelId}-{suffix}".
+  message_id: Numeric string assigned per delivered message.
+note: >-
+  The polymorphic Message and Event hierarchies are where the schema count
+  comes from — 203 schemas in messaging-api and 60 in webhook, most of them
+  message-object and event-object variants rather than distinct entities.

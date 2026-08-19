@@ -1,0 +1,130 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Live unauthenticated GET probes of /.well-known/* on every apis.yml baseURL
+  host, every OpenAPI servers[] host, and the docs/console host.
+summary:
+  hosts_probed: 6
+  paths_probed: 7
+  documents_found: 2
+  note: >-
+    Two real documents were served: an RFC 9116 security.txt at the corporate
+    root (line.me) and an OpenID Connect discovery document at access.line.me,
+    the LINE Login authorization host. The API host api.line.me serves a clean
+    404 for every /.well-known/* path — no api-catalog, no OAuth authorization
+    server metadata, no agent card. developers.line.biz answers 403 with an
+    HTML shell for every /.well-known/* path (CDN edge rule, not a document).
+hosts:
+  - host: https://line.me
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        file: line-security.txt
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://access.line.me
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: application/json
+        file: line-openid-configuration.json
+        note: >-
+          LINE Login v2.1 OIDC discovery. issuer https://access.line.me,
+          scopes_supported [openid, profile, email], PKCE S256,
+          id_token_signing_alg ES256, subject_types pairwise. Feeds
+          scopes/line-scopes.yml and authentication/line-authentication.yml.
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+  - host: https://api.line.me
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://api-data.line.me
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://manager.line.biz
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://developers.line.biz
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+        content_type: text/html
+        note: >-
+          HTML shell, not a document. The docs host answers 403 with the Nuxt
+          app shell for every /.well-known/* path; treated as a miss.
+      - path: /.well-known/openid-configuration
+        status: 403
+        note: HTML shell — miss.
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+        note: HTML shell — miss.
+      - path: /.well-known/api-catalog
+        status: 403
+        note: HTML shell — miss.
+      - path: /.well-known/ai-plugin.json
+        status: 403
+        note: HTML shell — miss.
+      - path: /.well-known/agent-card.json
+        status: 403
+        note: HTML shell — miss.
+      - path: /.well-known/agent.json
+        status: 403
+        note: HTML shell — miss.
+gaps:
+  - >-
+    No /.well-known/api-catalog (RFC 9727) on any host, so the nine published
+    OpenAPI documents in github.com/line/line-openapi are not discoverable from
+    the API host itself.
+  - >-
+    No /.well-known/oauth-authorization-server (RFC 8414) at access.line.me,
+    even though the OIDC discovery document is served there.
+  - >-
+    No A2A agent card at either the canonical or legacy path on any host.

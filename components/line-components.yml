@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.line.biz/en/docs/liff/,
+  https://developers.line.biz/en/docs/line-social-plugins/,
+  https://developers.line.biz/en/docs/line-mini-app/ and the llms.txt index at
+  https://developers.line.biz/llms.txt
+description: >-
+  Client-side and embeddable surfaces LINE publishes for running inside its own
+  app or on a third-party website. These are distinct from the server SDKs in
+  packages/ — they render UI or host an application rather than calling the
+  API.
+families:
+  - family: LIFF (LINE Front-end Framework)
+    description: >-
+      A web application platform that runs inside the LINE client's in-app
+      browser. A LIFF app can read the logged-in user's profile, obtain an ID
+      token, send messages into the current chat, scan a code, and share
+      target-picker messages — capabilities a plain web page cannot reach.
+    docs: https://developers.line.biz/en/docs/liff/
+    loader:
+      cdn_edge: https://static.line-scdn.net/liff/edge/2/sdk.js
+      cdn_pinned: https://static.line-scdn.net/liff/edge/versions/2.29.2/sdk.js
+      npm: "@line/liff"
+      version: 2.29.2
+      published: '2026-07-30'
+      note: >-
+        The edge path floats to the latest v2 MINOR/PATCH automatically; the
+        fixed path pins an exact version and must be bumped by hand.
+    server_api: openapi/line-liff-openapi.yml
+    tooling:
+      - "@line/liff-mock — mocks LIFF APIs for local testing"
+      - "@line/liff-inspector — DevTools for the LIFF WebView"
+      - "@line/liff-cli — manage LIFF apps and serve one locally over HTTPS"
+      - create-liff-app — project scaffolding
+  - family: LINE MINI App
+    description: >-
+      A LIFF-based application distributed inside LINE with no download step,
+      subject to a LINE review process before it can be published as a verified
+      MINI App.
+    docs: https://developers.line.biz/en/docs/line-mini-app/
+    built_on: LIFF
+  - family: LINE Social Plugins
+    description: >-
+      Drop-in buttons for third-party websites and blogs — Share, Like and Add
+      friend — that connect a page to LINE without any server integration.
+    docs: https://developers.line.biz/en/docs/line-social-plugins/
+    release_notes: https://developers.line.biz/en/docs/line-social-plugins/resources/release-notes/
+    components:
+      - name: Share button
+        purpose: Share the current page into a LINE chat.
+      - name: Like button
+        purpose: Like the page from LINE.
+      - name: Add friend button
+        purpose: Add the site's LINE Official Account as a friend.
+  - family: LINE Login button
+    description: >-
+      Branded sign-in button and the LINE Login web/mobile flow rendered by
+      LINE's own hosted authorization page at access.line.me.
+    docs: https://developers.line.biz/en/docs/line-login/
+    branding: https://developers.line.biz/en/docs/line-login/login-button/
+  - family: Rich menu
+    description: >-
+      A server-configured, tappable UI surface rendered inside the LINE chat
+      room beneath the input bar — an embedded interface owned by the API
+      rather than by the developer's front end. Created, imaged, aliased and
+      linked entirely through the Messaging API.
+    docs: https://developers.line.biz/en/docs/messaging-api/using-rich-menus/
+    backing_operations:
+      - createRichMenu
+      - setRichMenuImage
+      - setDefaultRichMenu
+      - linkRichMenuIdToUser
+      - richMenuBatch
+      - createRichMenuAlias
+  - family: Flex Message
+    description: >-
+      A JSON-defined, declaratively laid-out message component rendered by the
+      LINE client — bubbles and carousels composed of box/text/image/button
+      components. Effectively a UI framework delivered over the messaging
+      channel.
+    docs: https://developers.line.biz/en/docs/messaging-api/using-flex-messages/
+    simulator: https://developers.line.biz/flex-simulator/
+    backing_operations:
+      - replyMessage
+      - pushMessage
+      - broadcast
+      - narrowcast
+mobile_sdks:
+  note: >-
+    Native LINE Login SDKs are catalogued in packages/line-packages.yml under
+    mobile_sdks — iOS (Swift), Android, Unity and Flutter.

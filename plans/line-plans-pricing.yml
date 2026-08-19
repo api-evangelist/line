@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.line.biz/en/docs/messaging-api/pricing/
+docs: https://developers.line.biz/en/docs/messaging-api/pricing/
+summary:
+  plan_count: 3
+  currency: JPY
+  billing_period: monthly
+  model: >-
+    Subscription plan on the LINE Official Account, priced on messages sent —
+    not on API calls. Every plan includes a monthly allowance of free messages;
+    only the top plan permits paid overage. API access itself is free and
+    self-serve; the meter is the message.
+  region_note: >-
+    Plans and prices vary by country. The tiers below are the Japan plans LINE
+    publishes as the worked example in the developer documentation; Taiwan,
+    Thailand and other regions have their own plan tables at the regional
+    linebiz sites.
+plans:
+  - name: Communication Plan
+    price: 0
+    currency: JPY
+    period: month
+    included_quota:
+      messages: 200
+      unit: messages per month
+    overage: none
+    limits:
+      - Additional (paid) messages cannot be sent on this plan.
+    note: Free tier. Excludes tax.
+  - name: Light Plan
+    price: 5000
+    currency: JPY
+    period: month
+    included_quota:
+      messages: 5000
+      unit: messages per month
+    overage: none
+    limits:
+      - Additional (paid) messages cannot be sent on this plan.
+    note: Excludes tax.
+  - name: Standard Plan
+    price: 15000
+    currency: JPY
+    period: month
+    included_quota:
+      messages: 30000
+      unit: messages per month
+    overage:
+      price_up_to: 3
+      currency: JPY
+      unit: per additional message
+      note: >-
+        Up to JPY 3 per message; the unit price decreases as volume rises. A
+        maximum number of additional messages must be set in the LINE Official
+        Account Manager before overage sends are permitted.
+    limits:
+      - >-
+        Overage must be explicitly enabled and capped by the account owner in
+        LINE Official Account Manager (https://manager.line.biz/).
+    note: Excludes tax.
+metering:
+  counted_by: recipients, not requests
+  detail: >-
+    One push to a five-person chat with four message objects counts as five
+    messages. Message-object count in a request does not affect the meter.
+    Messages to users who blocked the Official Account, or to non-existent user
+    IDs, are not counted.
+  counted_sending_methods:
+    - pushMessage
+    - multicast
+    - broadcast
+    - narrowcast
+  uncounted_sending_methods:
+    - replyMessage
+  observable_via:
+    - getMessageQuota
+    - getMessageQuotaConsumption
+  on_exhaustion: >-
+    429 Too Many Requests with message "You have reached your monthly limit."
+regional_pricing:
+  - region: Japan
+    url: https://www.lycbiz.com/jp/service/line-official-account/plan/
+  - region: Taiwan
+    url: https://tw.linebiz.com/service/account-solutions/line-official-account/
+  - region: Thailand
+    url: https://lineforbusiness.com/th/service/line-oa-features/broadcast-message
+  - region: Other
+    url: https://www.lycbiz.jp/en/other/

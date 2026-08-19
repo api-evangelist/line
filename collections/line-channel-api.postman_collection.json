@@ -1,0 +1,215 @@
+{
+  "item": [
+    {
+      "id": "accce21a-3923-40f9-ab00-9c6a32b6fd4c",
+      "name": "Channel",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04999de0-ad21-493a-8af1-e3f1e12c5e86",
+          "name": "Get webhook endpoint information",
+          "request": {
+            "name": "Get webhook endpoint information",
+            "description": {
+              "content": "Returns the webhook endpoint URL configured for the channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "channel",
+                "webhook",
+                "endpoint"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2113e130-08d7-4f0c-963d-27e15e96cbcf",
+              "name": "Webhook endpoint information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channel",
+                    "webhook",
+                    "endpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"endpoint\": \"http://NvfIVDZBdZNZHoLEjPBdpEXmlmaGOZwzL.dzlIz-YP7ZvtHBOjLtpSG+37PGbiPp\",\n  \"active\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "115acbcc-9f00-463a-8c97-9e4acafc81dc",
+          "name": "Set webhook endpoint URL",
+          "request": {
+            "name": "Set webhook endpoint URL",
+            "description": {},
+            "url": {
+              "path": [
+                "channel",
+                "webhook",
+                "endpoint"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0e8674a0-4e5a-4e28-811b-b44a8e2b35a9",
+              "name": "Endpoint updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channel",
+                    "webhook",
+                    "endpoint"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.line.me/v2/bot",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fe6defe5-a8ac-4bbd-9466-b4ea76125ed5",
+    "name": "LINE Messaging Channel API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Partial OpenAPI 3.1 representation of the LINE Messaging API. LINE provides\npublic APIs for chatbots and Official Accounts. Authentication uses Bearer\nchannel access tokens issued per LINE channel. The authoritative OpenAPI\ndocuments are maintained by LINE at\nhttps://github.com/line/line-openapi (messaging-api.yml, webhook.yml,\nchannel-access-token.yml, liff.yml, insight.yml, manage-audience.yml,\nshop.yml).\n\n\nContact Support:\n Name: LINE Developers",
+      "type": "text/plain"
+    }
+  }
+}

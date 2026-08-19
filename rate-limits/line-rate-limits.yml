@@ -1,0 +1,134 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.line.biz/en/reference/messaging-api/#rate-limits
+docs: https://developers.line.biz/en/reference/messaging-api/
+summary:
+  limit_count: 9
+  scope: per-endpoint, per-channel
+  algorithm: token bucket
+  exhaustion_status: 429
+  response_headers_published: false
+  retry_after: false
+  note: >-
+    LINE documents a per-endpoint rate limit table but returns no rate-limit
+    response headers of any kind — no RateLimit-*, no X-RateLimit-*, no
+    Retry-After. An agent gets no runtime budget signal; it learns it is over
+    the line only by receiving 429 Too Many Requests. This is the single
+    largest runtime-semantics gap on the platform.
+scope_rules:
+  - Limits apply per API function (endpoint) on a per-channel basis.
+  - Same URL with a different HTTP method counts as a different endpoint.
+  - >-
+    Limits ignore URL parameter values and request body contents — all calls to
+    one endpoint share one bucket.
+  - Limits ignore source IP address.
+  - >-
+    Two channels attached to the same LINE Official Account are limited
+    independently.
+limits:
+  - scope: per-channel-per-endpoint
+    window: 1 hour
+    limit: 60
+    endpoints:
+      - narrowcast
+      - broadcast
+      - getNumberOfMessageDeliveries
+      - getNumberOfFollowers
+      - getFriendsDemographics
+      - getMessageEvent
+      - getStatisticsPerUnit
+      - getRichMenuInsightSummary
+      - getRichMenuInsightDaily
+      - testWebhookEndpoint
+  - scope: per-channel-per-endpoint
+    window: 1 minute
+    limit: 60
+    endpoints:
+      - createAudienceGroup
+      - createAudienceForUploadingUserIds
+      - addAudienceToAudienceGroup
+      - addUserIdsToAudience
+      - createClickBasedAudienceGroup
+      - createImpBasedAudienceGroup
+      - updateAudienceGroupDescription
+      - deleteAudienceGroup
+      - getAudienceData
+      - getAudienceGroups
+      - getSharedAudienceData
+      - getSharedAudienceGroups
+  - scope: per-channel-per-endpoint
+    window: 1 minute
+    limit: 1000
+    endpoints:
+      - setWebhookEndpoint
+      - getWebhookEndpoint
+  - scope: per-channel-per-endpoint
+    window: 1 hour
+    limit: 100
+    endpoints:
+      - createRichMenu
+      - deleteRichMenu
+      - deleteRichMenuAlias
+      - getRichMenuBatchProgress
+    note: >-
+      Creating and deleting rich menus through the LINE Official Account
+      Manager UI is not counted against this limit.
+  - scope: per-channel-per-endpoint
+    window: 1 hour
+    limit: 3
+    endpoints:
+      - richMenuBatch
+  - scope: per-channel-per-endpoint
+    window: 1 second
+    limit: 10
+    endpoints:
+      - getRichMenuList
+  - scope: per-channel-per-endpoint
+    window: 1 second
+    limit: 200
+    endpoints:
+      - multicast
+      - getMembershipSubscription
+      - getMembershipList
+      - createCoupon
+      - closeCoupon
+      - listCoupon
+      - getCouponDetail
+  - scope: per-channel-per-endpoint
+    window: 1 second
+    limit: 100
+    endpoints:
+      - showLoadingAnimation
+  - scope: per-channel-per-endpoint
+    window: 1 second
+    limit: 370
+    endpoints:
+      - issueStatelessChannelToken
+  - scope: per-channel-per-endpoint
+    window: 1 second
+    limit: 2000
+    endpoints:
+      - all other endpoints
+    note: Default limit for every Messaging API endpoint not named above.
+concurrency_limits:
+  - scope: per audienceGroupId
+    max_concurrent: 10
+    operations:
+      - createAudienceGroup
+      - createAudienceForUploadingUserIds
+      - addAudienceToAudienceGroup
+      - addUserIdsToAudience
+    observable_via: >-
+      getAudienceData — jobs[].jobStatus of QUEUED or WORKING counts toward the
+      concurrency total.
+    on_exceed: 429
+quota_limits:
+  - name: monthly message quota
+    scope: per LINE Official Account subscription plan
+    observable_via: [getMessageQuota, getMessageQuotaConsumption]
+    on_exceed: 429 with message "You have reached your monthly limit."
+    note: >-
+      A 429 on LINE can mean rate limit, concurrency limit, OR monthly message
+      quota exhaustion — three different conditions on one status code,
+      distinguishable only by the `message` string in the body.
+    see: plans/line-plans-pricing.yml

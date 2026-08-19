@@ -1,0 +1,61 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://github.com/line/liff-cli and
+  https://www.npmjs.com/package/@line/liff-cli
+name: LIFF CLI
+description: >-
+  First-party command-line tool for managing LINE Front-end Framework (LIFF)
+  apps — the only CLI LY Corporation publishes for the LINE platform. It wraps
+  the LIFF server API (openapi/line-liff-openapi.yml) plus local HTTPS
+  serving for development. There is no CLI for the Messaging API; that surface
+  is driven through the six language SDKs, the LINE Developers Console, and
+  the MCP server.
+official: true
+vendor: LY Corporation (LINE)
+repository: https://github.com/line/liff-cli
+package: "@line/liff-cli"
+registry: npm
+version: 0.5.0
+published: '2026-07-30'
+install:
+  - method: npm
+    command: npm install -g @line/liff-cli
+  - method: npx
+    command: npx @line/liff-cli
+authentication: >-
+  Channel ID and channel access token supplied to the CLI, matching the LIFF
+  server API's Bearer scheme.
+command_groups:
+  - group: app
+    purpose: Manage LIFF apps on a LINE Login channel
+    backing_operations:
+      - addLIFFApp
+      - getAllLIFFApps
+      - updateLIFFApp
+      - deleteLIFFApp
+    note: >-
+      Command names are not transcribed here because they were not read from
+      the published reference in this pass; the backing LIFF server API
+      operations above are verified present in
+      openapi/line-liff-openapi.yml.
+  - group: channel
+    purpose: Select and store the LINE Login channel the CLI operates against.
+  - group: serve
+    purpose: >-
+      Serve a local LIFF app over HTTPS with a public URL so it can be opened
+      inside the LINE client during development.
+related_tooling:
+  - name: create-liff-app
+    repository: https://github.com/line/create-liff-app
+    purpose: Scaffolding CLI for a new LIFF application.
+    official: true
+  - name: "@line/liff-inspector"
+    repository: https://github.com/line/liff-inspector
+    purpose: DevTools for the LIFF (WebView) browser.
+    official: true
+    version: 1.0.3
+    published: '2025-11-17'
+see:
+  - packages/line-packages.yml
+  - openapi/line-liff-openapi.yml

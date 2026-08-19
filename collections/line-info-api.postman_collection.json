@@ -1,0 +1,119 @@
+{
+  "item": [
+    {
+      "id": "bff8d934-d044-4c93-aa83-835ef76f0237",
+      "name": "Info",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "70248b8e-8252-455b-991f-dcc9b6e1002f",
+          "name": "Get bot info",
+          "request": {
+            "name": "Get bot info",
+            "description": {
+              "content": "Returns basic information about the bot associated with the channel access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a951b44-0024-42c4-85f3-07885e2494ea",
+              "name": "Bot info.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"userId\": \"string\",\n  \"basicId\": \"string\",\n  \"premiumId\": \"string\",\n  \"displayName\": \"string\",\n  \"pictureUrl\": \"https://jobcSohxwIePIhcXcDdrc.tgCURPBDGydaYx2GirL,eSjRk4xYzVmzSbItDGfrNNnCLCKOgU1\",\n  \"chatMode\": \"chat\",\n  \"markAsReadMode\": \"manual\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.line.me/v2/bot",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7333220a-665d-41f3-b12f-678bc4b7d7cd",
+    "name": "LINE Messaging Channel Info API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Partial OpenAPI 3.1 representation of the LINE Messaging API. LINE provides\npublic APIs for chatbots and Official Accounts. Authentication uses Bearer\nchannel access tokens issued per LINE channel. The authoritative OpenAPI\ndocuments are maintained by LINE at\nhttps://github.com/line/line-openapi (messaging-api.yml, webhook.yml,\nchannel-access-token.yml, liff.yml, insight.yml, manage-audience.yml,\nshop.yml).\n\n\nContact Support:\n Name: LINE Developers",
+      "type": "text/plain"
+    }
+  }
+}
