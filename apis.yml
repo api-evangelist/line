@@ -35,6 +35,17 @@ tags:
   - Social Login
   - Mini Apps
   - Marketing
+  - Webhook
+  - OpenID Connect
+  - Audience
+  - Analytics
+  - Japan
+tags_raw:
+  - Messaging
+  - Chatbots
+  - Social Login
+  - Mini Apps
+  - Marketing
   - Webhooks
   - OpenID Connect
   - Audience
@@ -59,6 +70,11 @@ apis:
   humanURL: https://developers.line.biz/en/docs/messaging-api/
   baseURL: https://api.line.me
   tags:
+  - Messaging
+  - Chatbots
+  - Rich Menu
+  - Webhook
+  tags_raw:
   - Messaging
   - Chatbots
   - Rich Menu
@@ -91,6 +107,9 @@ apis:
   humanURL: https://developers.line.biz/en/reference/messaging-api/#webhooks
   baseURL: https://api.line.me
   tags:
+  - Webhook
+  - Event
+  tags_raw:
   - Webhooks
   - Events
   properties:
@@ -271,6 +290,10 @@ apis:
   humanURL: https://developers.line.biz/en/docs/line-login/
   baseURL: https://api.line.me
   tags:
+  - Social Login
+  - OpenID Connect
+  - Authentication
+  tags_raw:
   - Social Login
   - OpenID Connect
   - OAuth
