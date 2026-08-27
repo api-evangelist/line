@@ -57,235 +57,14 @@ created: '2026-05-11'
 modified: '2026-08-13'
 specificationVersion: '0.23'
 apis:
-- aid: line:line-messaging-api
-  name: LINE Messaging API
-  description: >-
-    The core LINE bot API — 73 operations for replying, pushing, multicasting,
-    broadcasting and narrowcasting messages to LINE users, plus rich menus,
-    Flex messages, group and room membership, profiles, followers, message
-    quota, delivery statistics, coupons, memberships and webhook endpoint
-    configuration. Supports idempotent retries via the X-Line-Retry-Key header
-    on the four metered send operations. Binary content (message media, rich
-    menu images) is served from api-data.line.me rather than api.line.me.
-  humanURL: https://developers.line.biz/en/docs/messaging-api/
-  baseURL: https://api.line.me
-  tags:
-  - Messaging
-  - Chatbots
-  - Rich Menu
-  - Webhook
-  tags_raw:
-  - Messaging
-  - Chatbots
-  - Rich Menu
-  - Webhooks
-  properties:
-  - type: OpenAPI
-    url: openapi/line-messaging-api-openapi.yml
-  - type: Overlay
-    url: overlays/line-messaging-api-overlay.yaml
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/messaging-api/
-  - type: APIReference
-    url: https://developers.line.biz/en/reference/messaging-api/
-  - type: GettingStarted
-    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
-  - type: AsyncAPI
-    url: asyncapi/line-messaging-webhook.yml
-  - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
-- aid: line:line-webhook
-  name: LINE Messaging API Webhook
-  description: >-
-    The inbound event surface of the Messaging API, published by LINE as an
-    OpenAPI type-definition document. LINE delivers CallbackRequest envelopes
-    to the bot server's configured HTTPS endpoint, carrying an events[] array
-    of 20+ polymorphic event types (message, follow, unfollow, join, leave,
-    postback, beacon, accountLink, membership, videoPlayComplete and others)
-    over 60 component schemas. Every delivery is signed with a Base64
-    HMAC-SHA256 of the raw body in the x-line-signature header.
-  humanURL: https://developers.line.biz/en/reference/messaging-api/#webhooks
-  baseURL: https://api.line.me
-  tags:
-  - Webhook
-  - Event
-  tags_raw:
-  - Webhooks
-  - Events
-  properties:
-  - type: OpenAPI
-    url: openapi/line-webhook-openapi.yml
-  - type: AsyncAPI
-    url: asyncapi/line-messaging-webhook.yml
-  - type: Overlay
-    url: overlays/line-webhook-overlay.yaml
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
-  - type: Spectral
-    url: rules/line-asyncapi-spectral-rules.yml
-  note: >-
-    baseURL records the platform host that originates the delivery. The
-    published spec declares servers[] as https://example.com because the
-    receiving endpoint is owned by the bot developer, not by LINE.
-- aid: line:line-channel-access-token-api
-  name: LINE Channel Access Token API
-  description: >-
-    Issues, verifies and revokes the channel access tokens every other LINE
-    server API consumes. Four generations run concurrently: long-lived tokens
-    from the Developers Console, v2.0 short-lived tokens, v2.1 JWT-assertion
-    tokens that support concurrent validity and zero-downtime rotation, and v3
-    stateless 15-minute tokens. Eight operations.
-  humanURL: https://developers.line.biz/en/docs/basics/channel-access-token/
-  baseURL: https://api.line.me
-  tags:
-  - Authentication
-  - Tokens
-  properties:
-  - type: OpenAPI
-    url: openapi/line-channel-access-token-openapi.yml
-  - type: Overlay
-    url: overlays/line-channel-access-token-overlay.yaml
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/basics/channel-access-token/
-  - type: Authentication
-    url: authentication/line-authentication.yml
-- aid: line:line-insight-api
-  name: LINE Insight API
-  description: >-
-    Seven read operations returning analytics for a LINE Official Account —
-    friend demographics, number of followers, number of message deliveries by
-    day, per-request message event statistics (impressions, clicks, per-link
-    breakdown), statistics per aggregation unit, and rich menu insight totals
-    and daily series.
-  humanURL: https://developers.line.biz/en/reference/messaging-api/#get-insight
-  baseURL: https://api.line.me
-  tags:
-  - Analytics
-  - Insight
-  properties:
-  - type: OpenAPI
-    url: openapi/line-insight-openapi.yml
-  - type: Overlay
-    url: overlays/line-insight-overlay.yaml
-  - type: APIReference
-    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
-- aid: line:line-manage-audience-api
-  name: LINE Manage Audience API
-  description: >-
-    Twelve operations for building and managing the marketing audiences a
-    narrowcast targets — creating audiences from uploaded user IDs by JSON or
-    by file, click-based and impression-based audiences derived from earlier
-    sends, renaming, deleting, and reading audience data and shared Business
-    Manager audiences. Uploads are asynchronous jobs limited to ten concurrent
-    operations per audience.
-  humanURL: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
-  baseURL: https://api.line.me
-  tags:
-  - Marketing
-  - Audience
-  properties:
-  - type: OpenAPI
-    url: openapi/line-manage-audience-openapi.yml
-  - type: Overlay
-    url: overlays/line-manage-audience-overlay.yaml
-  - type: APIReference
-    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
-  note: >-
-    The by-file variants (createAudienceForUploadingUserIds,
-    addUserIdsToAudience) must be sent to https://api-data.line.me, not
-    api.line.me.
-- aid: line:line-liff-api
-  name: LIFF Server API
-  description: >-
-    Four operations for managing LINE Front-end Framework apps on a LINE Login
-    channel — add, list, update and delete LIFF apps. LIFF apps are web
-    applications that run inside the LINE client's in-app browser and can read
-    the logged-in user's profile, obtain an ID token, send messages into the
-    current chat and open the scanner.
-  humanURL: https://developers.line.biz/en/reference/liff-server/
-  baseURL: https://api.line.me
-  tags:
-  - Mini Apps
-  - LIFF
-  properties:
-  - type: OpenAPI
-    url: openapi/line-liff-openapi.yml
-  - type: Overlay
-    url: overlays/line-liff-overlay.yaml
-  - type: APIReference
-    url: https://developers.line.biz/en/reference/liff-server/
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/liff/
-  - type: CLI
-    url: cli/line-cli.yml
-- aid: line:line-module-api
-  name: LINE Module API
-  description: >-
-    Four operations for the module feature, which lets a partner-operated
-    module channel take and release chat control on behalf of a LINE Official
-    Account — detach a module, acquire chat initiative, release it, and list
-    the bots a module is attached to.
-  humanURL: https://developers.line.biz/en/docs/partner-docs/module/
-  baseURL: https://api.line.me
-  tags:
-  - Modules
-  - Partner
-  properties:
-  - type: OpenAPI
-    url: openapi/line-module-openapi.yml
-  - type: Overlay
-    url: overlays/line-module-overlay.yaml
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/partner-docs/module/
-- aid: line:line-module-attach-api
-  name: LINE Module Attach API
-  description: >-
-    A single operation that attaches a module channel to a LINE Official
-    Account and returns the resulting bot and scope grant. The only operation
-    across LINE's nine published specifications that uses HTTP Basic
-    authentication, and the only one served from manager.line.biz rather than
-    api.line.me.
-  humanURL: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
-  baseURL: https://manager.line.biz
-  tags:
-  - Modules
-  - Partner
-  properties:
-  - type: OpenAPI
-    url: openapi/line-module-attach-openapi.yml
-  - type: Overlay
-    url: overlays/line-module-attach-overlay.yaml
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
-- aid: line:line-shop-api
-  name: LINE Mission Sticker API
-  description: >-
-    A single operation for the Mission Sticker programme, granting a user a
-    sticker reward after they complete a defined mission with a corporate LINE
-    Official Account. Available only to corporate customers who have submitted
-    the required application.
-  humanURL: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
-  baseURL: https://api.line.me
-  tags:
-  - Stickers
-  - Partner
-  properties:
-  - type: OpenAPI
-    url: openapi/line-shop-openapi.yml
-  - type: Overlay
-    url: overlays/line-shop-overlay.yaml
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
 - aid: line:line-login-api
   name: LINE Login v2.1
   description: >-
-    End-user authentication and authorization over OAuth 2.0 authorization code
-    grant and OpenID Connect. Authorization runs at access.line.me; token,
-    userinfo, revocation and JWKS endpoints are on api.line.me. ID tokens are
-    ES256-signed JWTs with pairwise subject identifiers, PKCE is supported with
-    S256 only, and JARM response modes (jwt, query.jwt, form_post.jwt) are
-    accepted. Scopes are openid, profile and email. LINE publishes no OpenAPI
-    for this surface — the machine-readable contract is the OIDC discovery
+    End-user authentication and authorization over OAuth 2.0 authorization code grant and OpenID Connect.
+    Authorization runs at access.line.me; token, userinfo, revocation and JWKS endpoints are on api.line.me.
+    ID tokens are ES256-signed JWTs with pairwise subject identifiers, PKCE is supported with S256 only,
+    and JARM response modes (jwt, query.jwt, form_post.jwt) are accepted. Scopes are openid, profile and
+    email. LINE publishes no OpenAPI for this surface — the machine-readable contract is the OIDC discovery
     document.
   humanURL: https://developers.line.biz/en/docs/line-login/
   baseURL: https://api.line.me
@@ -308,7 +87,509 @@ apis:
     url: https://developers.line.biz/en/reference/line-login/
   - type: GettingStarted
     url: https://developers.line.biz/en/docs/line-login/integrate-line-login/
+- aid: line:line-channel-access-token-api
+  name: LINE Channel Access Token API
+  description: The channel-access-token API from LINE — 8 operation(s) for channel-access-token.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - channel-access-token
+  properties:
+  - type: OpenAPI
+    url: openapi/line-channel-access-token-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-dummy-api
+  name: LINE Dummy API
+  description: The dummy API from LINE — 1 operation(s) for dummy.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - dummy
+  properties:
+  - type: OpenAPI
+    url: openapi/line-dummy-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-insight-api
+  name: LINE Insight API
+  description: The insight API from LINE — 7 operation(s) for insight.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - insight
+  properties:
+  - type: OpenAPI
+    url: openapi/line-insight-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-liff-api
+  name: LINE Liff API
+  description: The liff API from LINE — 2 operation(s) for liff.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - liff
+  properties:
+  - type: OpenAPI
+    url: openapi/line-liff-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-line-module-api
+  name: LINE Line Module API
+  description: The line-module API from LINE — 4 operation(s) for line-module.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - line-module
+  properties:
+  - type: OpenAPI
+    url: openapi/line-line-module-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-line-module-attach-api
+  name: LINE Line Module Attach API
+  description: The line-module-attach API from LINE — 1 operation(s) for line-module-attach.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - line-module-attach
+  properties:
+  - type: OpenAPI
+    url: openapi/line-line-module-attach-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-manage-audience-api
+  name: LINE Manage Audience API
+  description: The manage-audience API from LINE — 8 operation(s) for manage-audience.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - manage-audience
+  properties:
+  - type: OpenAPI
+    url: openapi/line-manage-audience-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-manage-audience-blob-api
+  name: LINE Manage Audience Blob API
+  description: The manage-audience-blob API from LINE — 1 operation(s) for manage-audience-blob.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - manage-audience-blob
+  properties:
+  - type: OpenAPI
+    url: openapi/line-manage-audience-blob-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-messaging-api-api
+  name: LINE Messaging API
+  description: The messaging-api API from LINE — 61 operation(s) for messaging-api.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - messaging-api
+  properties:
+  - type: OpenAPI
+    url: openapi/line-messaging-api-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-messaging-api-blob-api
+  name: LINE Messaging API Blob API
+  description: The messaging-api-blob API from LINE — 4 operation(s) for messaging-api-blob.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - messaging-api-blob
+  properties:
+  - type: OpenAPI
+    url: openapi/line-messaging-api-blob-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
+- aid: line:line-shop-api
+  name: LINE Shop API
+  description: The shop API from LINE — 1 operation(s) for shop.
+  humanURL: https://developers.line.biz/en/docs/messaging-api/
+  baseURL: https://api.line.me
+  tags:
+  - shop
+  properties:
+  - type: OpenAPI
+    url: openapi/line-shop-api-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/
+  - type: GettingStarted
+    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+  - type: AsyncAPI
+    url: asyncapi/line-messaging-webhook.yml
+  - type: Webhooks
+    url: openapi/line-webhook-openapi.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
+  - type: Spectral
+    url: rules/line-asyncapi-spectral-rules.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/basics/channel-access-token/
+  - type: Authentication
+    url: authentication/line-authentication.yml
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#get-insight
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/messaging-api/#manage-audience-group
+  - type: APIReference
+    url: https://developers.line.biz/en/reference/liff-server/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/liff/
+  - type: CLI
+    url: cli/line-cli.yml
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/module-technical-attach-channel/
+  - type: Documentation
+    url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
 common:
+  - type: Overlay
+    url: overlays/line-messaging-api-overlay.yaml
+  - type: Overlay
+    url: overlays/line-webhook-overlay.yaml
+  - type: Overlay
+    url: overlays/line-channel-access-token-overlay.yaml
+  - type: Overlay
+    url: overlays/line-insight-overlay.yaml
+  - type: Overlay
+    url: overlays/line-manage-audience-overlay.yaml
+  - type: Overlay
+    url: overlays/line-liff-overlay.yaml
+  - type: Overlay
+    url: overlays/line-module-overlay.yaml
+  - type: Overlay
+    url: overlays/line-module-attach-overlay.yaml
+  - type: Overlay
+    url: overlays/line-shop-overlay.yaml
   - type: AgenticAccess
     url: agentic-access/line-agentic-access.yml
   - type: VulnerabilityDisclosure
