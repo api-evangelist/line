@@ -584,6 +584,9 @@ apis:
   - type: Documentation
     url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
 common:
+  - type: CapabilityMap
+    url: capabilities/line-capability-edges.yml
+    name: LINE Business Capability Map
   - type: Overlay
     url: overlays/line-messaging-api-overlay.yaml
   - type: Overlay
