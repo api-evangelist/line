@@ -1,0 +1,174 @@
+openapi: 3.2.0
+info:
+  title: LINE Messaging Messaging API Blob API
+  version: 0.0.1
+  description: This document describes LINE Messaging API.
+servers:
+- url: https://api.line.me
+security:
+- Bearer: []
+tags:
+- name: messaging-api-blob
+paths:
+  /v2/bot/message/{messageId}/content:
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-content
+      servers:
+      - url: https://api-data.line.me
+      tags:
+      - messaging-api-blob
+      operationId: getMessageContent
+      description: Download image, video, and audio data sent from users.
+      parameters:
+      - name: messageId
+        in: path
+        required: true
+        description: Message ID of video or audio
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                description: blob response
+                type: string
+                format: binary
+  /v2/bot/message/{messageId}/content/preview:
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview
+      servers:
+      - url: https://api-data.line.me
+      tags:
+      - messaging-api-blob
+      operationId: getMessageContentPreview
+      description: Get a preview image of the image or video
+      parameters:
+      - name: messageId
+        in: path
+        required: true
+        description: Message ID of image or video
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+                description: blob response
+  /v2/bot/message/{messageId}/content/transcoding:
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
+      servers:
+      - url: https://api-data.line.me
+      tags:
+      - messaging-api-blob
+      operationId: getMessageContentTranscodingByMessageId
+      description: Verify the preparation status of a video or audio for getting
+      parameters:
+      - name: messageId
+        in: path
+        required: true
+        description: Message ID of video or audio
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessageContentTranscodingResponse'
+              example:
+                status: processing
+  /v2/bot/richmenu/{richMenuId}/content:
+    get:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image
+      servers:
+      - url: https://api-data.line.me
+      tags:
+      - messaging-api-blob
+      operationId: getRichMenuImage
+      description: Download rich menu image.
+      parameters:
+      - name: richMenuId
+        in: path
+        required: true
+        description: ID of the rich menu with the image to be downloaded
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+                description: blob response
+    post:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image
+      servers:
+      - url: https://api-data.line.me
+      tags:
+      - messaging-api-blob
+      operationId: setRichMenuImage
+      description: Upload rich menu image
+      parameters:
+      - name: richMenuId
+        in: path
+        required: true
+        description: The ID of the rich menu to attach the image to
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          '*/*':
+            schema:
+              description: blob request
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    GetMessageContentTranscodingResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status
+      description: Transcoding response
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          description: 'The preparation status. One of:
+
+
+            `processing`: Preparing to get content.
+
+            `succeeded`: Ready to get the content. You can get the content sent by users.
+
+            `failed`: Failed to prepare to get the content.
+
+            '
+          enum:
+          - processing
+          - succeeded
+          - failed
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: Channel access token

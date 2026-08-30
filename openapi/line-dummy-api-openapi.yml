@@ -1,0 +1,144 @@
+openapi: 3.2.0
+info:
+  title: Webhook Type Definition Dummy API
+  description: Webhook event definition of the LINE Messaging API
+  version: 1.0.0
+servers:
+- url: https://example.com
+tags:
+- name: dummy
+paths:
+  /callback:
+    post:
+      operationId: callback
+      tags:
+      - dummy
+      description: This is the dummy endpoint to generate the model classes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallbackRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: dummy response
+                type: string
+                example: OK
+components:
+  schemas:
+    EventMode:
+      type: string
+      description: Channel state.
+      enum:
+      - active
+      - standby
+    Event:
+      description: Webhook event
+      required:
+      - type
+      - timestamp
+      - mode
+      - webhookEventId
+      - deliveryContext
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of the event
+        source:
+          $ref: '#/components/schemas/Source'
+        timestamp:
+          type: integer
+          format: int64
+          description: Time of the event in milliseconds.
+        mode:
+          $ref: '#/components/schemas/EventMode'
+        webhookEventId:
+          type: string
+          description: Webhook Event ID. An ID that uniquely identifies a webhook event. This is a string in ULID format.
+        deliveryContext:
+          $ref: '#/components/schemas/DeliveryContext'
+      discriminator:
+        propertyName: type
+        mapping:
+          message: '#/components/schemas/MessageEvent'
+          unsend: '#/components/schemas/UnsendEvent'
+          follow: '#/components/schemas/FollowEvent'
+          unfollow: '#/components/schemas/UnfollowEvent'
+          join: '#/components/schemas/JoinEvent'
+          leave: '#/components/schemas/LeaveEvent'
+          memberJoined: '#/components/schemas/MemberJoinedEvent'
+          memberLeft: '#/components/schemas/MemberLeftEvent'
+          postback: '#/components/schemas/PostbackEvent'
+          videoPlayComplete: '#/components/schemas/VideoPlayCompleteEvent'
+          beacon: '#/components/schemas/BeaconEvent'
+          accountLink: '#/components/schemas/AccountLinkEvent'
+          membership: '#/components/schemas/MembershipEvent'
+          module: '#/components/schemas/ModuleEvent'
+          activated: '#/components/schemas/ActivatedEvent'
+          deactivated: '#/components/schemas/DeactivatedEvent'
+          botSuspended: '#/components/schemas/BotSuspendedEvent'
+          botResumed: '#/components/schemas/BotResumedEvent'
+          delivery: '#/components/schemas/PnpDeliveryCompletionEvent'
+          messageEdited: '#/components/schemas/MessageEditedEvent'
+    CallbackRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#request-body
+      description: 'The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.
+
+        '
+      type: object
+      required:
+      - destination
+      - events
+      properties:
+        destination:
+          type: string
+          description: 'User ID of a bot that should receive webhook events.
+
+            The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
+
+            '
+          pattern: ^U[0-9a-f]{32}$
+          maxLength: 33
+          minLength: 33
+        events:
+          description: 'Array of webhook event objects.
+
+            The LINE Platform may send an empty array that doesn''t include a webhook event object to confirm communication.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    DeliveryContext:
+      type: object
+      description: webhook's delivery context information
+      required:
+      - isRedelivery
+      properties:
+        isRedelivery:
+          type: boolean
+          description: Whether the webhook event is a redelivered one or not.
+    Source:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#source-user
+      description: the source of the event.
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: source type
+      discriminator:
+        propertyName: type
+        mapping:
+          user: '#/components/schemas/UserSource'
+          group: '#/components/schemas/GroupSource'
+          room: '#/components/schemas/RoomSource'
