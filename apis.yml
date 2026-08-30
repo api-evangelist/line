@@ -193,6 +193,8 @@ apis:
   humanURL: https://developers.line.biz/en/docs/messaging-api/
   baseURL: https://api.line.me
   tags:
+  - Insight
+  tags_raw:
   - insight
   properties:
   - type: OpenAPI
@@ -457,6 +459,8 @@ apis:
   humanURL: https://developers.line.biz/en/docs/messaging-api/
   baseURL: https://api.line.me
   tags:
+  - Messaging API
+  tags_raw:
   - messaging-api
   properties:
   - type: OpenAPI
@@ -545,6 +549,8 @@ apis:
   humanURL: https://developers.line.biz/en/docs/messaging-api/
   baseURL: https://api.line.me
   tags:
+  - Shop
+  tags_raw:
   - shop
   properties:
   - type: OpenAPI
