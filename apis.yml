@@ -112,7 +112,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -156,7 +156,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -202,7 +202,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -246,7 +246,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -290,7 +290,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -334,7 +334,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -378,7 +378,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -422,7 +422,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -468,7 +468,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -512,7 +512,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
@@ -558,7 +558,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/line-messaging-webhook.yml
   - type: Webhooks
-    url: openapi/line-webhook-openapi.yml
+    url: openapi/_original/line-webhook-openapi.yml
   - type: Documentation
     url: https://developers.line.biz/en/docs/messaging-api/receiving-messages/
   - type: Spectral
