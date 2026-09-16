@@ -1,19 +1,15 @@
 aid: line
 name: LINE
-description: >-
-  LINE is a Japan-based messaging platform operated by LY Corporation, with
-  over 200 million monthly active users across Japan, Taiwan, Thailand and
-  Indonesia, offering messaging, payments, news and a broad ecosystem of
-  services. The LINE Developers platform exposes public APIs for building
-  chatbots and Official Accounts (Messaging API), issuing and rotating
-  credentials (Channel Access Token API), reading delivery and audience
-  analytics (Insight API), building marketing audiences (Manage Audience API),
-  running web apps inside the LINE client (LIFF), and social login via LINE
-  Login v2.1 over OAuth 2.0 and OpenID Connect. LINE publishes nine
-  first-party OpenAPI documents covering 111 operations at
-  github.com/line/line-openapi and generates all six official server SDKs from
-  them. Server API calls authenticate with a channel access token presented as
-  an HTTP Bearer credential and scoped to a single LINE channel.
+description: LINE is a Japan-based messaging platform operated by LY Corporation, with over 200 million
+  monthly active users across Japan, Taiwan, Thailand and Indonesia, offering messaging, payments, news
+  and a broad ecosystem of services. The LINE Developers platform exposes public APIs for building chatbots
+  and Official Accounts (Messaging API), issuing and rotating credentials (Channel Access Token API),
+  reading delivery and audience analytics (Insight API), building marketing audiences (Manage Audience
+  API), running web apps inside the LINE client (LIFF), and social login via LINE Login v2.1 over OAuth
+  2.0 and OpenID Connect. LINE publishes nine first-party OpenAPI documents covering 111 operations at
+  github.com/line/line-openapi and generates all six official server SDKs from them. Server API calls
+  authenticate with a channel access token presented as an HTTP Bearer credential and scoped to a single
+  LINE channel.
 type: Index
 deliveryModel:
   model: saas
@@ -42,42 +38,40 @@ accessModel:
   method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/line.png
 tags:
-  - Messaging
-  - Chatbots
-  - Social Login
-  - Mini Apps
-  - Marketing
-  - Webhook
-  - OpenID Connect
-  - Audience
-  - Analytics
-  - Japan
+- Messaging
+- Chatbots
+- Social Login
+- Mini Apps
+- Marketing
+- Webhook
+- OpenID Connect
+- Audience
+- Analytics
+- Japan
 tags_raw:
-  - Messaging
-  - Chatbots
-  - Social Login
-  - Mini Apps
-  - Marketing
-  - Webhooks
-  - OpenID Connect
-  - Audience
-  - Analytics
-  - Japan
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/apis.yml
+- Messaging
+- Chatbots
+- Social Login
+- Mini Apps
+- Marketing
+- Webhooks
+- OpenID Connect
+- Audience
+- Analytics
+- Japan
+url: https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-08-13'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: line:line-login-api
   name: LINE Login v2.1
-  description: >-
-    End-user authentication and authorization over OAuth 2.0 authorization code grant and OpenID Connect.
-    Authorization runs at access.line.me; token, userinfo, revocation and JWKS endpoints are on api.line.me.
-    ID tokens are ES256-signed JWTs with pairwise subject identifiers, PKCE is supported with S256 only,
-    and JARM response modes (jwt, query.jwt, form_post.jwt) are accepted. Scopes are openid, profile and
-    email. LINE publishes no OpenAPI for this surface — the machine-readable contract is the OIDC discovery
-    document.
+  description: End-user authentication and authorization over OAuth 2.0 authorization code grant and OpenID
+    Connect. Authorization runs at access.line.me; token, userinfo, revocation and JWKS endpoints are
+    on api.line.me. ID tokens are ES256-signed JWTs with pairwise subject identifiers, PKCE is supported
+    with S256 only, and JARM response modes (jwt, query.jwt, form_post.jwt) are accepted. Scopes are openid,
+    profile and email. LINE publishes no OpenAPI for this surface — the machine-readable contract is the
+    OIDC discovery document.
   humanURL: https://developers.line.biz/en/docs/line-login/
   baseURL: https://api.line.me
   tags:
@@ -278,7 +272,7 @@ apis:
   - type: Documentation
     url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
 - aid: line:line-line-module-api
-  name: LINE Line Module API
+  name: LINE Module API
   description: The line-module API from LINE — 4 operation(s) for line-module.
   humanURL: https://developers.line.biz/en/docs/messaging-api/
   baseURL: https://api.line.me
@@ -322,7 +316,7 @@ apis:
   - type: Documentation
     url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
 - aid: line:line-line-module-attach-api
-  name: LINE Line Module Attach API
+  name: LINE Module Attach API
   description: The line-module-attach API from LINE — 1 operation(s) for line-module-attach.
   humanURL: https://developers.line.biz/en/docs/messaging-api/
   baseURL: https://api.line.me
@@ -590,120 +584,120 @@ apis:
   - type: Documentation
     url: https://developers.line.biz/en/docs/partner-docs/mission-stickers/
 common:
-  - type: CapabilityMap
-    url: capabilities/line-capability-edges.yml
-    name: LINE Business Capability Map
-  - type: Overlay
-    url: overlays/line-messaging-api-overlay.yaml
-  - type: Overlay
-    url: overlays/line-webhook-overlay.yaml
-  - type: Overlay
-    url: overlays/line-channel-access-token-overlay.yaml
-  - type: Overlay
-    url: overlays/line-insight-overlay.yaml
-  - type: Overlay
-    url: overlays/line-manage-audience-overlay.yaml
-  - type: Overlay
-    url: overlays/line-liff-overlay.yaml
-  - type: Overlay
-    url: overlays/line-module-overlay.yaml
-  - type: Overlay
-    url: overlays/line-module-attach-overlay.yaml
-  - type: Overlay
-    url: overlays/line-shop-overlay.yaml
-  - type: AgenticAccess
-    url: agentic-access/line-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/line-vulnerability-disclosure.yml
-  - type: Security
-    url: security/line-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/line-domain-security.yml
-  - type: Authentication
-    url: authentication/line-authentication.yml
-  - type: OAuthScopes
-    url: scopes/line-scopes.yml
-  - type: Packages
-    url: packages/line-packages.yml
-  - type: SDKs
-    url: packages/line-packages.yml
-  - type: CLI
-    url: cli/line-cli.yml
-  - type: Components
-    url: components/line-components.yml
-  - type: Sandbox
-    url: sandbox/line-sandbox.yml
-  - type: Conventions
-    url: conventions/line-conventions.yml
-  - type: Idempotency
-    url: conventions/line-conventions.yml
-  - type: ErrorCatalog
-    url: errors/line-problem-types.yml
-  - type: RateLimits
-    url: rate-limits/line-rate-limits.yml
-  - type: Plans
-    url: plans/line-plans-pricing.yml
-  - type: Lifecycle
-    url: lifecycle/line-lifecycle.yml
-  - type: StatusPage
-    url: https://api.line-status.info/
-  - type: Deprecation
-    url: lifecycle/line-lifecycle.yml
-  - type: ChangeLog
-    url: changelog/line-changelog.yml
-  - type: Conformance
-    url: conformance/line-conformance.yml
-  - type: DataModel
-    url: data-model/line-data-model.yml
-  - type: WellKnown
-    url: well-known/line-well-known.yml
-  - type: SecurityTxt
-    url: well-known/line-security.txt
-  - type: MCPServer
-    name: MCP Server
-    url: https://github.com/line/line-bot-mcp-server
-  - type: MCPServer
-    name: MCP Server manifest
-    url: mcp/line-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/line-tool-crosswalk.yml
-  - type: AgentSkill
-    url: skills/_index.yml
-  - type: LLMsTxt
-    url: llms/line-llms.txt
-  - type: LlmsText
-    url: https://developers.line.biz/llms.txt
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/linecorp
-  - type: Website
-    url: https://line.me
-  - type: DeveloperPortal
-    url: https://developers.line.biz/en/
-  - type: Documentation
-    url: https://developers.line.biz/en/docs/
-  - type: APIReference
-    url: https://developers.line.biz/en/reference/messaging-api/
-  - type: GettingStarted
-    url: https://developers.line.biz/en/docs/messaging-api/getting-started/
-  - type: Support
-    url: https://developers.line.biz/en/faq/
-  - type: Blog
-    url: https://techblog.lycorp.co.jp/en/
-  - type: OpenAPI Repository
-    url: https://github.com/line/line-openapi
-  - type: GitHubOrganization
-    url: https://github.com/line
-  - type: SignUp
-    url: https://developers.line.biz/console/
-  - type: Pricing
-    url: https://developers.line.biz/en/docs/messaging-api/pricing/
-  - type: TermsOfService
-    url: https://developers.line.biz/en/terms-and-policies/
-  - type: PrivacyPolicy
-    url: https://www.lycorp.co.jp/en/company/privacypolicy/
+- type: CapabilityMap
+  url: capabilities/line-capability-edges.yml
+  name: LINE Business Capability Map
+- type: Overlay
+  url: overlays/line-messaging-api-overlay.yaml
+- type: Overlay
+  url: overlays/line-webhook-overlay.yaml
+- type: Overlay
+  url: overlays/line-channel-access-token-overlay.yaml
+- type: Overlay
+  url: overlays/line-insight-overlay.yaml
+- type: Overlay
+  url: overlays/line-manage-audience-overlay.yaml
+- type: Overlay
+  url: overlays/line-liff-overlay.yaml
+- type: Overlay
+  url: overlays/line-module-overlay.yaml
+- type: Overlay
+  url: overlays/line-module-attach-overlay.yaml
+- type: Overlay
+  url: overlays/line-shop-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/line-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/line-vulnerability-disclosure.yml
+- type: Security
+  url: security/line-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/line-domain-security.yml
+- type: Authentication
+  url: authentication/line-authentication.yml
+- type: OAuthScopes
+  url: scopes/line-scopes.yml
+- type: Packages
+  url: packages/line-packages.yml
+- type: SDKs
+  url: packages/line-packages.yml
+- type: CLI
+  url: cli/line-cli.yml
+- type: Components
+  url: components/line-components.yml
+- type: Sandbox
+  url: sandbox/line-sandbox.yml
+- type: Conventions
+  url: conventions/line-conventions.yml
+- type: Idempotency
+  url: conventions/line-conventions.yml
+- type: ErrorCatalog
+  url: errors/line-problem-types.yml
+- type: RateLimits
+  url: rate-limits/line-rate-limits.yml
+- type: Plans
+  url: plans/line-plans-pricing.yml
+- type: Lifecycle
+  url: lifecycle/line-lifecycle.yml
+- type: StatusPage
+  url: https://api.line-status.info/
+- type: Deprecation
+  url: lifecycle/line-lifecycle.yml
+- type: ChangeLog
+  url: changelog/line-changelog.yml
+- type: Conformance
+  url: conformance/line-conformance.yml
+- type: DataModel
+  url: data-model/line-data-model.yml
+- type: WellKnown
+  url: well-known/line-well-known.yml
+- type: SecurityTxt
+  url: well-known/line-security.txt
+- type: MCPServer
+  name: MCP Server
+  url: https://github.com/line/line-bot-mcp-server
+- type: MCPServer
+  name: MCP Server manifest
+  url: mcp/line-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/line-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/line-llms.txt
+- type: LlmsText
+  url: https://developers.line.biz/llms.txt
+- type: LinkedIn
+  url: https://www.linkedin.com/company/linecorp
+- type: Website
+  url: https://line.me
+- type: DeveloperPortal
+  url: https://developers.line.biz/en/
+- type: Documentation
+  url: https://developers.line.biz/en/docs/
+- type: APIReference
+  url: https://developers.line.biz/en/reference/messaging-api/
+- type: GettingStarted
+  url: https://developers.line.biz/en/docs/messaging-api/getting-started/
+- type: Support
+  url: https://developers.line.biz/en/faq/
+- type: Blog
+  url: https://techblog.lycorp.co.jp/en/
+- type: OpenAPI Repository
+  url: https://github.com/line/line-openapi
+- type: GitHubOrganization
+  url: https://github.com/line
+- type: SignUp
+  url: https://developers.line.biz/console/
+- type: Pricing
+  url: https://developers.line.biz/en/docs/messaging-api/pricing/
+- type: TermsOfService
+  url: https://developers.line.biz/en/terms-and-policies/
+- type: PrivacyPolicy
+  url: https://www.lycorp.co.jp/en/company/privacypolicy/
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
 x-enrichment:
   date: '2026-08-13'
   status: enriched
