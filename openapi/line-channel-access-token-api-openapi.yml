@@ -19,9 +19,7 @@ paths:
 
         unlike the other token types.
 
-        The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
-
-        '
+        The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.'
       requestBody:
         required: true
         content:
@@ -41,6 +39,8 @@ paths:
                 token_type: Bearer
                 access_token: eyJhbGciOiJIUz.....
                 expires_in: 899
+      summary: Issue stateless channel token
+      x-summary-source: derived
   /oauth2/v2.1/tokens/kid:
     get:
       externalDocs:
@@ -77,6 +77,8 @@ paths:
                 - FHGanaP79smDxxxxyPrVw
                 - CguB-0kxxxxdSM3A5Q_UtQ
                 - G82YP96jhHwyKSxxxx7IFA
+      summary: Gets all valid channel access token key ids
+      x-summary-source: derived
   /oauth2/v2.1/token:
     post:
       externalDocs:
@@ -118,6 +120,8 @@ paths:
                 token_type: Bearer
                 expires_in: 2592000
                 key_id: sDTOzw5wIfxxxxPEzcmeQA
+      summary: Issue channel token by JWT
+      x-summary-source: derived
   /oauth2/v2.1/verify:
     get:
       externalDocs:
@@ -144,6 +148,8 @@ paths:
                 client_id: '1573163733'
                 expires_in: 2591659
                 scope: profile chat_message.write
+      summary: Verify channel token by JWT
+      x-summary-source: derived
   /oauth2/v2.1/revoke:
     post:
       externalDocs:
@@ -176,6 +182,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Revoke channel token by JWT
+      x-summary-source: derived
   /v2/oauth/accessToken:
     post:
       externalDocs:
@@ -226,6 +234,8 @@ paths:
               example:
                 error: invalid_request
                 error_description: some parameters missed or invalid
+      summary: Issue channel token
+      x-summary-source: derived
   /v2/oauth/verify:
     post:
       externalDocs:
@@ -258,6 +268,8 @@ paths:
                 client_id: '1350031035'
                 expires_in: 3138007490
                 scope: P CM
+      summary: Verify channel token
+      x-summary-source: derived
   /v2/oauth/revoke:
     post:
       externalDocs:
@@ -282,20 +294,35 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Revoke channel token
+      x-summary-source: derived
 components:
   schemas:
-    ErrorResponse:
+    IssueShortLivedChannelAccessTokenResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
-      description: Error response of the Channel access token
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
+      description: Issued short-lived channel access token
+      required:
+      - access_token
+      - expires_in
+      - token_type
       type: object
       properties:
-        error:
-          description: Error summary
+        access_token:
           type: string
-        error_description:
-          description: Details of the error. Not returned in certain situations.
+          description: 'A short-lived channel access token. Valid for 30 days.
+
+            Note: Channel access tokens cannot be refreshed.
+
+            '
+        expires_in:
+          type: integer
+          format: int32
+          description: Time until channel access token expires in seconds from time the token is issued.
+        token_type:
           type: string
+          default: Bearer
+          description: Token type. The value is always `Bearer`.
     IssueStatelessChannelTokenByClientSecretRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
@@ -317,19 +344,6 @@ components:
         client_secret:
           type: string
           description: Channel secret.
-    ChannelAccessTokenKeyIdsResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1
-      description: Channel access token key IDs
-      required:
-      - kids
-      type: object
-      properties:
-        kids:
-          description: Array of channel access token key IDs.
-          type: array
-          items:
-            type: string
     VerifyChannelAccessTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
@@ -372,31 +386,6 @@ components:
         client_assertion:
           type: string
           description: A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
-    IssueShortLivedChannelAccessTokenResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
-      description: Issued short-lived channel access token
-      required:
-      - access_token
-      - expires_in
-      - token_type
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: 'A short-lived channel access token. Valid for 30 days.
-
-            Note: Channel access tokens cannot be refreshed.
-
-            '
-        expires_in:
-          type: integer
-          format: int32
-          description: Time until channel access token expires in seconds from time the token is issued.
-        token_type:
-          type: string
-          default: Bearer
-          description: Token type. The value is always `Bearer`.
     IssueStatelessChannelAccessTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
@@ -424,6 +413,19 @@ components:
           type: string
           default: Bearer
           description: Token type. The value is always `Bearer`.
+    ChannelAccessTokenKeyIdsResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1
+      description: Channel access token key IDs
+      required:
+      - kids
+      type: object
+      properties:
+        kids:
+          description: Array of channel access token key IDs.
+          type: array
+          items:
+            type: string
     IssueChannelAccessTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
@@ -451,3 +453,15 @@ components:
         key_id:
           type: string
           description: Unique key ID for identifying the channel access token.
+    ErrorResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
+      description: Error response of the Channel access token
+      type: object
+      properties:
+        error:
+          description: Error summary
+          type: string
+        error_description:
+          description: Details of the error. Not returned in certain situations.
+          type: string

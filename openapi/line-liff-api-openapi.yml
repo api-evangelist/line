@@ -139,9 +139,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#delete-liff-app
       summary: Delete LIFF app from a channel
-      description: 'Deletes a LIFF app from a channel.
-
-        '
+      description: Deletes a LIFF app from a channel.
       tags:
       - liff
       responses:
@@ -162,6 +160,69 @@ paths:
             '
 components:
   schemas:
+    GetAllLiffAppsResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
+      type: object
+      properties:
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiffApp'
+    LiffApp:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
+      type: object
+      properties:
+        liffId:
+          type: string
+          description: LIFF app ID
+        view:
+          $ref: '#/components/schemas/LiffView'
+        description:
+          type: string
+          description: Name of the LIFF app
+        features:
+          $ref: '#/components/schemas/LiffFeatures'
+        permanentLinkPattern:
+          type: string
+          description: 'How additional information in LIFF URLs is handled. concat is returned.
+
+            '
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiffScope'
+        botPrompt:
+          $ref: '#/components/schemas/LiffBotPrompt'
+    UpdateLiffAppRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/UpdateLiffView'
+        description:
+          type: string
+          description: 'Name of the LIFF app.
+
+
+            The LIFF app name can''t include "LINE" or similar strings, or inappropriate strings.
+
+            '
+        features:
+          $ref: '#/components/schemas/LiffFeatures'
+        permanentLinkPattern:
+          type: string
+          description: 'How additional information in LIFF URLs is handled. Specify `concat`.
+
+            '
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiffScope'
+        botPrompt:
+          $ref: '#/components/schemas/LiffBotPrompt'
     AddLiffAppRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
@@ -184,87 +245,6 @@ components:
         permanentLinkPattern:
           type: string
           description: 'How additional information in LIFF URLs is handled. Specify `concat`.
-
-            '
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiffScope'
-        botPrompt:
-          $ref: '#/components/schemas/LiffBotPrompt'
-    LiffScope:
-      type: string
-      enum:
-      - openid
-      - email
-      - profile
-      - chat_message.write
-      description: 'Array of scopes required for some LIFF SDK methods to function.
-
-        The default value is `["profile", "chat_message.write"]`.
-
-
-        '
-    LiffView:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
-      type: object
-      required:
-      - type
-      - url
-      properties:
-        type:
-          description: 'Size of the LIFF app view. Specify one of these values:
-
-            - compact
-
-            - tall
-
-            - full
-
-            '
-          type: string
-          enum:
-          - compact
-          - tall
-          - full
-        url:
-          type: string
-          format: uri
-          description: 'Endpoint URL. This is the URL of the web app that implements the LIFF app
-
-            (e.g. https://example.com).
-
-            Used when the LIFF app is launched using the LIFF URL.
-
-            The URL scheme must be https. URL fragments (#URL-fragment) can''t be specified.
-
-            '
-        moduleMode:
-          type: boolean
-          description: '`true` to use the LIFF app in modular mode.
-
-            When in modular mode, the action button in the header is not displayed.
-
-            '
-    LiffApp:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
-      type: object
-      properties:
-        liffId:
-          type: string
-          description: LIFF app ID
-        view:
-          $ref: '#/components/schemas/LiffView'
-        description:
-          type: string
-          description: Name of the LIFF app
-        features:
-          $ref: '#/components/schemas/LiffFeatures'
-        permanentLinkPattern:
-          type: string
-          description: 'How additional information in LIFF URLs is handled. concat is returned.
 
             '
         scope:
@@ -312,6 +292,19 @@ components:
             When in modular mode, the action button in the header is not displayed.
 
             '
+    LiffScope:
+      type: string
+      enum:
+      - openid
+      - email
+      - profile
+      - chat_message.write
+      description: 'Array of scopes required for some LIFF SDK methods to function.
+
+        The default value is `["profile", "chat_message.write"]`.
+
+
+        '
     LiffFeatures:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
@@ -328,50 +321,6 @@ components:
 
             '
           default: false
-    LiffBotPrompt:
-      type: string
-      description: "Specify the setting for bot link feature with one of the following values:\n\n`normal`: Display the option to add the LINE Official Account as a friend in the channel consent screen.\n`aggressive`: Display a screen with the option to add the LINE Official Account as a friend after the channel consent screen.\n`none`: Don't display the option to add the LINE Official Account as a friend.\n  The default value is none.\n"
-      enum:
-      - normal
-      - aggressive
-      - none
-    UpdateLiffAppRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
-      type: object
-      properties:
-        view:
-          $ref: '#/components/schemas/UpdateLiffView'
-        description:
-          type: string
-          description: 'Name of the LIFF app.
-
-
-            The LIFF app name can''t include "LINE" or similar strings, or inappropriate strings.
-
-            '
-        features:
-          $ref: '#/components/schemas/LiffFeatures'
-        permanentLinkPattern:
-          type: string
-          description: 'How additional information in LIFF URLs is handled. Specify `concat`.
-
-            '
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiffScope'
-        botPrompt:
-          $ref: '#/components/schemas/LiffBotPrompt'
-    GetAllLiffAppsResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
-      type: object
-      properties:
-        apps:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiffApp'
     AddLiffAppResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
@@ -381,6 +330,55 @@ components:
       properties:
         liffId:
           type: string
+    LiffView:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      required:
+      - type
+      - url
+      properties:
+        type:
+          description: 'Size of the LIFF app view. Specify one of these values:
+
+            - compact
+
+            - tall
+
+            - full
+
+            '
+          type: string
+          enum:
+          - compact
+          - tall
+          - full
+        url:
+          type: string
+          format: uri
+          description: 'Endpoint URL. This is the URL of the web app that implements the LIFF app
+
+            (e.g. https://example.com).
+
+            Used when the LIFF app is launched using the LIFF URL.
+
+            The URL scheme must be https. URL fragments (#URL-fragment) can''t be specified.
+
+            '
+        moduleMode:
+          type: boolean
+          description: '`true` to use the LIFF app in modular mode.
+
+            When in modular mode, the action button in the header is not displayed.
+
+            '
+    LiffBotPrompt:
+      type: string
+      description: "Specify the setting for bot link feature with one of the following values:\n\n`normal`: Display the option to add the LINE Official Account as a friend in the channel consent screen.\n`aggressive`: Display a screen with the option to add the LINE Official Account as a friend after the channel consent screen.\n`none`: Don't display the option to add the LINE Official Account as a friend.\n  The default value is none.\n"
+      enum:
+      - normal
+      - aggressive
+      - none
   securitySchemes:
     Bearer:
       type: http

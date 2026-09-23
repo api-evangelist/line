@@ -1,20 +1,56 @@
 {
   "provider": "line",
   "sources": [
-    "line-channel-api-openapi.yml",
-    "line-info-api-openapi.yml",
-    "line-message-api-openapi.yml",
-    "line-profile-api-openapi.yml"
+    "_original/line-channel-access-token-openapi.yml",
+    "_original/line-insight-openapi.yml",
+    "_original/line-liff-openapi.yml",
+    "_original/line-manage-audience-openapi.yml",
+    "_original/line-messaging-api-openapi.yml",
+    "_original/line-module-attach-openapi.yml",
+    "_original/line-module-openapi.yml",
+    "_original/line-shop-openapi.yml",
+    "_original/line-webhook-openapi.yml"
   ],
   "outputs": [
-    "line-channel-api-openapi.yml",
-    "line-info-api-openapi.yml",
-    "line-message-api-openapi.yml",
-    "line-profile-api-openapi.yml"
+    "line-channel-access-token-api-openapi.yml",
+    "line-insight-api-openapi.yml",
+    "line-liff-api-openapi.yml",
+    "line-manage-audience-api-openapi.yml",
+    "line-manage-audience-blob-api-openapi.yml",
+    "line-messaging-api-api-openapi.yml",
+    "line-messaging-api-blob-api-openapi.yml",
+    "line-line-module-attach-api-openapi.yml",
+    "line-line-module-api-openapi.yml",
+    "line-shop-api-openapi.yml",
+    "line-dummy-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (9 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "line-channel-access-token-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "line-insight-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "line-liff-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "line-manage-audience-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "line-messaging-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "line-module-attach-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "line-module-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "line-shop-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "line-webhook-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "line-channel-access-token-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-dummy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-insight-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-liff-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-line-module-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-line-module-attach-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-manage-audience-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-manage-audience-blob-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-messaging-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-messaging-api-blob-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "line-shop-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -8,14 +8,14 @@ servers:
 security:
 - Bearer: []
 tags:
-- name: messaging-api
+- name: Messaging API
 paths:
   /v2/bot/channel/webhook/endpoint:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getWebhookEndpoint
       description: Get webhook endpoint information
       responses:
@@ -36,11 +36,13 @@ paths:
                   value:
                     endpoint: https://example.com/test
                     active: false
+      summary: Get webhook endpoint
+      x-summary-source: derived
     put:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url
       tags:
-      - messaging-api
+      - Messaging API
       operationId: setWebhookEndpoint
       description: Set webhook endpoint URL
       requestBody:
@@ -52,14 +54,15 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Set webhook endpoint
+      x-summary-source: derived
   /v2/bot/channel/webhook/test:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
       tags:
-      - messaging-api
+      - Messaging API
       operationId: testWebhookEndpoint
-      description: Test webhook endpoint
       requestBody:
         content:
           application/json:
@@ -78,12 +81,14 @@ paths:
                 statusCode: 200
                 reason: OK
                 detail: '200'
+      summary: Test webhook endpoint
+      x-summary-source: derived
   /v2/bot/message/reply:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-reply-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: replyMessage
       description: Send reply message
       requestBody:
@@ -111,12 +116,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Reply message
+      x-summary-source: derived
   /v2/bot/message/push:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-push-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: pushMessage
       description: Sends a message to a user, group chat, or multi-person chat at any time.
       parameters:
@@ -170,12 +177,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Push message
+      x-summary-source: derived
   /v2/bot/message/multicast:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: multicast
       description: An API that efficiently sends the same message to multiple user IDs. You can't send messages to group chats or multi-person chats.
       parameters:
@@ -229,12 +238,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Multicast
+      x-summary-source: derived
   /v2/bot/message/narrowcast:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: narrowcast
       description: Send narrowcast message
       parameters:
@@ -288,12 +299,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Narrowcast
+      x-summary-source: derived
   /v2/bot/message/progress/narrowcast:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getNarrowcastProgress
       description: Gets the status of a narrowcast message.
       parameters:
@@ -313,12 +326,14 @@ paths:
               example:
                 phase: waiting
                 acceptedTime: 2020-12-03 10:15:30.121000+00:00
+      summary: Get narrowcast progress
+      x-summary-source: derived
   /v2/bot/message/broadcast:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: broadcast
       description: Sends a message to multiple users at any time.
       parameters:
@@ -372,12 +387,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Broadcast
+      x-summary-source: derived
   /v2/bot/message/quota:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-quota
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getMessageQuota
       description: Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
       responses:
@@ -390,12 +407,14 @@ paths:
               example:
                 type: limited
                 value: 1000
+      summary: Get message quota
+      x-summary-source: derived
   /v2/bot/message/quota/consumption:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-consumption
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getMessageQuotaConsumption
       description: Gets the number of messages sent in the current month.
       responses:
@@ -407,14 +426,15 @@ paths:
                 $ref: '#/components/schemas/QuotaConsumptionResponse'
               example:
                 totalUsage: 500
+      summary: Get message quota consumption
+      x-summary-source: derived
   /v2/bot/message/delivery/reply:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-reply-messages
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getNumberOfSentReplyMessages
-      description: Get number of sent reply messages
       parameters:
       - name: date
         in: query
@@ -439,14 +459,15 @@ paths:
               example:
                 status: ready
                 success: 10000
+      summary: Get number of sent reply messages
+      x-summary-source: derived
   /v2/bot/message/delivery/push:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-push-messages
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getNumberOfSentPushMessages
-      description: Get number of sent push messages
       parameters:
       - name: date
         in: query
@@ -471,14 +492,15 @@ paths:
               example:
                 status: ready
                 success: 10000
+      summary: Get number of sent push messages
+      x-summary-source: derived
   /v2/bot/message/delivery/multicast:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-multicast-messages
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getNumberOfSentMulticastMessages
-      description: Get number of sent multicast messages
       parameters:
       - name: date
         in: query
@@ -503,14 +525,15 @@ paths:
               example:
                 status: ready
                 success: 10000
+      summary: Get number of sent multicast messages
+      x-summary-source: derived
   /v2/bot/message/delivery/broadcast:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-broadcast-messages
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getNumberOfSentBroadcastMessages
-      description: Get number of sent broadcast messages
       parameters:
       - name: date
         in: query
@@ -536,12 +559,14 @@ paths:
               example:
                 status: ready
                 success: 10000
+      summary: Get number of sent broadcast messages
+      x-summary-source: derived
   /v2/bot/message/validate/reply:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: validateReply
       description: Validate message objects of a reply message
       requestBody:
@@ -553,12 +578,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Validate reply
+      x-summary-source: derived
   /v2/bot/message/validate/push:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: validatePush
       description: Validate message objects of a push message
       requestBody:
@@ -570,12 +597,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Validate push
+      x-summary-source: derived
   /v2/bot/message/validate/multicast:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: validateMulticast
       description: Validate message objects of a multicast message
       requestBody:
@@ -587,12 +616,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Validate multicast
+      x-summary-source: derived
   /v2/bot/message/validate/narrowcast:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: validateNarrowcast
       description: Validate message objects of a narrowcast message
       requestBody:
@@ -604,12 +635,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Validate narrowcast
+      x-summary-source: derived
   /v2/bot/message/validate/broadcast:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: validateBroadcast
       description: Validate message objects of a broadcast message
       requestBody:
@@ -621,12 +654,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Validate broadcast
+      x-summary-source: derived
   /v2/bot/message/aggregation/info:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getAggregationUnitUsage
       description: Get number of units used this month
       responses:
@@ -638,12 +673,14 @@ paths:
                 $ref: '#/components/schemas/GetAggregationUnitUsageResponse'
               example:
                 numOfCustomAggregationUnits: 22
+      summary: Get aggregation unit usage
+      x-summary-source: derived
   /v2/bot/message/aggregation/list:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getAggregationUnitNameList
       description: Get name list of units used this month
       parameters:
@@ -677,14 +714,15 @@ paths:
                 - promotion_a
                 - promotion_b
                 next: jxEWCEEP...
+      summary: Get aggregation unit name list
+      x-summary-source: derived
   /v2/bot/profile/{userId}:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-profile
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getProfile
-      description: Get profile
       parameters:
       - name: userId
         in: path
@@ -705,12 +743,14 @@ paths:
                 language: en
                 pictureUrl: https://obs.line-apps.com/...
                 statusMessage: Hello, LINE!
+      summary: Get profile
+      x-summary-source: derived
   /v2/bot/followers/ids:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getFollowers
       description: Get a list of users who added your LINE Official Account as a friend
       parameters:
@@ -746,14 +786,15 @@ paths:
                 - U0c229f96c4...
                 - U95afb1d4df...
                 next: yANU9IA...
+      summary: Get followers
+      x-summary-source: derived
   /v2/bot/info:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-bot-info
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getBotInfo
-      description: Get bot info
       responses:
         '200':
           description: OK
@@ -768,12 +809,14 @@ paths:
                 pictureUrl: https://obs.line-apps.com/...
                 chatMode: chat
                 markAsReadMode: manual
+      summary: Get bot info
+      x-summary-source: derived
   /v2/bot/group/{groupId}/member/{userId}:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getGroupMemberProfile
       description: Get group chat member profile
       parameters:
@@ -800,12 +843,14 @@ paths:
                 displayName: LINE taro
                 userId: U4af4980629...
                 pictureUrl: https://obs.line-apps.com/...
+      summary: Get group member profile
+      x-summary-source: derived
   /v2/bot/room/{roomId}/member/{userId}:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRoomMemberProfile
       description: Get multi-person chat member profile
       parameters:
@@ -832,12 +877,14 @@ paths:
                 displayName: LINE taro
                 userId: U4af4980629...
                 pictureUrl: https://obs.line-apps.com/...
+      summary: Get room member profile
+      x-summary-source: derived
   /v2/bot/group/{groupId}/members/ids:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getGroupMembersIds
       description: Get group chat member user IDs
       parameters:
@@ -870,12 +917,14 @@ paths:
                 - U0c229f96c4...
                 - U95afb1d4df...
                 next: jxEWCEEP...
+      summary: Get group members ids
+      x-summary-source: derived
   /v2/bot/room/{roomId}/members/ids:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRoomMembersIds
       description: Get multi-person chat member user IDs
       parameters:
@@ -908,12 +957,14 @@ paths:
                 - U0c229f96c4...
                 - U95afb1d4df...
                 next: jxEWCEEP...
+      summary: Get room members ids
+      x-summary-source: derived
   /v2/bot/group/{groupId}/leave:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#leave-group
       tags:
-      - messaging-api
+      - Messaging API
       operationId: leaveGroup
       description: Leave group chat
       parameters:
@@ -938,12 +989,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Leave group
+      x-summary-source: derived
   /v2/bot/room/{roomId}/leave:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#leave-room
       tags:
-      - messaging-api
+      - Messaging API
       operationId: leaveRoom
       description: Leave multi-person chat
       parameters:
@@ -956,12 +1009,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Leave room
+      x-summary-source: derived
   /v2/bot/group/{groupId}/summary:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-group-summary
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getGroupSummary
       description: Get group chat summary
       parameters:
@@ -982,12 +1037,14 @@ paths:
                 groupId: Ca56f94637c...
                 groupName: Group name
                 pictureUrl: https://profile.line-scdn.net/abcdefghijklmn
+      summary: Get group summary
+      x-summary-source: derived
   /v2/bot/group/{groupId}/members/count:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-members-group-count
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getGroupMemberCount
       description: Get number of users in a group chat
       parameters:
@@ -1006,12 +1063,14 @@ paths:
                 $ref: '#/components/schemas/GroupMemberCountResponse'
               example:
                 count: 3
+      summary: Get group member count
+      x-summary-source: derived
   /v2/bot/room/{roomId}/members/count:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-members-room-count
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRoomMemberCount
       description: Get number of users in a multi-person chat
       parameters:
@@ -1030,14 +1089,15 @@ paths:
                 $ref: '#/components/schemas/RoomMemberCountResponse'
               example:
                 count: 3
+      summary: Get room member count
+      x-summary-source: derived
   /v2/bot/richmenu:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu
       tags:
-      - messaging-api
+      - Messaging API
       operationId: createRichMenu
-      description: Create rich menu
       requestBody:
         content:
           application/json:
@@ -1053,14 +1113,15 @@ paths:
                 $ref: '#/components/schemas/RichMenuIdResponse'
               example:
                 richMenuId: '{richMenuId}'
+      summary: Create rich menu
+      x-summary-source: derived
   /v2/bot/richmenu/validate:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object
       tags:
-      - messaging-api
+      - Messaging API
       operationId: validateRichMenuObject
-      description: Validate rich menu object
       requestBody:
         content:
           application/json:
@@ -1070,6 +1131,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Validate rich menu object
+      x-summary-source: derived
   /v2/bot/richmenu/{richMenuId}:
     parameters:
     - name: richMenuId
@@ -1082,7 +1145,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRichMenu
       description: Gets a rich menu via a rich menu ID.
       responses:
@@ -1109,24 +1172,27 @@ paths:
                   action:
                     type: postback
                     data: action=buy&itemid=123
+      summary: Get rich menu
+      x-summary-source: derived
     delete:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu
       tags:
-      - messaging-api
+      - Messaging API
       operationId: deleteRichMenu
       description: Deletes a rich menu.
       responses:
         '200':
           description: OK
+      summary: Delete rich menu
+      x-summary-source: derived
   /v2/bot/richmenu/list:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRichMenuList
-      description: Get rich menu list
       responses:
         '200':
           description: OK
@@ -1152,14 +1218,15 @@ paths:
                     action:
                       type: postback
                       data: action=buy&itemid=123
+      summary: Get rich menu list
+      x-summary-source: derived
   /v2/bot/user/all/richmenu/{richMenuId}:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#set-default-rich-menu
       tags:
-      - messaging-api
+      - Messaging API
       operationId: setDefaultRichMenu
-      description: Set default rich menu
       parameters:
       - name: richMenuId
         in: path
@@ -1170,12 +1237,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Set default rich menu
+      x-summary-source: derived
   /v2/bot/user/all/richmenu:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getDefaultRichMenuId
       description: Gets the ID of the default rich menu set with the Messaging API.
       responses:
@@ -1187,24 +1256,26 @@ paths:
                 $ref: '#/components/schemas/RichMenuIdResponse'
               example:
                 richMenuId: '{richMenuId}'
+      summary: Get default rich menu id
+      x-summary-source: derived
     delete:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu
       tags:
-      - messaging-api
+      - Messaging API
       operationId: cancelDefaultRichMenu
-      description: Cancel default rich menu
       responses:
         '200':
           description: OK
+      summary: Cancel default rich menu
+      x-summary-source: derived
   /v2/bot/richmenu/alias:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias
       tags:
-      - messaging-api
+      - Messaging API
       operationId: createRichMenuAlias
-      description: Create rich menu alias
       requestBody:
         content:
           application/json:
@@ -1220,12 +1291,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Create rich menu alias
+      x-summary-source: derived
   /v2/bot/richmenu/alias/{richMenuAliasId}:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-by-id
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRichMenuAlias
       description: Get rich menu alias information
       parameters:
@@ -1245,13 +1318,14 @@ paths:
               example:
                 richMenuAliasId: richmenu-alias-a
                 richMenuId: richmenu-88c05ef6921ae53f8b58a25f3a65faf7
+      summary: Get rich menu alias
+      x-summary-source: derived
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias
       tags:
-      - messaging-api
+      - Messaging API
       operationId: updateRichMenuAlias
-      description: Update rich menu alias
       parameters:
       - name: richMenuAliasId
         in: path
@@ -1274,13 +1348,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Update rich menu alias
+      x-summary-source: derived
     delete:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu-alias
       tags:
-      - messaging-api
+      - Messaging API
       operationId: deleteRichMenuAlias
-      description: Delete rich menu alias
       parameters:
       - name: richMenuAliasId
         in: path
@@ -1297,12 +1372,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Delete rich menu alias
+      x-summary-source: derived
   /v2/bot/richmenu/alias/list:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRichMenuAliasList
       description: Get list of rich menu alias
       responses:
@@ -1325,6 +1402,8 @@ paths:
                   summary: If you have 0 rich menu alias
                   value:
                     aliases: []
+      summary: Get rich menu alias list
+      x-summary-source: derived
   /v2/bot/user/{userId}/richmenu:
     parameters:
     - name: userId
@@ -1337,7 +1416,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRichMenuIdOfUser
       description: Get rich menu ID of user
       responses:
@@ -1349,22 +1428,26 @@ paths:
                 $ref: '#/components/schemas/RichMenuIdResponse'
               example:
                 richMenuId: '{richMenuId}'
+      summary: Get rich menu id of user
+      x-summary-source: derived
     delete:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user
       tags:
-      - messaging-api
+      - Messaging API
       operationId: unlinkRichMenuIdFromUser
       description: Unlink rich menu from user
       responses:
         '200':
           description: OK
+      summary: Unlink rich menu id from user
+      x-summary-source: derived
   /v2/bot/user/{userId}/richmenu/{richMenuId}:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user
       tags:
-      - messaging-api
+      - Messaging API
       operationId: linkRichMenuIdToUser
       description: Link rich menu to user.
       parameters:
@@ -1383,12 +1466,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Link rich menu id to user
+      x-summary-source: derived
   /v2/bot/richmenu/bulk/link:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
       tags:
-      - messaging-api
+      - Messaging API
       operationId: linkRichMenuIdToUsers
       description: Link rich menu to multiple users
       requestBody:
@@ -1400,12 +1485,14 @@ paths:
       responses:
         '202':
           description: Accepted
+      summary: Link rich menu id to users
+      x-summary-source: derived
   /v2/bot/richmenu/bulk/unlink:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users
       tags:
-      - messaging-api
+      - Messaging API
       operationId: unlinkRichMenuIdFromUsers
       description: Unlink rich menus from multiple users
       requestBody:
@@ -1417,12 +1504,14 @@ paths:
       responses:
         '202':
           description: Accepted
+      summary: Unlink rich menu id from users
+      x-summary-source: derived
   /v2/bot/richmenu/batch:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users
       tags:
-      - messaging-api
+      - Messaging API
       operationId: richMenuBatch
       description: 'You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user.
 
@@ -1433,9 +1522,7 @@ paths:
 
         2. Unlink a rich menu for all users linked to a specific rich menu
 
-        3. Unlink a rich menu for all users linked the rich menu
-
-        '
+        3. Unlink a rich menu for all users linked the rich menu'
       requestBody:
         content:
           application/json:
@@ -1445,12 +1532,14 @@ paths:
       responses:
         '202':
           description: Accepted
+      summary: Rich menu batch
+      x-summary-source: derived
   /v2/bot/richmenu/validate/batch:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#validate-batch-control-rich-menus-request
       tags:
-      - messaging-api
+      - Messaging API
       operationId: validateRichMenuBatchRequest
       description: Validate a request body of the Replace or unlink the linked rich menus in batches endpoint.
       requestBody:
@@ -1462,12 +1551,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Validate rich menu batch request
+      x-summary-source: derived
   /v2/bot/richmenu/progress/batch:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getRichMenuBatchProgress
       description: Get the status of Replace or unlink a linked rich menus in batches.
       parameters:
@@ -1487,14 +1578,15 @@ paths:
               example:
                 phase: ongoing
                 acceptedTime: 2023-07-04 10:15:30.121000+00:00
+      summary: Get rich menu batch progress
+      x-summary-source: derived
   /v2/bot/user/{userId}/linkToken:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-link-token
       tags:
-      - messaging-api
+      - Messaging API
       operationId: issueLinkToken
-      description: Issue link token
       parameters:
       - name: userId
         in: path
@@ -1515,12 +1607,14 @@ paths:
                 $ref: '#/components/schemas/IssueLinkTokenResponse'
               example:
                 linkToken: NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY
+      summary: Issue link token
+      x-summary-source: derived
   /v2/bot/message/markAsRead:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
       tags:
-      - messaging-api
+      - Messaging API
       operationId: markMessagesAsRead
       description: Mark messages from users as read
       requestBody:
@@ -1535,12 +1629,14 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Mark messages as read
+      x-summary-source: derived
   /bot/pnp/push:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
       tags:
-      - messaging-api
+      - Messaging API
       operationId: pushMessagesByPhone
       description: Send LINE notification message
       parameters:
@@ -1567,12 +1663,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Push messages by phone
+      x-summary-source: derived
   /v2/bot/message/delivery/pnp:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getPNPMessageStatistics
       description: Get number of sent LINE notification messages
       parameters:
@@ -1600,12 +1698,14 @@ paths:
               example:
                 status: ready
                 success: 3
+      summary: Get PNP message statistics
+      x-summary-source: derived
   /v2/bot/membership/subscription/{userId}:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getMembershipSubscription
       description: Get a user's membership subscription.
       parameters:
@@ -1650,12 +1750,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Get membership subscription
+      x-summary-source: derived
   /v2/bot/membership/list:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-membership-plans
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getMembershipList
       description: Get a list of memberships.
       responses:
@@ -1696,12 +1798,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Get membership list
+      x-summary-source: derived
   /v2/bot/membership/{membershipId}/users/ids:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getJoinedMembershipUsers
       description: Get a list of user IDs who joined the membership.
       parameters:
@@ -1762,12 +1866,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Get joined membership users
+      x-summary-source: derived
   /v2/bot/coupon:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-coupons-list
       tags:
-      - messaging-api
+      - Messaging API
       operationId: listCoupon
       description: Get a paginated list of coupons.
       parameters:
@@ -1813,11 +1919,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: List coupon
+      x-summary-source: derived
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-coupon
       tags:
-      - messaging-api
+      - Messaging API
       operationId: createCoupon
       description: Create a new coupon. Define coupon details such as type, title, and validity period.
       requestBody:
@@ -1838,14 +1946,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Create coupon
+      x-summary-source: derived
   /v2/bot/coupon/{couponId}:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-coupon
       tags:
-      - messaging-api
+      - Messaging API
       operationId: getCouponDetail
-      description: Get coupon detail
       parameters:
       - in: path
         name: couponId
@@ -1871,14 +1980,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Get coupon detail
+      x-summary-source: derived
   /v2/bot/coupon/{couponId}/close:
     put:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon
       tags:
-      - messaging-api
+      - Messaging API
       operationId: closeCoupon
-      description: Close coupon
       parameters:
       - in: path
         name: couponId
@@ -1906,12 +2016,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Close coupon
+      x-summary-source: derived
   /v2/bot/chat/loading/start:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator
       tags:
-      - messaging-api
+      - Messaging API
       operationId: showLoadingAnimation
       description: Display a loading animation in one-on-one chats between users and LINE Official Accounts.
       requestBody:
@@ -1933,12 +2045,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Show loading animation
+      x-summary-source: derived
   /v2/bot/chat/markAsRead:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#mark-as-read
       tags:
-      - messaging-api
+      - Messaging API
       operationId: markMessagesAsReadByToken
       description: Mark messages from users as read by token
       requestBody:
@@ -1958,233 +2072,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      summary: Mark messages as read by token
+      x-summary-source: derived
 components:
   schemas:
-    RoomMemberCountResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-members-room-count
-      required:
-      - count
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int32
-          description: The count of members in the multi-person chat. The number returned excludes the LINE Official Account.
-    SubscribedMembershipPlan:
-      description: Object containing information about the membership plan.
-      type: object
-      required:
-      - membershipId
-      - title
-      - description
-      - benefits
-      - price
-      - currency
-      properties:
-        membershipId:
-          type: integer
-          description: Membership plan ID.
-        title:
-          type: string
-          description: Membership plan name.
-        description:
-          type: string
-          description: Membership plan description.
-        benefits:
-          type: array
-          minItems: 1
-          items:
-            type: string
-          description: List of membership plan perks.
-        price:
-          type: number
-          format: double
-          example: 500.0
-          description: Monthly fee for membership plan. (e.g. 1500.00)
-        currency:
-          type: string
-          description: The currency of membership.price.
-          enum:
-          - JPY
-          - TWD
-          - THB
-    RoomUserProfileResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile
-      required:
-      - displayName
-      - userId
-      type: object
-      properties:
-        displayName:
-          type: string
-          description: User's display name
-        userId:
-          type: string
-          description: User ID
-        pictureUrl:
-          type: string
-          format: uri
-          description: Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
-    ValidateMessageRequest:
-      required:
-      - messages
-      type: object
-      properties:
-        messages:
-          maxItems: 5
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          description: Array of message objects to validate
-    MembersIdsResponse:
-      required:
-      - memberIds
-      type: object
-      properties:
-        memberIds:
-          type: array
-          description: List of user IDs of members in the group chat. Only users of LINE for iOS and LINE for Android are included in `memberIds`.
-          items:
-            type: string
-          maxItems: 100
-        next:
-          type: string
-          description: 'A continuation token to get the next array of user IDs of the members in the group chat.
-
-            Returned only when there are remaining user IDs that were not returned in `memberIds` in the original request.
-
-            '
-    CouponCreateRequest:
-      description: Request object for creating a coupon. Contains all configurable coupon properties.
-      required:
-      - acquisitionCondition
-      - endTimestamp
-      - maxUseCountPerTicket
-      - startTimestamp
-      - title
-      - visibility
-      - timezone
-      type: object
-      properties:
-        acquisitionCondition:
-          $ref: '#/components/schemas/AcquisitionConditionRequest'
-        barcodeImageUrl:
-          type: string
-          description: URL of the barcode image associated with the coupon. Used for in-store redemption.
-        couponCode:
-          type: string
-          description: Unique code to be presented by the user to redeem the coupon. Optional.
-        description:
-          maxLength: 1000
-          minLength: 0
-          type: string
-          description: Detailed description of the coupon. Displayed to users.
-        endTimestamp:
-          type: integer
-          format: int64
-          description: Coupon expiration time (epoch seconds). Coupon cannot be used after this time.
-        imageUrl:
-          type: string
-          description: URL of the main image representing the coupon. Displayed in the coupon list.
-        maxUseCountPerTicket:
-          type: integer
-          format: int32
-          maximum: 1
-          description: Maximum number of times a single coupon ticket can be used. Use -1 to indicate no limit.
-        startTimestamp:
-          type: integer
-          format: int64
-          description: Coupon start time (epoch seconds). Coupon can be used from this time.
-        title:
-          maxLength: 60
-          minLength: 1
-          type: string
-          description: Title of the coupon. Displayed in the coupon list.
-        usageCondition:
-          maxLength: 100
-          minLength: 0
-          type: string
-          description: Conditions for using the coupon. Shown to users.
-        reward:
-          $ref: '#/components/schemas/CouponRewardRequest'
-        visibility:
-          type: string
-          description: Visibility of the coupon. Determines who can see or acquire the coupon.
-          enum:
-          - UNLISTED
-          - PUBLIC
-        timezone:
-          type: string
-          description: Timezone for interpreting start and end timestamps.
-          enum:
-          - ETC_GMT_MINUS_12
-          - ETC_GMT_MINUS_11
-          - PACIFIC_HONOLULU
-          - AMERICA_ANCHORAGE
-          - AMERICA_LOS_ANGELES
-          - AMERICA_PHOENIX
-          - AMERICA_CHICAGO
-          - AMERICA_NEW_YORK
-          - AMERICA_CARACAS
-          - AMERICA_SANTIAGO
-          - AMERICA_ST_JOHNS
-          - AMERICA_SAO_PAULO
-          - ETC_GMT_MINUS_2
-          - ATLANTIC_CAPE_VERDE
-          - EUROPE_LONDON
-          - EUROPE_PARIS
-          - EUROPE_ISTANBUL
-          - EUROPE_MOSCOW
-          - ASIA_TEHRAN
-          - ASIA_TBILISI
-          - ASIA_KABUL
-          - ASIA_TASHKENT
-          - ASIA_COLOMBO
-          - ASIA_KATHMANDU
-          - ASIA_ALMATY
-          - ASIA_RANGOON
-          - ASIA_BANGKOK
-          - ASIA_TAIPEI
-          - ASIA_TOKYO
-          - AUSTRALIA_DARWIN
-          - AUSTRALIA_SYDNEY
-          - ASIA_VLADIVOSTOK
-          - ETC_GMT_PLUS_12
-          - PACIFIC_TONGATAPU
-    Subscription:
-      description: An array of memberships.
-      required:
-      - membership
-      - user
-      type: object
-      properties:
-        membership:
-          $ref: '#/components/schemas/SubscribedMembershipPlan'
-        user:
-          $ref: '#/components/schemas/SubscribedMembershipUser'
-    QuickReplyItem:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#items-object
-      type: object
-      properties:
-        imageUrl:
-          type: string
-          format: uri
-          description: URL of the icon that is displayed at the beginning of the button
-          maxLength: 2000
-        action:
-          $ref: '#/components/schemas/Action'
-        type:
-          type: string
-          description: '`action`'
-          default: action
-    ShowLoadingAnimationResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator-response
-      type: object
     QuickReply:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#items-object
@@ -2197,192 +2088,6 @@ components:
           items:
             $ref: '#/components/schemas/QuickReplyItem'
           description: Quick reply button objects.
-    QuotaConsumptionResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-consumption
-      required:
-      - totalUsage
-      type: object
-      properties:
-        totalUsage:
-          type: integer
-          format: int64
-          description: The number of sent messages in the current month
-    MessagingApiPagerCouponListResponse:
-      description: Paginated response object containing a list of coupons.
-      required:
-      - items
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CouponListResponse'
-          description: List of coupon summary objects.
-        next:
-          type: string
-          description: Token for fetching the next page of results.
-    GroupSummaryResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-group-summary
-      required:
-      - groupId
-      - groupName
-      type: object
-      properties:
-        groupId:
-          type: string
-          description: Group ID
-        groupName:
-          type: string
-          description: Group name
-        pictureUrl:
-          type: string
-          format: uri
-          description: Group icon URL. Not included in the response if the user doesn't set a group profile icon.
-    MulticastResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-response
-      type: object
-    NarrowcastProgressResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status
-      required:
-      - phase
-      - acceptedTime
-      type: object
-      properties:
-        phase:
-          type: string
-          enum:
-          - waiting
-          - sending
-          - succeeded
-          - failed
-          description: 'The current status. One of:
-
-
-            `waiting`: Messages are not yet ready to be sent. They are currently being filtered or processed in some way.
-
-            `sending`: Messages are currently being sent.
-
-            `succeeded`: Messages were sent successfully. This may not mean the messages were successfully received.
-
-            `failed`: Messages failed to be sent. Use the failedDescription property to find the cause of the failure.
-
-            '
-        successCount:
-          type: integer
-          format: int64
-          description: The number of users who successfully received the message.
-        failureCount:
-          type: integer
-          format: int64
-          description: The number of users who failed to send the message.
-        targetCount:
-          type: integer
-          format: int64
-          description: The number of intended recipients of the message.
-        failedDescription:
-          type: string
-          description: The reason the message failed to be sent. This is only included with a `phase` property value of `failed`.
-        errorCode:
-          type: integer
-          format: int64
-          description: 'Error summary. This is only included with a phase property value of failed.
-
-            One of:
-
-
-            `1`: An internal error occurred.
-
-            `2`: An error occurred because there weren''t enough recipients.
-
-            `3`: A conflict error of requests occurs because a request that has already been accepted is retried.
-
-            `4`: An audience of less than 50 recipients is included as a condition of sending.
-
-            `5`: Message delivery has been canceled to prevent messages from being delivered only to a subset of the target audience.
-
-            '
-        acceptedTime:
-          type: string
-          format: date-time
-          description: 'Narrowcast message request accepted time in milliseconds.
-
-
-            Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z)
-
-            Timezone: UTC
-
-            '
-        completedTime:
-          type: string
-          format: date-time
-          description: 'Processing of narrowcast message request completion time in milliseconds. Returned when the phase property is succeeded or failed.
-
-
-            Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z)
-
-            Timezone: UTC
-
-            '
-    UserProfileResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-profile
-      required:
-      - displayName
-      - userId
-      type: object
-      properties:
-        displayName:
-          type: string
-          description: User's display name
-        userId:
-          type: string
-          description: User ID
-        pictureUrl:
-          type: string
-          format: uri
-          description: Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
-        statusMessage:
-          type: string
-          description: User's status message. Not included in the response if the user doesn't have a status message.
-        language:
-          type: string
-          description: User's language, as a BCP 47 language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy.
-          example: en
-    CreateRichMenuAliasRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias
-      required:
-      - richMenuAliasId
-      - richMenuId
-      type: object
-      properties:
-        richMenuAliasId:
-          type: string
-          description: Rich menu alias ID, which can be any ID, unique for each channel.
-          maxLength: 32
-          minLength: 1
-          pattern: ^[a-z0-9_-]{1,32}$
-        richMenuId:
-          type: string
-          description: The rich menu ID to be associated with the rich menu alias.
-    ReplyMessageResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response
-      required:
-      - sentMessages
-      type: object
-      properties:
-        sentMessages:
-          description: Array of sent messages.
-          maxItems: 5
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/SentMessage'
     GetFollowersResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-follower-ids
@@ -2410,485 +2115,6 @@ components:
 
 
             '
-    RichMenuBatchRequest:
-      type: object
-      required:
-      - operations
-      properties:
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/RichMenuBatchOperation'
-          description: Array of Rich menu operation object...
-          maxItems: 1000
-        resumeRequestKey:
-          type: string
-          description: Key for retry. Key value is a string matching the regular expression pattern
-          maxLength: 100
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_-]{1,100}$
-    CouponListResponse:
-      description: Summary information about a coupon, used in coupon lists.
-      required:
-      - couponId
-      - title
-      type: object
-      properties:
-        couponId:
-          type: string
-          description: Unique identifier of the coupon.
-        title:
-          type: string
-          description: Title of the coupon. Displayed in the coupon list.
-    BroadcastRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
-      required:
-      - messages
-      type: object
-      properties:
-        messages:
-          maxItems: 5
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          description: List of Message objects.
-        notificationDisabled:
-          $ref: '#/components/schemas/NotificationDisabled'
-    Membership:
-      required:
-      - membershipId
-      - title
-      - description
-      - benefits
-      - price
-      - currency
-      - memberCount
-      - memberLimit
-      - isInAppPurchase
-      - isPublished
-      type: object
-      properties:
-        membershipId:
-          type: integer
-          description: Membership plan ID.
-        title:
-          type: string
-          description: Membership plan name.
-        description:
-          type: string
-          description: Membership plan description.
-        benefits:
-          type: array
-          minItems: 1
-          items:
-            type: string
-          description: List of membership plan perks.
-        price:
-          type: number
-          format: double
-          example: 500.0
-          description: Monthly fee for membership plan. (e.g. 1500.00)
-        currency:
-          type: string
-          description: The currency of membership.price.
-          enum:
-          - JPY
-          - TWD
-          - THB
-        memberCount:
-          type: integer
-          example: 100
-          description: Number of members subscribed to the membership plan.
-        memberLimit:
-          type:
-          - integer
-          - 'null'
-          example: 1000
-          description: The upper limit of members who can subscribe. If no upper limit is set, it will be null.
-        isInAppPurchase:
-          type: boolean
-          description: Payment method for users who subscribe to a membership plan.
-        isPublished:
-          type: boolean
-          description: Membership plan status.
-    RichMenuRequest:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/RichMenuSize'
-        selected:
-          type: boolean
-          description: '`true` to display the rich menu by default. Otherwise, `false`.'
-        name:
-          type: string
-          description: Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
-          maxLength: 300
-        chatBarText:
-          type: string
-          description: Text displayed in the chat bar
-          maxLength: 14
-        areas:
-          type: array
-          description: Array of area objects which define the coordinates and size of tappable areas
-          items:
-            $ref: '#/components/schemas/RichMenuArea'
-    QuotaType:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-quota
-      type: string
-      enum:
-      - none
-      - limited
-      description: One of the following values to indicate whether a target limit is set or not.
-    DemographicFilter:
-      type: object
-      description: Demographic filter
-      properties:
-        type:
-          type: string
-          description: Type of demographic filter
-      discriminator:
-        propertyName: type
-        mapping:
-          age: '#/components/schemas/AgeDemographicFilter'
-          appType: '#/components/schemas/AppTypeDemographicFilter'
-          area: '#/components/schemas/AreaDemographicFilter'
-          gender: '#/components/schemas/GenderDemographicFilter'
-          operator: '#/components/schemas/OperatorDemographicFilter'
-          subscriptionPeriod: '#/components/schemas/SubscriptionPeriodDemographicFilter'
-    Limit:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
-      type: object
-      description: Limit of the Narrowcast
-      properties:
-        max:
-          minimum: 1
-          type: integer
-          format: int32
-          description: 'The maximum number of narrowcast messages to send.
-
-            Use this parameter to limit the number of narrowcast messages sent.
-
-            The recipients will be chosen at random.
-
-            '
-        upToRemainingQuota:
-          type: boolean
-          default: false
-          description: 'If true, the message will be sent within the maximum number of deliverable messages. The default value is `false`.
-
-
-            Targets will be selected at random.
-
-            '
-        forbidPartialDelivery:
-          type: boolean
-          default: false
-          description: 'This option prevents messages from being delivered to only a subset of the target audience.
-
-            If true, the narrowcast request success but fails asynchronously.
-
-            You can check whether message delivery was canceled by retrieving the narrowcast message progress.
-
-
-            This property can be set to true only if upToRemainingQuota is set to true.
-
-            '
-    SentMessage:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the sent message.
-        quoteToken:
-          type: string
-          description: 'Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push or reply message.
-
-            '
-    NarrowcastRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
-      required:
-      - messages
-      type: object
-      properties:
-        messages:
-          maxItems: 5
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          description: List of Message objects.
-        recipient:
-          $ref: '#/components/schemas/Recipient'
-        filter:
-          $ref: '#/components/schemas/Filter'
-        limit:
-          $ref: '#/components/schemas/Limit'
-        notificationDisabled:
-          $ref: '#/components/schemas/NotificationDisabled'
-    RichMenuResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object
-      required:
-      - richMenuId
-      - size
-      - selected
-      - name
-      - chatBarText
-      - areas
-      type: object
-      properties:
-        richMenuId:
-          type: string
-          description: ID of a rich menu
-        size:
-          $ref: '#/components/schemas/RichMenuSize'
-        selected:
-          type: boolean
-          description: '`true` to display the rich menu by default. Otherwise, `false`.'
-        name:
-          type: string
-          description: Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
-          maxLength: 300
-        chatBarText:
-          type: string
-          description: Text displayed in the chat bar
-          maxLength: 14
-        areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/RichMenuArea'
-          description: Array of area objects which define the coordinates and size of tappable areas
-          maxItems: 20
-    ShowLoadingAnimationRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator-request-body
-      required:
-      - chatId
-      type: object
-      properties:
-        chatId:
-          type: string
-          description: User ID of the target user for whom the loading animation is to be displayed.
-        loadingSeconds:
-          type: integer
-          format: int32
-          maximum: 60
-          minimum: 5
-          description: 'The number of seconds to display the loading indicator.
-
-            It must be a multiple of 5. The maximum value is 60 seconds.
-
-            '
-    RichMenuBatchOperation:
-      description: Rich menu operation object represents the batch operation to the rich menu linked to the user.
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users-operations
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll.
-      discriminator:
-        propertyName: type
-        mapping:
-          link: '#/components/schemas/RichMenuBatchLinkOperation'
-          unlink: '#/components/schemas/RichMenuBatchUnlinkOperation'
-          unlinkAll: '#/components/schemas/RichMenuBatchUnlinkAllOperation'
-    BroadcastResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-response
-      type: object
-    RichMenuSize:
-      type: object
-      description: Rich menu size
-      properties:
-        width:
-          maximum: 2147483647
-          minimum: 1
-          type: integer
-          format: int64
-          description: width
-        height:
-          maximum: 2147483647
-          minimum: 1
-          type: integer
-          format: int64
-          description: height
-    NumberOfMessagesResponse:
-      required:
-      - status
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - ready
-          - unready
-          - unavailable_for_privacy
-          - out_of_service
-          description: 'Aggregation process status. One of:
-
-
-            `ready`: The number of messages can be obtained.
-
-            `unready`: We haven''t finished calculating the number of sent messages for the specified in date. For example, this property is returned when the delivery date or a future date is specified. Calculation usually takes about a day.
-
-            `unavailable_for_privacy`: The total number of messages on the specified day is less than 20.
-
-            `out_of_service`: The specified date is earlier than the date on which we first started calculating sent messages (March 31, 2018).
-
-            '
-        success:
-          type: integer
-          format: int64
-          description: 'The number of messages delivered using the phone number on the date specified in `date`.
-
-            The response has this property only when the value of `status` is `ready`.
-
-
-            '
-    GroupMemberCountResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-members-group-count
-      required:
-      - count
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int32
-          description: The count of members in the group chat. The number returned excludes the LINE Official Account.
-    SetWebhookEndpointRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url
-      required:
-      - endpoint
-      type: object
-      properties:
-        endpoint:
-          maxLength: 500
-          minLength: 0
-          type: string
-          format: uri
-          description: A valid webhook URL.
-    TestWebhookEndpointResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
-      required:
-      - statusCode
-      - timestamp
-      - reason
-      - detail
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Result of the communication from the LINE platform to the webhook URL.
-        timestamp:
-          type: string
-          format: date-time
-          description: 'Time of the event in milliseconds. Even in the case of a redelivered webhook, it represents the time the event occurred, not the time it was redelivered.
-
-            '
-        statusCode:
-          type: integer
-          format: int32
-          description: The HTTP status code. If the webhook response isn't received, the status code is set to zero or a negative number.
-        reason:
-          type: string
-          description: Reason for the response.
-        detail:
-          type: string
-          description: Details of the response.
-    PnpMessagesRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
-      required:
-      - messages
-      - to
-      type: object
-      properties:
-        messages:
-          maxItems: 5
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          description: Message to be sent.
-        to:
-          type: string
-          description: Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256.
-        notificationDisabled:
-          $ref: '#/components/schemas/NotificationDisabled'
-    RichMenuBulkLinkRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
-      required:
-      - richMenuId
-      - userIds
-      type: object
-      properties:
-        richMenuId:
-          type: string
-          description: ID of a rich menu
-        userIds:
-          maxItems: 500
-          minItems: 1
-          type: array
-          items:
-            type: string
-          description: Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-    TestWebhookEndpointRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
-      type: object
-      properties:
-        endpoint:
-          maxLength: 500
-          minLength: 0
-          type: string
-          format: uri
-          description: A webhook URL to be validated.
-    UpdateRichMenuAliasRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias
-      required:
-      - richMenuId
-      type: object
-      properties:
-        richMenuId:
-          type: string
-          description: The rich menu ID to be associated with the rich menu alias.
-    RichMenuArea:
-      type: object
-      description: Rich menu area
-      properties:
-        bounds:
-          $ref: '#/components/schemas/RichMenuBounds'
-        action:
-          $ref: '#/components/schemas/Action'
-    Recipient:
-      type: object
-      description: Recipient
-      properties:
-        type:
-          description: Type of recipient
-          type: string
-      discriminator:
-        propertyName: type
-        mapping:
-          operator: '#/components/schemas/OperatorRecipient'
-          audience: '#/components/schemas/AudienceRecipient'
-          redelivery: '#/components/schemas/RedeliveryRecipient'
     SubscribedMembershipUser:
       description: Object containing user membership subscription information.
       type: object
@@ -2916,127 +2142,47 @@ components:
         totalSubscriptionMonths:
           type: integer
           description: The period of time in months that the user has been subscribed to a membership plan. If a user previously canceled and then re-subscribed to the same membership plan, only the period after the re-subscription will be counted.
-    CouponRewardResponse:
+    ErrorDetail:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Details of the error. Not included in the response under certain situations.
+        property:
+          type: string
+          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
+    AcquisitionConditionResponse:
       type: object
       required:
       - type
       properties:
         type:
           type: string
-          description: Type of coupon. Determines the benefit provided.
+          description: Determines how the coupon is distributed or used.
       discriminator:
         propertyName: type
         mapping:
-          cashBack: '#/components/schemas/CouponCashBackRewardResponse'
-          discount: '#/components/schemas/CouponDiscountRewardResponse'
-          free: '#/components/schemas/CouponFreeRewardResponse'
-          gift: '#/components/schemas/CouponGiftRewardResponse'
-          others: '#/components/schemas/CouponOthersRewardResponse'
-    NarrowcastResponse:
+          normal: '#/components/schemas/NormalAcquisitionConditionResponse'
+          lottery: '#/components/schemas/LotteryAcquisitionConditionResponse'
+          referral: '#/components/schemas/ReferralAcquisitionConditionResponse'
+    RichMenuBulkLinkRequest:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-response
-      type: object
-    RichMenuListResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
+        url: https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users
       required:
-      - richmenus
+      - richMenuId
+      - userIds
       type: object
       properties:
-        richmenus:
-          type: array
-          items:
-            $ref: '#/components/schemas/RichMenuResponse'
-          description: Rich menus
-    Action:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#action-objects
-      description: Action
-      type: object
-      properties:
-        type:
+        richMenuId:
           type: string
-          description: Type of action
-        label:
-          type: string
-          description: Label for the action.
-      discriminator:
-        propertyName: type
-        mapping:
-          camera: '#/components/schemas/CameraAction'
-          cameraRoll: '#/components/schemas/CameraRollAction'
-          clipboard: '#/components/schemas/ClipboardAction'
-          datetimepicker: '#/components/schemas/DatetimePickerAction'
-          location: '#/components/schemas/LocationAction'
-          message: '#/components/schemas/MessageAction'
-          postback: '#/components/schemas/PostbackAction'
-          richmenuswitch: '#/components/schemas/RichMenuSwitchAction'
-          uri: '#/components/schemas/URIAction'
-    PushMessageRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-push-message
-      required:
-      - messages
-      - to
-      type: object
-      properties:
-        to:
-          type: string
-          description: ID of the receiver.
-        messages:
-          description: List of Message objects.
-          maxItems: 5
+          description: ID of a rich menu
+        userIds:
+          maxItems: 500
           minItems: 1
           type: array
           items:
-            $ref: '#/components/schemas/Message'
-        notificationDisabled:
-          $ref: '#/components/schemas/NotificationDisabled'
-        customAggregationUnits:
-          description: 'List of aggregation unit name. Case-sensitive.
-
-            This functions can only be used by corporate users who have submitted the required applications.
-
-            '
-          type: array
-          items:
             type: string
-    RichMenuAliasResponse:
-      required:
-      - richMenuAliasId
-      - richMenuId
-      type: object
-      properties:
-        richMenuAliasId:
-          type: string
-          description: Rich menu alias ID.
-        richMenuId:
-          type: string
-          description: The rich menu ID associated with the rich menu alias.
-    NotificationDisabled:
-      type: boolean
-      default: false
-      description: '`true`: The user doesn’t receive a push notification when a message is sent.
-
-        `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device).
-
-        The default value is false.
-
-        '
-    GetMembershipSubscriptionResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status
-      description: A user's membership subscription status
-      required:
-      - subscriptions
-      type: object
-      properties:
-        subscriptions:
-          type: array
-          minItems: 0
-          description: List of subscription information
-          items:
-            $ref: '#/components/schemas/Subscription'
+          description: Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
     CouponResponse:
       description: Detailed information about a coupon, including all properties and current status.
       type: object
@@ -3144,15 +2290,1147 @@ components:
           - DRAFT
           - RUNNING
           - CLOSED
-    ErrorDetail:
+    RichMenuListResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list
+      required:
+      - richmenus
       type: object
       properties:
-        message:
+        richmenus:
+          type: array
+          items:
+            $ref: '#/components/schemas/RichMenuResponse'
+          description: Rich menus
+    Limit:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
+      type: object
+      description: Limit of the Narrowcast
+      properties:
+        max:
+          minimum: 1
+          type: integer
+          format: int32
+          description: 'The maximum number of narrowcast messages to send.
+
+            Use this parameter to limit the number of narrowcast messages sent.
+
+            The recipients will be chosen at random.
+
+            '
+        upToRemainingQuota:
+          type: boolean
+          default: false
+          description: 'If true, the message will be sent within the maximum number of deliverable messages. The default value is `false`.
+
+
+            Targets will be selected at random.
+
+            '
+        forbidPartialDelivery:
+          type: boolean
+          default: false
+          description: 'This option prevents messages from being delivered to only a subset of the target audience.
+
+            If true, the narrowcast request success but fails asynchronously.
+
+            You can check whether message delivery was canceled by retrieving the narrowcast message progress.
+
+
+            This property can be set to true only if upToRemainingQuota is set to true.
+
+            '
+    NarrowcastProgressResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status
+      required:
+      - phase
+      - acceptedTime
+      type: object
+      properties:
+        phase:
           type: string
-          description: Details of the error. Not included in the response under certain situations.
-        property:
+          enum:
+          - waiting
+          - sending
+          - succeeded
+          - failed
+          description: 'The current status. One of:
+
+
+            `waiting`: Messages are not yet ready to be sent. They are currently being filtered or processed in some way.
+
+            `sending`: Messages are currently being sent.
+
+            `succeeded`: Messages were sent successfully. This may not mean the messages were successfully received.
+
+            `failed`: Messages failed to be sent. Use the failedDescription property to find the cause of the failure.
+
+            '
+        successCount:
+          type: integer
+          format: int64
+          description: The number of users who successfully received the message.
+        failureCount:
+          type: integer
+          format: int64
+          description: The number of users who failed to send the message.
+        targetCount:
+          type: integer
+          format: int64
+          description: The number of intended recipients of the message.
+        failedDescription:
           type: string
-          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
+          description: The reason the message failed to be sent. This is only included with a `phase` property value of `failed`.
+        errorCode:
+          type: integer
+          format: int64
+          description: 'Error summary. This is only included with a phase property value of failed.
+
+            One of:
+
+
+            `1`: An internal error occurred.
+
+            `2`: An error occurred because there weren''t enough recipients.
+
+            `3`: A conflict error of requests occurs because a request that has already been accepted is retried.
+
+            `4`: An audience of less than 50 recipients is included as a condition of sending.
+
+            `5`: Message delivery has been canceled to prevent messages from being delivered only to a subset of the target audience.
+
+            '
+        acceptedTime:
+          type: string
+          format: date-time
+          description: 'Narrowcast message request accepted time in milliseconds.
+
+
+            Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z)
+
+            Timezone: UTC
+
+            '
+        completedTime:
+          type: string
+          format: date-time
+          description: 'Processing of narrowcast message request completion time in milliseconds. Returned when the phase property is succeeded or failed.
+
+
+            Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z)
+
+            Timezone: UTC
+
+            '
+    RichMenuAliasListResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
+      required:
+      - aliases
+      type: object
+      properties:
+        aliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/RichMenuAliasResponse'
+          description: Rich menu aliases.
+    RichMenuBatchRequest:
+      type: object
+      required:
+      - operations
+      properties:
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RichMenuBatchOperation'
+          description: Array of Rich menu operation object...
+          maxItems: 1000
+        resumeRequestKey:
+          type: string
+          description: Key for retry. Key value is a string matching the regular expression pattern
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]{1,100}$
+    MulticastRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-message
+      required:
+      - messages
+      - to
+      type: object
+      properties:
+        messages:
+          maxItems: 5
+          minItems: 1
+          type: array
+          description: Messages to send
+          items:
+            $ref: '#/components/schemas/Message'
+        to:
+          maxItems: 500
+          minItems: 1
+          type: array
+          description: Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE.
+          items:
+            type: string
+        notificationDisabled:
+          $ref: '#/components/schemas/NotificationDisabled'
+        customAggregationUnits:
+          type: array
+          maxItems: 1
+          description: Name of aggregation unit. Case-sensitive.
+          items:
+            type: string
+            maxLength: 30
+            minLength: 1
+            pattern: ^[a-zA-Z0-9_]{1,30}$
+    RichMenuSize:
+      type: object
+      description: Rich menu size
+      properties:
+        width:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int64
+          description: width
+        height:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int64
+          description: height
+    Membership:
+      required:
+      - membershipId
+      - title
+      - description
+      - benefits
+      - price
+      - currency
+      - memberCount
+      - memberLimit
+      - isInAppPurchase
+      - isPublished
+      type: object
+      properties:
+        membershipId:
+          type: integer
+          description: Membership plan ID.
+        title:
+          type: string
+          description: Membership plan name.
+        description:
+          type: string
+          description: Membership plan description.
+        benefits:
+          type: array
+          minItems: 1
+          items:
+            type: string
+          description: List of membership plan perks.
+        price:
+          type: number
+          format: double
+          example: 500.0
+          description: Monthly fee for membership plan. (e.g. 1500.00)
+        currency:
+          type: string
+          description: The currency of membership.price.
+          enum:
+          - JPY
+          - TWD
+          - THB
+        memberCount:
+          type: integer
+          example: 100
+          description: Number of members subscribed to the membership plan.
+        memberLimit:
+          type:
+          - integer
+          - 'null'
+          example: 1000
+          description: The upper limit of members who can subscribe. If no upper limit is set, it will be null.
+        isInAppPurchase:
+          type: boolean
+          description: Payment method for users who subscribe to a membership plan.
+        isPublished:
+          type: boolean
+          description: Membership plan status.
+    RoomMemberCountResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-members-room-count
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+          description: The count of members in the multi-person chat. The number returned excludes the LINE Official Account.
+    ValidateMessageRequest:
+      required:
+      - messages
+      type: object
+      properties:
+        messages:
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          description: Array of message objects to validate
+    RichMenuBounds:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#bounds-object
+      type: object
+      description: Rich menu bounds
+      properties:
+        x:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          format: int64
+          description: Horizontal position relative to the top-left corner of the area.
+        y:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+          format: int64
+          description: Vertical position relative to the top-left corner of the area.
+        width:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int64
+          description: Width of the area.
+        height:
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+          format: int64
+          description: Height of the area.
+    SubscribedMembershipPlan:
+      description: Object containing information about the membership plan.
+      type: object
+      required:
+      - membershipId
+      - title
+      - description
+      - benefits
+      - price
+      - currency
+      properties:
+        membershipId:
+          type: integer
+          description: Membership plan ID.
+        title:
+          type: string
+          description: Membership plan name.
+        description:
+          type: string
+          description: Membership plan description.
+        benefits:
+          type: array
+          minItems: 1
+          items:
+            type: string
+          description: List of membership plan perks.
+        price:
+          type: number
+          format: double
+          example: 500.0
+          description: Monthly fee for membership plan. (e.g. 1500.00)
+        currency:
+          type: string
+          description: The currency of membership.price.
+          enum:
+          - JPY
+          - TWD
+          - THB
+    GetAggregationUnitNameListResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
+      required:
+      - customAggregationUnits
+      type: object
+      properties:
+        customAggregationUnits:
+          type: array
+          items:
+            type: string
+          description: An array of strings indicating the names of aggregation units used this month.
+        next:
+          type: string
+          description: 'A continuation token to get the next array of unit names.
+
+            Returned only when there are remaining aggregation units that weren''t returned in customAggregationUnits in the original request.
+
+
+            '
+    BroadcastResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-response
+      type: object
+    CouponRewardResponse:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type of coupon. Determines the benefit provided.
+      discriminator:
+        propertyName: type
+        mapping:
+          cashBack: '#/components/schemas/CouponCashBackRewardResponse'
+          discount: '#/components/schemas/CouponDiscountRewardResponse'
+          free: '#/components/schemas/CouponFreeRewardResponse'
+          gift: '#/components/schemas/CouponGiftRewardResponse'
+          others: '#/components/schemas/CouponOthersRewardResponse'
+    ShowLoadingAnimationRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator-request-body
+      required:
+      - chatId
+      type: object
+      properties:
+        chatId:
+          type: string
+          description: User ID of the target user for whom the loading animation is to be displayed.
+        loadingSeconds:
+          type: integer
+          format: int32
+          maximum: 60
+          minimum: 5
+          description: 'The number of seconds to display the loading indicator.
+
+            It must be a multiple of 5. The maximum value is 60 seconds.
+
+            '
+    RichMenuRequest:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/RichMenuSize'
+        selected:
+          type: boolean
+          description: '`true` to display the rich menu by default. Otherwise, `false`.'
+        name:
+          type: string
+          description: Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
+          maxLength: 300
+        chatBarText:
+          type: string
+          description: Text displayed in the chat bar
+          maxLength: 14
+        areas:
+          type: array
+          description: Array of area objects which define the coordinates and size of tappable areas
+          items:
+            $ref: '#/components/schemas/RichMenuArea'
+    GroupUserProfileResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
+      required:
+      - displayName
+      - userId
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: User's display name
+        userId:
+          type: string
+          description: User ID
+        pictureUrl:
+          type: string
+          format: uri
+          description: Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
+    Sender:
+      type: object
+      description: Change icon and display name
+      properties:
+        name:
+          type: string
+          description: Display name. Certain words such as `LINE` may not be used.
+          maxLength: 20
+        iconUrl:
+          type: string
+          format: uri
+          description: URL of the image to display as an icon when sending a message
+          maxLength: 2000
+    Message:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#message-common-properties
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of message
+        quickReply:
+          $ref: '#/components/schemas/QuickReply'
+        sender:
+          $ref: '#/components/schemas/Sender'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/TextMessage'
+          textV2: '#/components/schemas/TextMessageV2'
+          sticker: '#/components/schemas/StickerMessage'
+          image: '#/components/schemas/ImageMessage'
+          video: '#/components/schemas/VideoMessage'
+          audio: '#/components/schemas/AudioMessage'
+          location: '#/components/schemas/LocationMessage'
+          imagemap: '#/components/schemas/ImagemapMessage'
+          template: '#/components/schemas/TemplateMessage'
+          flex: '#/components/schemas/FlexMessage'
+          coupon: '#/components/schemas/CouponMessage'
+    RichMenuBatchProgressPhase:
+      type: string
+      description: "The current status. One of:\n\n`ongoing`: Rich menu batch control is in progress.\n`succeeded`: Rich menu batch control is complete.\n`failed`: Rich menu batch control failed.\n          This means that the rich menu for one or more users couldn't be controlled.\n          There may also be users whose operations have been successfully completed.\n"
+      enum:
+      - ongoing
+      - succeeded
+      - failed
+    RichMenuBatchProgressResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response
+      required:
+      - phase
+      - acceptedTime
+      type: object
+      properties:
+        phase:
+          $ref: '#/components/schemas/RichMenuBatchProgressPhase'
+        acceptedTime:
+          type: string
+          format: date-time
+          description: 'The accepted time in milliseconds of the request of batch control the rich menu.
+
+
+            Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z)
+
+            Timezone: UTC
+
+            '
+        completedTime:
+          type: string
+          format: date-time
+          description: 'The completed time in milliseconds of rich menu batch control. Returned when the phase property is succeeded or failed.
+
+
+            Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z)
+
+            Timezone: UTC
+
+            '
+    UserProfileResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-profile
+      required:
+      - displayName
+      - userId
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: User's display name
+        userId:
+          type: string
+          description: User ID
+        pictureUrl:
+          type: string
+          format: uri
+          description: Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
+        statusMessage:
+          type: string
+          description: User's status message. Not included in the response if the user doesn't have a status message.
+        language:
+          type: string
+          description: User's language, as a BCP 47 language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy.
+          example: en
+    GetJoinedMembershipUsersResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids
+      description: List of users who have joined the membership
+      required:
+      - userIds
+      type: object
+      properties:
+        userIds:
+          type: array
+          maxItems: 1000
+          description: 'A list of user IDs who joined the membership.
+
+            Users who have not agreed to the bot user agreement, are not following the bot, or are not active will be excluded.
+
+            If there are no users in the membership, an empty list will be returned.
+
+            '
+          items:
+            type: string
+        next:
+          type: string
+          description: 'A continuation token to get next remaining membership user IDs.
+
+            Returned only when there are remaining user IDs that weren''t returned in the userIds property in the previous request.
+
+            The continuation token expires in 24 hours (86,400 seconds).
+
+
+            '
+    NarrowcastRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message
+      required:
+      - messages
+      type: object
+      properties:
+        messages:
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          description: List of Message objects.
+        recipient:
+          $ref: '#/components/schemas/Recipient'
+        filter:
+          $ref: '#/components/schemas/Filter'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        notificationDisabled:
+          $ref: '#/components/schemas/NotificationDisabled'
+    MarkMessagesAsReadRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
+      required:
+      - chat
+      type: object
+      properties:
+        chat:
+          $ref: '#/components/schemas/ChatReference'
+    RoomUserProfileResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile
+      required:
+      - displayName
+      - userId
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: User's display name
+        userId:
+          type: string
+          description: User ID
+        pictureUrl:
+          type: string
+          format: uri
+          description: Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
+    MarkMessagesAsReadByTokenRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#mark-as-read-request-body
+      required:
+      - markAsReadToken
+      type: object
+      properties:
+        markAsReadToken:
+          type: string
+          description: Token used to mark messages as read.
+    MessageQuotaResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-quota
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/QuotaType'
+        value:
+          type: integer
+          format: int64
+          description: 'The target limit for sending messages in the current month. This property is returned when the `type` property has a value of `limited`.
+
+            '
+    TestWebhookEndpointResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
+      required:
+      - statusCode
+      - timestamp
+      - reason
+      - detail
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Result of the communication from the LINE platform to the webhook URL.
+        timestamp:
+          type: string
+          format: date-time
+          description: 'Time of the event in milliseconds. Even in the case of a redelivered webhook, it represents the time the event occurred, not the time it was redelivered.
+
+            '
+        statusCode:
+          type: integer
+          format: int32
+          description: The HTTP status code. If the webhook response isn't received, the status code is set to zero or a negative number.
+        reason:
+          type: string
+          description: Reason for the response.
+        detail:
+          type: string
+          description: Details of the response.
+    ReplyMessageRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-reply-message
+      required:
+      - messages
+      - replyToken
+      type: object
+      properties:
+        replyToken:
+          type: string
+          description: replyToken received via webhook.
+        messages:
+          description: List of messages.
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        notificationDisabled:
+          $ref: '#/components/schemas/NotificationDisabled'
+    CouponRewardRequest:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type of coupon. Determines the benefit provided.
+      discriminator:
+        propertyName: type
+        mapping:
+          cashBack: '#/components/schemas/CouponCashBackRewardRequest'
+          discount: '#/components/schemas/CouponDiscountRewardRequest'
+          free: '#/components/schemas/CouponFreeRewardRequest'
+          gift: '#/components/schemas/CouponGiftRewardRequest'
+          others: '#/components/schemas/CouponOthersRewardRequest'
+    Subscription:
+      description: An array of memberships.
+      required:
+      - membership
+      - user
+      type: object
+      properties:
+        membership:
+          $ref: '#/components/schemas/SubscribedMembershipPlan'
+        user:
+          $ref: '#/components/schemas/SubscribedMembershipUser'
+    PushMessageRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-push-message
+      required:
+      - messages
+      - to
+      type: object
+      properties:
+        to:
+          type: string
+          description: ID of the receiver.
+        messages:
+          description: List of Message objects.
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        notificationDisabled:
+          $ref: '#/components/schemas/NotificationDisabled'
+        customAggregationUnits:
+          description: 'List of aggregation unit name. Case-sensitive.
+
+            This functions can only be used by corporate users who have submitted the required applications.
+
+            '
+          type: array
+          items:
+            type: string
+    Recipient:
+      type: object
+      description: Recipient
+      properties:
+        type:
+          description: Type of recipient
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          operator: '#/components/schemas/OperatorRecipient'
+          audience: '#/components/schemas/AudienceRecipient'
+          redelivery: '#/components/schemas/RedeliveryRecipient'
+    Filter:
+      type: object
+      description: Filter for narrowcast
+      properties:
+        demographic:
+          $ref: '#/components/schemas/DemographicFilter'
+    CouponListResponse:
+      description: Summary information about a coupon, used in coupon lists.
+      required:
+      - couponId
+      - title
+      type: object
+      properties:
+        couponId:
+          type: string
+          description: Unique identifier of the coupon.
+        title:
+          type: string
+          description: Title of the coupon. Displayed in the coupon list.
+    UpdateRichMenuAliasRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias
+      required:
+      - richMenuId
+      type: object
+      properties:
+        richMenuId:
+          type: string
+          description: The rich menu ID to be associated with the rich menu alias.
+    ShowLoadingAnimationResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator-response
+      type: object
+    DemographicFilter:
+      type: object
+      description: Demographic filter
+      properties:
+        type:
+          type: string
+          description: Type of demographic filter
+      discriminator:
+        propertyName: type
+        mapping:
+          age: '#/components/schemas/AgeDemographicFilter'
+          appType: '#/components/schemas/AppTypeDemographicFilter'
+          area: '#/components/schemas/AreaDemographicFilter'
+          gender: '#/components/schemas/GenderDemographicFilter'
+          operator: '#/components/schemas/OperatorDemographicFilter'
+          subscriptionPeriod: '#/components/schemas/SubscriptionPeriodDemographicFilter'
+    AcquisitionConditionRequest:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Determines how the coupon is distributed or used.
+      discriminator:
+        propertyName: type
+        mapping:
+          normal: '#/components/schemas/NormalAcquisitionConditionRequest'
+          lottery: '#/components/schemas/LotteryAcquisitionConditionRequest'
+    QuotaType:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-quota
+      type: string
+      enum:
+      - none
+      - limited
+      description: One of the following values to indicate whether a target limit is set or not.
+    GetWebhookEndpointResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
+      required:
+      - endpoint
+      - active
+      type: object
+      properties:
+        endpoint:
+          type: string
+          format: uri
+          description: Webhook URL
+        active:
+          type: boolean
+          description: 'Webhook usage status. Send a webhook event from the LINE Platform to the webhook URL only if enabled.
+
+
+            `true`: Webhook usage is enabled.
+
+            `false`: Webhook usage is disabled.
+
+            '
+    RichMenuAliasResponse:
+      required:
+      - richMenuAliasId
+      - richMenuId
+      type: object
+      properties:
+        richMenuAliasId:
+          type: string
+          description: Rich menu alias ID.
+        richMenuId:
+          type: string
+          description: The rich menu ID associated with the rich menu alias.
+    RichMenuBulkUnlinkRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users
+      required:
+      - userIds
+      type: object
+      properties:
+        userIds:
+          maxItems: 500
+          minItems: 1
+          type: array
+          items:
+            type: string
+          description: Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
+    GetAggregationUnitUsageResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
+      required:
+      - numOfCustomAggregationUnits
+      type: object
+      properties:
+        numOfCustomAggregationUnits:
+          type: integer
+          format: int64
+          description: Number of aggregation units used this month.
+    QuickReplyItem:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#items-object
+      type: object
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the icon that is displayed at the beginning of the button
+          maxLength: 2000
+        action:
+          $ref: '#/components/schemas/Action'
+        type:
+          type: string
+          description: '`action`'
+          default: action
+    MembersIdsResponse:
+      required:
+      - memberIds
+      type: object
+      properties:
+        memberIds:
+          type: array
+          description: List of user IDs of members in the group chat. Only users of LINE for iOS and LINE for Android are included in `memberIds`.
+          items:
+            type: string
+          maxItems: 100
+        next:
+          type: string
+          description: 'A continuation token to get the next array of user IDs of the members in the group chat.
+
+            Returned only when there are remaining user IDs that were not returned in `memberIds` in the original request.
+
+            '
+    NotificationDisabled:
+      type: boolean
+      default: false
+      description: '`true`: The user doesn’t receive a push notification when a message is sent.
+
+        `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device).
+
+        The default value is false.
+
+        '
+    RichMenuArea:
+      type: object
+      description: Rich menu area
+      properties:
+        bounds:
+          $ref: '#/components/schemas/RichMenuBounds'
+        action:
+          $ref: '#/components/schemas/Action'
+    QuotaConsumptionResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-consumption
+      required:
+      - totalUsage
+      type: object
+      properties:
+        totalUsage:
+          type: integer
+          format: int64
+          description: The number of sent messages in the current month
+    TestWebhookEndpointRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint
+      type: object
+      properties:
+        endpoint:
+          maxLength: 500
+          minLength: 0
+          type: string
+          format: uri
+          description: A webhook URL to be validated.
+    ChatReference:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
+      required:
+      - userId
+      type: object
+      description: Chat reference
+      properties:
+        userId:
+          type: string
+          description: The target user ID
+    Action:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#action-objects
+      description: Action
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of action
+        label:
+          type: string
+          description: Label for the action.
+      discriminator:
+        propertyName: type
+        mapping:
+          camera: '#/components/schemas/CameraAction'
+          cameraRoll: '#/components/schemas/CameraRollAction'
+          clipboard: '#/components/schemas/ClipboardAction'
+          datetimepicker: '#/components/schemas/DatetimePickerAction'
+          location: '#/components/schemas/LocationAction'
+          message: '#/components/schemas/MessageAction'
+          postback: '#/components/schemas/PostbackAction'
+          richmenuswitch: '#/components/schemas/RichMenuSwitchAction'
+          uri: '#/components/schemas/URIAction'
+    CouponCreateRequest:
+      description: Request object for creating a coupon. Contains all configurable coupon properties.
+      required:
+      - acquisitionCondition
+      - endTimestamp
+      - maxUseCountPerTicket
+      - startTimestamp
+      - title
+      - visibility
+      - timezone
+      type: object
+      properties:
+        acquisitionCondition:
+          $ref: '#/components/schemas/AcquisitionConditionRequest'
+        barcodeImageUrl:
+          type: string
+          description: URL of the barcode image associated with the coupon. Used for in-store redemption.
+        couponCode:
+          type: string
+          description: Unique code to be presented by the user to redeem the coupon. Optional.
+        description:
+          maxLength: 1000
+          minLength: 0
+          type: string
+          description: Detailed description of the coupon. Displayed to users.
+        endTimestamp:
+          type: integer
+          format: int64
+          description: Coupon expiration time (epoch seconds). Coupon cannot be used after this time.
+        imageUrl:
+          type: string
+          description: URL of the main image representing the coupon. Displayed in the coupon list.
+        maxUseCountPerTicket:
+          type: integer
+          format: int32
+          maximum: 1
+          description: Maximum number of times a single coupon ticket can be used. Use -1 to indicate no limit.
+        startTimestamp:
+          type: integer
+          format: int64
+          description: Coupon start time (epoch seconds). Coupon can be used from this time.
+        title:
+          maxLength: 60
+          minLength: 1
+          type: string
+          description: Title of the coupon. Displayed in the coupon list.
+        usageCondition:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: Conditions for using the coupon. Shown to users.
+        reward:
+          $ref: '#/components/schemas/CouponRewardRequest'
+        visibility:
+          type: string
+          description: Visibility of the coupon. Determines who can see or acquire the coupon.
+          enum:
+          - UNLISTED
+          - PUBLIC
+        timezone:
+          type: string
+          description: Timezone for interpreting start and end timestamps.
+          enum:
+          - ETC_GMT_MINUS_12
+          - ETC_GMT_MINUS_11
+          - PACIFIC_HONOLULU
+          - AMERICA_ANCHORAGE
+          - AMERICA_LOS_ANGELES
+          - AMERICA_PHOENIX
+          - AMERICA_CHICAGO
+          - AMERICA_NEW_YORK
+          - AMERICA_CARACAS
+          - AMERICA_SANTIAGO
+          - AMERICA_ST_JOHNS
+          - AMERICA_SAO_PAULO
+          - ETC_GMT_MINUS_2
+          - ATLANTIC_CAPE_VERDE
+          - EUROPE_LONDON
+          - EUROPE_PARIS
+          - EUROPE_ISTANBUL
+          - EUROPE_MOSCOW
+          - ASIA_TEHRAN
+          - ASIA_TBILISI
+          - ASIA_KABUL
+          - ASIA_TASHKENT
+          - ASIA_COLOMBO
+          - ASIA_KATHMANDU
+          - ASIA_ALMATY
+          - ASIA_RANGOON
+          - ASIA_BANGKOK
+          - ASIA_TAIPEI
+          - ASIA_TOKYO
+          - AUSTRALIA_DARWIN
+          - AUSTRALIA_SYDNEY
+          - ASIA_VLADIVOSTOK
+          - ETC_GMT_PLUS_12
+          - PACIFIC_TONGATAPU
+    PnpMessagesRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message
+      required:
+      - messages
+      - to
+      type: object
+      properties:
+        messages:
+          maxItems: 5
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          description: Message to be sent.
+        to:
+          type: string
+          description: Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256.
+        notificationDisabled:
+          $ref: '#/components/schemas/NotificationDisabled'
     BotInfoResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-bot-info
@@ -3207,61 +3485,23 @@ components:
 
 
             '
-    RichMenuIdResponse:
+    MessagingApiPagerCouponListResponse:
+      description: Paginated response object containing a list of coupons.
       required:
-      - richMenuId
+      - items
       type: object
       properties:
-        richMenuId:
-          type: string
-          description: Rich menu ID
-    AcquisitionConditionResponse:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          description: Determines how the coupon is distributed or used.
-      discriminator:
-        propertyName: type
-        mapping:
-          normal: '#/components/schemas/NormalAcquisitionConditionResponse'
-          lottery: '#/components/schemas/LotteryAcquisitionConditionResponse'
-          referral: '#/components/schemas/ReferralAcquisitionConditionResponse'
-    MembershipListResponse:
-      description: List of memberships
-      required:
-      - memberships
-      type: object
-      properties:
-        memberships:
+        items:
           type: array
-          minItems: 0
-          description: List of membership information
           items:
-            $ref: '#/components/schemas/Membership'
-    GroupUserProfileResponse:
+            $ref: '#/components/schemas/CouponListResponse'
+          description: List of coupon summary objects.
+        next:
+          type: string
+          description: Token for fetching the next page of results.
+    ReplyMessageResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile
-      required:
-      - displayName
-      - userId
-      type: object
-      properties:
-        displayName:
-          type: string
-          description: User's display name
-        userId:
-          type: string
-          description: User ID
-        pictureUrl:
-          type: string
-          format: uri
-          description: Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
-    PushMessageResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-push-message-response
+        url: https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response
       required:
       - sentMessages
       type: object
@@ -3273,67 +3513,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SentMessage'
-    ChatReference:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
-      required:
-      - userId
-      type: object
-      description: Chat reference
-      properties:
-        userId:
-          type: string
-          description: The target user ID
-    GetJoinedMembershipUsersResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids
-      description: List of users who have joined the membership
-      required:
-      - userIds
-      type: object
-      properties:
-        userIds:
-          type: array
-          maxItems: 1000
-          description: 'A list of user IDs who joined the membership.
-
-            Users who have not agreed to the bot user agreement, are not following the bot, or are not active will be excluded.
-
-            If there are no users in the membership, an empty list will be returned.
-
-            '
-          items:
-            type: string
-        next:
-          type: string
-          description: 'A continuation token to get next remaining membership user IDs.
-
-            Returned only when there are remaining user IDs that weren''t returned in the userIds property in the previous request.
-
-            The continuation token expires in 24 hours (86,400 seconds).
-
-
-            '
-    RichMenuBatchProgressPhase:
-      type: string
-      description: "The current status. One of:\n\n`ongoing`: Rich menu batch control is in progress.\n`succeeded`: Rich menu batch control is complete.\n`failed`: Rich menu batch control failed.\n          This means that the rich menu for one or more users couldn't be controlled.\n          There may also be users whose operations have been successfully completed.\n"
-      enum:
-      - ongoing
-      - succeeded
-      - failed
-    AcquisitionConditionRequest:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          description: Determines how the coupon is distributed or used.
-      discriminator:
-        propertyName: type
-        mapping:
-          normal: '#/components/schemas/NormalAcquisitionConditionRequest'
-          lottery: '#/components/schemas/LotteryAcquisitionConditionRequest'
     IssueLinkTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-link-token
@@ -3349,120 +3528,89 @@ components:
 
 
             '
-    MessageQuotaResponse:
+    RichMenuResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-quota
+        url: https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object
       required:
-      - type
+      - richMenuId
+      - size
+      - selected
+      - name
+      - chatBarText
+      - areas
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/QuotaType'
-        value:
-          type: integer
-          format: int64
-          description: 'The target limit for sending messages in the current month. This property is returned when the `type` property has a value of `limited`.
-
-            '
-    GetWebhookEndpointResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information
-      required:
-      - endpoint
-      - active
-      type: object
-      properties:
-        endpoint:
+        richMenuId:
           type: string
-          format: uri
-          description: Webhook URL
-        active:
+          description: ID of a rich menu
+        size:
+          $ref: '#/components/schemas/RichMenuSize'
+        selected:
           type: boolean
-          description: 'Webhook usage status. Send a webhook event from the LINE Platform to the webhook URL only if enabled.
-
-
-            `true`: Webhook usage is enabled.
-
-            `false`: Webhook usage is disabled.
-
-            '
-    MarkMessagesAsReadByTokenRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#mark-as-read-request-body
-      required:
-      - markAsReadToken
-      type: object
-      properties:
-        markAsReadToken:
+          description: '`true` to display the rich menu by default. Otherwise, `false`.'
+        name:
           type: string
-          description: Token used to mark messages as read.
-    RichMenuAliasListResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list
-      required:
-      - aliases
-      type: object
-      properties:
-        aliases:
+          description: Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
+          maxLength: 300
+        chatBarText:
+          type: string
+          description: Text displayed in the chat bar
+          maxLength: 14
+        areas:
           type: array
           items:
-            $ref: '#/components/schemas/RichMenuAliasResponse'
-          description: Rich menu aliases.
-    RichMenuBulkUnlinkRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users
+            $ref: '#/components/schemas/RichMenuArea'
+          description: Array of area objects which define the coordinates and size of tappable areas
+          maxItems: 20
+    RichMenuIdResponse:
       required:
-      - userIds
+      - richMenuId
       type: object
       properties:
-        userIds:
-          maxItems: 500
+        richMenuId:
+          type: string
+          description: Rich menu ID
+    SentMessage:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the sent message.
+        quoteToken:
+          type: string
+          description: 'Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push or reply message.
+
+            '
+    PushMessageResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-push-message-response
+      required:
+      - sentMessages
+      type: object
+      properties:
+        sentMessages:
+          description: Array of sent messages.
+          maxItems: 5
           minItems: 1
           type: array
           items:
-            type: string
-          description: Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-    GetAggregationUnitUsageResponse:
+            $ref: '#/components/schemas/SentMessage'
+    GetMembershipSubscriptionResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month
+        url: https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status
+      description: A user's membership subscription status
       required:
-      - numOfCustomAggregationUnits
+      - subscriptions
       type: object
       properties:
-        numOfCustomAggregationUnits:
-          type: integer
-          format: int64
-          description: Number of aggregation units used this month.
-    RichMenuBounds:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#bounds-object
-      type: object
-      description: Rich menu bounds
-      properties:
-        x:
-          maximum: 2147483647
-          minimum: 0
-          type: integer
-          format: int64
-          description: Horizontal position relative to the top-left corner of the area.
-        y:
-          maximum: 2147483647
-          minimum: 0
-          type: integer
-          format: int64
-          description: Vertical position relative to the top-left corner of the area.
-        width:
-          maximum: 2147483647
-          minimum: 1
-          type: integer
-          format: int64
-          description: Width of the area.
-        height:
-          maximum: 2147483647
-          minimum: 1
-          type: integer
-          format: int64
-          description: Height of the area.
+        subscriptions:
+          type: array
+          minItems: 0
+          description: List of subscription information
+          items:
+            $ref: '#/components/schemas/Subscription'
     ErrorResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#error-responses
@@ -3485,6 +3633,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SentMessage'
+    MulticastResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-response
+      type: object
     CouponCreateResponse:
       description: Response object returned after creating a coupon. Contains the coupon ID.
       required:
@@ -3494,183 +3646,147 @@ components:
         couponId:
           type: string
           description: Unique identifier of the coupon.
-    MarkMessagesAsReadRequest:
+    GroupMemberCountResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read
+        url: https://developers.line.biz/en/reference/messaging-api/#get-members-group-count
       required:
-      - chat
+      - count
       type: object
       properties:
-        chat:
-          $ref: '#/components/schemas/ChatReference'
-    RichMenuBatchProgressResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response
+        count:
+          type: integer
+          format: int32
+          description: The count of members in the group chat. The number returned excludes the LINE Official Account.
+    MembershipListResponse:
+      description: List of memberships
       required:
-      - phase
-      - acceptedTime
+      - memberships
       type: object
       properties:
-        phase:
-          $ref: '#/components/schemas/RichMenuBatchProgressPhase'
-        acceptedTime:
-          type: string
-          format: date-time
-          description: 'The accepted time in milliseconds of the request of batch control the rich menu.
-
-
-            Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z)
-
-            Timezone: UTC
-
-            '
-        completedTime:
-          type: string
-          format: date-time
-          description: 'The completed time in milliseconds of rich menu batch control. Returned when the phase property is succeeded or failed.
-
-
-            Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z)
-
-            Timezone: UTC
-
-            '
-    ReplyMessageRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-reply-message
-      required:
-      - messages
-      - replyToken
-      type: object
-      properties:
-        replyToken:
-          type: string
-          description: replyToken received via webhook.
-        messages:
-          description: List of messages.
-          maxItems: 5
-          minItems: 1
+        memberships:
           type: array
+          minItems: 0
+          description: List of membership information
           items:
-            $ref: '#/components/schemas/Message'
-        notificationDisabled:
-          $ref: '#/components/schemas/NotificationDisabled'
-    Sender:
+            $ref: '#/components/schemas/Membership'
+    CreateRichMenuAliasRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias
+      required:
+      - richMenuAliasId
+      - richMenuId
       type: object
-      description: Change icon and display name
       properties:
-        name:
+        richMenuAliasId:
           type: string
-          description: Display name. Certain words such as `LINE` may not be used.
-          maxLength: 20
-        iconUrl:
+          description: Rich menu alias ID, which can be any ID, unique for each channel.
+          maxLength: 32
+          minLength: 1
+          pattern: ^[a-z0-9_-]{1,32}$
+        richMenuId:
+          type: string
+          description: The rich menu ID to be associated with the rich menu alias.
+    RichMenuBatchOperation:
+      description: Rich menu operation object represents the batch operation to the rich menu linked to the user.
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users-operations
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll.
+      discriminator:
+        propertyName: type
+        mapping:
+          link: '#/components/schemas/RichMenuBatchLinkOperation'
+          unlink: '#/components/schemas/RichMenuBatchUnlinkOperation'
+          unlinkAll: '#/components/schemas/RichMenuBatchUnlinkAllOperation'
+    NumberOfMessagesResponse:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ready
+          - unready
+          - unavailable_for_privacy
+          - out_of_service
+          description: 'Aggregation process status. One of:
+
+
+            `ready`: The number of messages can be obtained.
+
+            `unready`: We haven''t finished calculating the number of sent messages for the specified in date. For example, this property is returned when the delivery date or a future date is specified. Calculation usually takes about a day.
+
+            `unavailable_for_privacy`: The total number of messages on the specified day is less than 20.
+
+            `out_of_service`: The specified date is earlier than the date on which we first started calculating sent messages (March 31, 2018).
+
+            '
+        success:
+          type: integer
+          format: int64
+          description: 'The number of messages delivered using the phone number on the date specified in `date`.
+
+            The response has this property only when the value of `status` is `ready`.
+
+
+            '
+    GroupSummaryResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-group-summary
+      required:
+      - groupId
+      - groupName
+      type: object
+      properties:
+        groupId:
+          type: string
+          description: Group ID
+        groupName:
+          type: string
+          description: Group name
+        pictureUrl:
           type: string
           format: uri
-          description: URL of the image to display as an icon when sending a message
-          maxLength: 2000
-    Filter:
-      type: object
-      description: Filter for narrowcast
-      properties:
-        demographic:
-          $ref: '#/components/schemas/DemographicFilter'
-    Message:
+          description: Group icon URL. Not included in the response if the user doesn't set a group profile icon.
+    NarrowcastResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#message-common-properties
+        url: https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-response
+      type: object
+    SetWebhookEndpointRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url
       required:
-      - type
+      - endpoint
       type: object
       properties:
-        type:
+        endpoint:
+          maxLength: 500
+          minLength: 0
           type: string
-          description: Type of message
-        quickReply:
-          $ref: '#/components/schemas/QuickReply'
-        sender:
-          $ref: '#/components/schemas/Sender'
-      discriminator:
-        propertyName: type
-        mapping:
-          text: '#/components/schemas/TextMessage'
-          textV2: '#/components/schemas/TextMessageV2'
-          sticker: '#/components/schemas/StickerMessage'
-          image: '#/components/schemas/ImageMessage'
-          video: '#/components/schemas/VideoMessage'
-          audio: '#/components/schemas/AudioMessage'
-          location: '#/components/schemas/LocationMessage'
-          imagemap: '#/components/schemas/ImagemapMessage'
-          template: '#/components/schemas/TemplateMessage'
-          flex: '#/components/schemas/FlexMessage'
-          coupon: '#/components/schemas/CouponMessage'
-    MulticastRequest:
+          format: uri
+          description: A valid webhook URL.
+    BroadcastRequest:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#send-multicast-message
+        url: https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message
       required:
       - messages
-      - to
       type: object
       properties:
         messages:
           maxItems: 5
           minItems: 1
           type: array
-          description: Messages to send
           items:
             $ref: '#/components/schemas/Message'
-        to:
-          maxItems: 500
-          minItems: 1
-          type: array
-          description: Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE.
-          items:
-            type: string
+          description: List of Message objects.
         notificationDisabled:
           $ref: '#/components/schemas/NotificationDisabled'
-        customAggregationUnits:
-          type: array
-          maxItems: 1
-          description: Name of aggregation unit. Case-sensitive.
-          items:
-            type: string
-            maxLength: 30
-            minLength: 1
-            pattern: ^[a-zA-Z0-9_]{1,30}$
-    GetAggregationUnitNameListResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month
-      required:
-      - customAggregationUnits
-      type: object
-      properties:
-        customAggregationUnits:
-          type: array
-          items:
-            type: string
-          description: An array of strings indicating the names of aggregation units used this month.
-        next:
-          type: string
-          description: 'A continuation token to get the next array of unit names.
-
-            Returned only when there are remaining aggregation units that weren''t returned in customAggregationUnits in the original request.
-
-
-            '
-    CouponRewardRequest:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          description: Type of coupon. Determines the benefit provided.
-      discriminator:
-        propertyName: type
-        mapping:
-          cashBack: '#/components/schemas/CouponCashBackRewardRequest'
-          discount: '#/components/schemas/CouponDiscountRewardRequest'
-          free: '#/components/schemas/CouponFreeRewardRequest'
-          gift: '#/components/schemas/CouponGiftRewardRequest'
-          others: '#/components/schemas/CouponOthersRewardRequest'
   securitySchemes:
     Bearer:
       type: http

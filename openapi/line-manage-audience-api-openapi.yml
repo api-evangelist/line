@@ -40,6 +40,8 @@ paths:
                 permission: READ_WRITE
                 expireTimestamp: 1629250278
                 isIfaAudience: false
+      summary: Create audience group
+      x-summary-source: derived
     put:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
@@ -56,6 +58,8 @@ paths:
       responses:
         '202':
           description: OK
+      summary: Add audience to audience group
+      x-summary-source: derived
   /v2/bot/audienceGroup/click:
     post:
       externalDocs:
@@ -88,6 +92,8 @@ paths:
                 isIfaAudience: false
                 requestId: bb9744f9-47fa-4a29-941e-1234567890ab
                 clickUrl: https://developers.line.biz/
+      summary: Create click based audience group
+      x-summary-source: derived
   /v2/bot/audienceGroup/imp:
     post:
       externalDocs:
@@ -119,6 +125,8 @@ paths:
                 expireTimestamp: 1629259095
                 isIfaAudience: false
                 requestId: bb9744f9-47fa-4a29-941e-1234567890ab
+      summary: Create imp based audience group
+      x-summary-source: derived
   /v2/bot/audienceGroup/{audienceGroupId}/updateDescription:
     put:
       externalDocs:
@@ -144,6 +152,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Update audience group description
+      x-summary-source: derived
   /v2/bot/audienceGroup/{audienceGroupId}:
     parameters:
     - name: audienceGroupId
@@ -163,6 +173,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Delete audience group
+      x-summary-source: derived
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
@@ -247,6 +259,8 @@ paths:
                 message: audience group not found
                 details:
                 - message: AUDIENCE_GROUP_NOT_FOUND
+      summary: Get audience data
+      x-summary-source: derived
   /v2/bot/audienceGroup/list:
     get:
       externalDocs:
@@ -372,6 +386,8 @@ paths:
                     readWriteAudienceGroupTotalCount: 0
                     size: 40
                     page: 1
+      summary: Get audience groups
+      x-summary-source: derived
   /v2/bot/audienceGroup/shared/{audienceGroupId}:
     parameters:
     - name: audienceGroupId
@@ -467,6 +483,8 @@ paths:
                 message: audience group not found
                 details:
                 - message: AUDIENCE_GROUP_NOT_FOUND
+      summary: Get shared audience data
+      x-summary-source: derived
   /v2/bot/audienceGroup/shared/list:
     get:
       externalDocs:
@@ -592,39 +610,116 @@ paths:
                     readWriteAudienceGroupTotalCount: 0
                     size: 40
                     page: 1
+      summary: Get shared audience groups
+      x-summary-source: derived
 components:
   schemas:
-    AudienceGroupJob:
+    AudienceGroupStatus:
+      description: Status
+      type: string
+      enum:
+      - IN_PROGRESS
+      - READY
+      - FAILED
+      - EXPIRED
+      - INACTIVE
+      - ACTIVATING
+    AudienceGroupJobType:
+      description: Job Type
+      type: string
+      enum:
+      - DIFF_ADD
+    AudienceGroupJobFailedType:
+      description: Failed type
+      type: string
+      enum:
+      - INTERNAL_ERROR
+      - AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT
+    CreateClickBasedAudienceGroupRequest:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-      description: Audience group job
+        url: https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
       type: object
+      description: Create audience for click-based retargeting
       properties:
-        audienceGroupJobId:
-          type: integer
-          format: int64
-          description: A job ID.
-        audienceGroupId:
-          type: integer
-          format: int64
-          description: An audience ID.
         description:
           type: string
-          description: The job's description.
-        type:
-          $ref: '#/components/schemas/AudienceGroupJobType'
-        jobStatus:
-          $ref: '#/components/schemas/AudienceGroupJobStatus'
-        failedType:
-          $ref: '#/components/schemas/AudienceGroupJobFailedType'
-        audienceCount:
-          type: integer
-          format: int64
-          description: The number of accounts (recipients) that were added or removed.
-        created:
-          type: integer
-          format: int64
-          description: When the job was created (in UNIX time).
+          description: 'The audience''s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
+
+            Max character limit: 120
+
+            '
+          maxLength: 120
+        requestId:
+          type: string
+          description: 'The request ID of a broadcast or narrowcast message sent in the past 60 days.
+
+            Each Messaging API request has a request ID.
+
+            '
+        clickUrl:
+          type: string
+          format: uri
+          description: 'The URL clicked by the user. If empty, users who clicked any URL in the message are added to the list of recipients.
+
+            Max character limit: 2,000
+
+            '
+          maxLength: 2000
+    Audience:
+      description: Audience
+      type: object
+      properties:
+        id:
+          type: string
+          description: A user ID or IFA. You can specify an empty array.
+    ErrorDetail:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Details of the error. Not included in the response under certain situations.
+        property:
+          type: string
+          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
+    GetSharedAudienceDataResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
+      type: object
+      description: Get audience data
+      properties:
+        audienceGroup:
+          $ref: '#/components/schemas/AudienceGroup'
+        jobs:
+          type: array
+          description: 'An array of jobs.
+
+            This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs.
+
+            Empty array is returned for any other type of audience.
+
+            Max: 50
+
+            '
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/AudienceGroupJob'
+        owner:
+          $ref: '#/components/schemas/DetailedOwner'
+    UpdateAudienceGroupDescriptionRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group
+      type: object
+      description: Rename an audience
+      properties:
+        description:
+          type: string
+          description: 'The audience''s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
+
+            Max character limit: 120
+
+            '
+          maxLength: 120
+          minLength: 1
     AddAudienceToAudienceGroupRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group
@@ -644,6 +739,120 @@ components:
           items:
             $ref: '#/components/schemas/Audience'
           maxItems: 10000
+    GetSharedAudienceGroupsResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
+      type: object
+      description: Gets data for more than one audience.
+      properties:
+        audienceGroups:
+          description: An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned.
+          type: array
+          items:
+            $ref: '#/components/schemas/AudienceGroup'
+        hasNextPage:
+          type: boolean
+          description: true when this is not the last page.
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of audiences that can be returned with the specified filter.
+        readWriteAudienceGroupTotalCount:
+          type: integer
+          format: int64
+          description: Of the audiences you can get with the specified filter, the number of audiences with the update permission set to READ_WRITE.
+        page:
+          type: integer
+          format: int64
+          description: The current page number.
+        size:
+          type: integer
+          format: int64
+          description: The maximum number of audiences on the current page.
+    AudienceGroupFailedType:
+      description: Failed type
+      type:
+      - string
+      - 'null'
+      enum:
+      - AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT
+      - INTERNAL_ERROR
+    CreateImpBasedAudienceGroupRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
+      type: object
+      description: Create audience for impression-based retargeting
+      properties:
+        description:
+          type: string
+          description: 'The audience''s name.
+
+            This is case-insensitive, meaning `AUDIENCE` and `audience` are considered identical.
+
+            Max character limit: 120
+
+            '
+          maxLength: 120
+          minLength: 1
+        requestId:
+          type: string
+          description: 'The request ID of a broadcast or narrowcast message sent in the past 60 days.
+
+            Each Messaging API request has a request ID.
+
+            '
+    CreateImpBasedAudienceGroupResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
+      type: object
+      description: Create audience for impression-based retargeting
+      properties:
+        audienceGroupId:
+          type: integer
+          format: int64
+          description: The audience ID.
+        type:
+          $ref: '#/components/schemas/AudienceGroupType'
+        description:
+          type: string
+          description: The audience's name.
+        created:
+          type: integer
+          format: int64
+          description: When the audience was created (in UNIX time).
+        requestId:
+          type: string
+          description: The request ID that was specified when the audience was created.
+    GetAudienceGroupsResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
+      type: object
+      description: Gets data for more than one audience.
+      properties:
+        audienceGroups:
+          description: An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned.
+          type: array
+          items:
+            $ref: '#/components/schemas/AudienceGroup'
+        hasNextPage:
+          type: boolean
+          description: true when this is not the last page.
+        totalCount:
+          type: integer
+          format: int64
+          description: The total number of audiences that can be returned with the specified filter.
+        readWriteAudienceGroupTotalCount:
+          type: integer
+          format: int64
+          description: Of the audiences you can get with the specified filter, the number of audiences with the update permission set to READ_WRITE.
+        page:
+          type: integer
+          format: int64
+          description: The current page number.
+        size:
+          type: integer
+          format: int64
+          description: The maximum number of audiences on the current page.
     CreateAudienceGroupResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
@@ -702,6 +911,73 @@ components:
             `false` (default): Accounts are specified with user IDs.
 
             '
+    Adaccount:
+      description: Adaccount
+      type: object
+      properties:
+        name:
+          type: string
+          description: Ad account name.
+    GetAudienceDataResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
+      type: object
+      description: Get audience data
+      properties:
+        audienceGroup:
+          $ref: '#/components/schemas/AudienceGroup'
+        jobs:
+          type: array
+          description: 'An array of jobs.
+
+            This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs.
+
+            Empty array is returned for any other type of audience.
+
+            Max: 50
+
+            '
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/AudienceGroupJob'
+        adaccount:
+          $ref: '#/components/schemas/Adaccount'
+    CreateAudienceGroupRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
+      type: object
+      description: Create audience for uploading user IDs (by JSON)
+      properties:
+        description:
+          type: string
+          description: 'The audience''s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
+
+            Max character limit: 120
+
+            '
+          maxLength: 120
+        isIfaAudience:
+          type: boolean
+          description: 'To specify recipients by IFAs: set true.
+
+            To specify recipients by user IDs: set false or omit isIfaAudience property.
+
+            '
+        uploadDescription:
+          type: string
+          description: 'The description to register for the job (in jobs[].description).
+
+            '
+        audiences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Audience'
+          description: 'An array of user IDs or IFAs.
+
+            Max number: 10,000
+
+            '
+          maxItems: 10000
     DetailedOwner:
       description: Owner of this audience group.
       type: object
@@ -717,46 +993,29 @@ components:
         name:
           type: string
           description: Owner account name.
-    AudienceGroupStatus:
-      description: Status
+    AudienceGroupJobStatus:
+      description: Job status
       type: string
       enum:
-      - IN_PROGRESS
-      - READY
+      - QUEUED
+      - WORKING
+      - FINISHED
       - FAILED
-      - EXPIRED
-      - INACTIVE
-      - ACTIVATING
-    GetAudienceGroupsResponse:
+    ErrorResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
+        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
       type: object
-      description: Gets data for more than one audience.
+      required:
+      - message
       properties:
-        audienceGroups:
-          description: An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned.
+        message:
+          type: string
+          description: Message containing information about the error.
+        details:
           type: array
           items:
-            $ref: '#/components/schemas/AudienceGroup'
-        hasNextPage:
-          type: boolean
-          description: true when this is not the last page.
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of audiences that can be returned with the specified filter.
-        readWriteAudienceGroupTotalCount:
-          type: integer
-          format: int64
-          description: Of the audiences you can get with the specified filter, the number of audiences with the update permission set to READ_WRITE.
-        page:
-          type: integer
-          format: int64
-          description: The current page number.
-        size:
-          type: integer
-          format: int64
-          description: The maximum number of audiences on the current page.
+            $ref: '#/components/schemas/ErrorDetail'
+          description: An array of error details. If the array is empty, this property will not be included in the response.
     AudienceGroup:
       type: object
       description: Audience group
@@ -806,319 +1065,6 @@ components:
           $ref: '#/components/schemas/AudienceGroupPermission'
         createRoute:
           $ref: '#/components/schemas/AudienceGroupCreateRoute'
-    UpdateAudienceGroupDescriptionRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group
-      type: object
-      description: Rename an audience
-      properties:
-        description:
-          type: string
-          description: 'The audience''s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
-
-            Max character limit: 120
-
-            '
-          maxLength: 120
-          minLength: 1
-    AudienceGroupJobStatus:
-      description: Job status
-      type: string
-      enum:
-      - QUEUED
-      - WORKING
-      - FINISHED
-      - FAILED
-    CreateAudienceGroupRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
-      type: object
-      description: Create audience for uploading user IDs (by JSON)
-      properties:
-        description:
-          type: string
-          description: 'The audience''s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
-
-            Max character limit: 120
-
-            '
-          maxLength: 120
-        isIfaAudience:
-          type: boolean
-          description: 'To specify recipients by IFAs: set true.
-
-            To specify recipients by user IDs: set false or omit isIfaAudience property.
-
-            '
-        uploadDescription:
-          type: string
-          description: 'The description to register for the job (in jobs[].description).
-
-            '
-        audiences:
-          type: array
-          items:
-            $ref: '#/components/schemas/Audience'
-          description: 'An array of user IDs or IFAs.
-
-            Max number: 10,000
-
-            '
-          maxItems: 10000
-    GetSharedAudienceDataResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-      type: object
-      description: Get audience data
-      properties:
-        audienceGroup:
-          $ref: '#/components/schemas/AudienceGroup'
-        jobs:
-          type: array
-          description: 'An array of jobs.
-
-            This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs.
-
-            Empty array is returned for any other type of audience.
-
-            Max: 50
-
-            '
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/AudienceGroupJob'
-        owner:
-          $ref: '#/components/schemas/DetailedOwner'
-    GetSharedAudienceGroupsResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-groups
-      type: object
-      description: Gets data for more than one audience.
-      properties:
-        audienceGroups:
-          description: An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned.
-          type: array
-          items:
-            $ref: '#/components/schemas/AudienceGroup'
-        hasNextPage:
-          type: boolean
-          description: true when this is not the last page.
-        totalCount:
-          type: integer
-          format: int64
-          description: The total number of audiences that can be returned with the specified filter.
-        readWriteAudienceGroupTotalCount:
-          type: integer
-          format: int64
-          description: Of the audiences you can get with the specified filter, the number of audiences with the update permission set to READ_WRITE.
-        page:
-          type: integer
-          format: int64
-          description: The current page number.
-        size:
-          type: integer
-          format: int64
-          description: The maximum number of audiences on the current page.
-    CreateImpBasedAudienceGroupResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
-      type: object
-      description: Create audience for impression-based retargeting
-      properties:
-        audienceGroupId:
-          type: integer
-          format: int64
-          description: The audience ID.
-        type:
-          $ref: '#/components/schemas/AudienceGroupType'
-        description:
-          type: string
-          description: The audience's name.
-        created:
-          type: integer
-          format: int64
-          description: When the audience was created (in UNIX time).
-        requestId:
-          type: string
-          description: The request ID that was specified when the audience was created.
-    AudienceGroupPermission:
-      description: Permission
-      type: string
-      enum:
-      - READ
-      - READ_WRITE
-    AudienceGroupCreateRoute:
-      description: 'How the audience was created. One of:
-
-
-        - `OA_MANAGER`: Audience created with [LINE Official Account Manager](https://manager.line.biz/).
-
-        - `MESSAGING_API`: Audience created with Messaging API.
-
-        - `POINT_AD`: Audience created with [LINE Points Ads](https://www.linebiz.com/jp/service/line-point-ad/) (Japanese only).
-
-        - `AD_MANAGER`: Audience created with [LINE Ads](https://admanager.line.biz/).
-
-        '
-      type: string
-      enum:
-      - OA_MANAGER
-      - MESSAGING_API
-      - POINT_AD
-      - AD_MANAGER
-    Adaccount:
-      description: Adaccount
-      type: object
-      properties:
-        name:
-          type: string
-          description: Ad account name.
-    ErrorResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Message containing information about the error.
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetail'
-          description: An array of error details. If the array is empty, this property will not be included in the response.
-    CreateImpBasedAudienceGroupRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group
-      type: object
-      description: Create audience for impression-based retargeting
-      properties:
-        description:
-          type: string
-          description: 'The audience''s name.
-
-            This is case-insensitive, meaning `AUDIENCE` and `audience` are considered identical.
-
-            Max character limit: 120
-
-            '
-          maxLength: 120
-          minLength: 1
-        requestId:
-          type: string
-          description: 'The request ID of a broadcast or narrowcast message sent in the past 60 days.
-
-            Each Messaging API request has a request ID.
-
-            '
-    AudienceGroupJobType:
-      description: Job Type
-      type: string
-      enum:
-      - DIFF_ADD
-    AudienceGroupJobFailedType:
-      description: Failed type
-      type: string
-      enum:
-      - INTERNAL_ERROR
-      - AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT
-    GetAudienceDataResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
-      type: object
-      description: Get audience data
-      properties:
-        audienceGroup:
-          $ref: '#/components/schemas/AudienceGroup'
-        jobs:
-          type: array
-          description: 'An array of jobs.
-
-            This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs.
-
-            Empty array is returned for any other type of audience.
-
-            Max: 50
-
-            '
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/AudienceGroupJob'
-        adaccount:
-          $ref: '#/components/schemas/Adaccount'
-    AudienceGroupType:
-      description: Audience group type
-      type: string
-      enum:
-      - UPLOAD
-      - CLICK
-      - IMP
-      - CHAT_TAG
-      - FRIEND_PATH
-      - RESERVATION
-      - APP_EVENT
-      - VIDEO_VIEW
-      - WEBTRAFFIC
-      - IMAGE_CLICK
-      - RICHMENU_IMP
-      - RICHMENU_CLICK
-      - POP_AD_IMP
-      - TRACKINGTAG_WEBTRAFFIC
-    CreateClickBasedAudienceGroupRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
-      type: object
-      description: Create audience for click-based retargeting
-      properties:
-        description:
-          type: string
-          description: 'The audience''s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical.
-
-            Max character limit: 120
-
-            '
-          maxLength: 120
-        requestId:
-          type: string
-          description: 'The request ID of a broadcast or narrowcast message sent in the past 60 days.
-
-            Each Messaging API request has a request ID.
-
-            '
-        clickUrl:
-          type: string
-          format: uri
-          description: 'The URL clicked by the user. If empty, users who clicked any URL in the message are added to the list of recipients.
-
-            Max character limit: 2,000
-
-            '
-          maxLength: 2000
-    AudienceGroupFailedType:
-      description: Failed type
-      type:
-      - string
-      - 'null'
-      enum:
-      - AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT
-      - INTERNAL_ERROR
-    ErrorDetail:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Details of the error. Not included in the response under certain situations.
-        property:
-          type: string
-          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
-    Audience:
-      description: Audience
-      type: object
-      properties:
-        id:
-          type: string
-          description: A user ID or IFA. You can specify an empty array.
     CreateClickBasedAudienceGroupResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group
@@ -1182,6 +1128,80 @@ components:
             false (default): Accounts are specified with user IDs.
 
             '
+    AudienceGroupJob:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-audience-group
+      description: Audience group job
+      type: object
+      properties:
+        audienceGroupJobId:
+          type: integer
+          format: int64
+          description: A job ID.
+        audienceGroupId:
+          type: integer
+          format: int64
+          description: An audience ID.
+        description:
+          type: string
+          description: The job's description.
+        type:
+          $ref: '#/components/schemas/AudienceGroupJobType'
+        jobStatus:
+          $ref: '#/components/schemas/AudienceGroupJobStatus'
+        failedType:
+          $ref: '#/components/schemas/AudienceGroupJobFailedType'
+        audienceCount:
+          type: integer
+          format: int64
+          description: The number of accounts (recipients) that were added or removed.
+        created:
+          type: integer
+          format: int64
+          description: When the job was created (in UNIX time).
+    AudienceGroupType:
+      description: Audience group type
+      type: string
+      enum:
+      - UPLOAD
+      - CLICK
+      - IMP
+      - CHAT_TAG
+      - FRIEND_PATH
+      - RESERVATION
+      - APP_EVENT
+      - VIDEO_VIEW
+      - WEBTRAFFIC
+      - IMAGE_CLICK
+      - RICHMENU_IMP
+      - RICHMENU_CLICK
+      - POP_AD_IMP
+      - TRACKINGTAG_WEBTRAFFIC
+    AudienceGroupPermission:
+      description: Permission
+      type: string
+      enum:
+      - READ
+      - READ_WRITE
+    AudienceGroupCreateRoute:
+      description: 'How the audience was created. One of:
+
+
+        - `OA_MANAGER`: Audience created with [LINE Official Account Manager](https://manager.line.biz/).
+
+        - `MESSAGING_API`: Audience created with Messaging API.
+
+        - `POINT_AD`: Audience created with [LINE Points Ads](https://www.linebiz.com/jp/service/line-point-ad/) (Japanese only).
+
+        - `AD_MANAGER`: Audience created with [LINE Ads](https://admanager.line.biz/).
+
+        '
+      type: string
+      enum:
+      - OA_MANAGER
+      - MESSAGING_API
+      - POINT_AD
+      - AD_MANAGER
   securitySchemes:
     Bearer:
       type: http

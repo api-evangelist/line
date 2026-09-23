@@ -8,14 +8,14 @@ servers:
 security:
 - Bearer: []
 tags:
-- name: insight
+- name: Insight
 paths:
   /v2/bot/insight/demographic:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
       tags:
-      - insight
+      - Insight
       operationId: getFriendsDemographics
       description: 'Retrieves the demographic attributes for a LINE Official Account''s
 
@@ -23,9 +23,7 @@ paths:
 
         Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia
 
-        (ID).
-
-        '
+        (ID).'
       responses:
         '200':
           content:
@@ -72,18 +70,18 @@ paths:
                 - subscriptionPeriod: within7days
                   percentage: 0
           description: OK
+      summary: Get friends demographics
+      x-summary-source: derived
   /v2/bot/insight/message/delivery:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages
       tags:
-      - insight
+      - Insight
       operationId: getNumberOfMessageDeliveries
       description: 'Returns the number of messages sent from LINE Official Account
 
-        on a specified day.
-
-        '
+        on a specified day.'
       parameters:
       - in: query
         name: date
@@ -117,13 +115,11 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
       tags:
-      - insight
+      - Insight
       summary: Get number of followers
       description: 'Returns the number of users who have added the LINE Official Account
 
-        on or before a specified date.
-
-        '
+        on or before a specified date.'
       operationId: getNumberOfFollowers
       parameters:
       - in: query
@@ -159,12 +155,10 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-message-event
       tags:
-      - insight
+      - Insight
       description: 'Returns statistics about how users interact with narrowcast messages
 
-        or broadcast messages sent from your LINE Official Account.
-
-        '
+        or broadcast messages sent from your LINE Official Account.'
       summary: Get user interaction statistics
       operationId: getMessageEvent
       parameters:
@@ -224,12 +218,10 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit
       tags:
-      - insight
+      - Insight
       description: 'You can check the per-unit statistics of how users interact with
 
-        push messages and multicast messages sent from your LINE Official Account.
-
-        '
+        push messages and multicast messages sent from your LINE Official Account.'
       operationId: getStatisticsPerUnit
       parameters:
       - in: query
@@ -316,12 +308,14 @@ paths:
                   click: 29
                   uniqueClick: null
                   uniqueClickOfRequest: null
+      summary: Get statistics per unit
+      x-summary-source: derived
   /v2/bot/insight/richmenu/{richMenuId}/summary:
     get:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-summary
       tags:
-      - insight
+      - Insight
       operationId: getRichMenuInsightSummary
       summary: Get rich menu insight summary
       description: 'Gets a summary of rich menu statistics for the specified period, for a rich
@@ -336,9 +330,7 @@ paths:
 
         privacy threshold, only `richMenuId` is returned and the other fields are
 
-        omitted.
-
-        '
+        omitted.'
       parameters:
       - in: path
         name: richMenuId
@@ -441,7 +433,7 @@ paths:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-daily
       tags:
-      - insight
+      - Insight
       operationId: getRichMenuInsightDaily
       summary: Get rich menu insight daily
       description: 'Gets rich menu statistics broken down by day for the specified period, for a
@@ -454,9 +446,7 @@ paths:
 
         privacy threshold, only `richMenuId` is returned and the other fields are
 
-        omitted.
-
-        '
+        omitted.'
       parameters:
       - in: path
         name: richMenuId
@@ -568,6 +558,89 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    GetStatisticsPerUnitResponseClick:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
+      type: object
+      properties:
+        seq:
+          format: int64
+          type: integer
+          description: The URL's serial number.
+        url:
+          type: string
+          description: URL.
+        click:
+          format: int64
+          type:
+          - integer
+          - 'null'
+          description: Number of times the URL in the bubble was opened.
+        uniqueClick:
+          format: int64
+          type:
+          - integer
+          - 'null'
+          description: Number of users that opened the URL in the bubble.
+        uniqueClickOfRequest:
+          format: int64
+          type:
+          - integer
+          - 'null'
+          description: 'Number of users who opened this url through any link in the message.
+
+            If another message bubble contains the same URL and a user opens both links, it''s counted only once.
+
+            '
+      required:
+      - seq
+      - url
+    GetRichMenuInsightSummaryResponse:
+      description: Summary of impression and click statistics for a rich menu created via the Messaging API.
+      type: object
+      required:
+      - richMenuId
+      properties:
+        richMenuId:
+          type: string
+          description: Rich menu ID.
+        metricsFrom:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9]{8}$
+          example: '20260213'
+          description: 'Start date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260213).'
+        metricsTo:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9]{8}$
+          example: '20260215'
+          description: 'End date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260215).'
+        impression:
+          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseImpression'
+        clicks:
+          type: array
+          description: Click metrics for each tappable area of the rich menu.
+          items:
+            $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseClick'
+    GenderTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
+      type: object
+      properties:
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+          - unknown
+          description: users' gender
+        percentage:
+          type: number
+          format: double
+          description: Percentage
     AreaTile:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
@@ -580,6 +653,221 @@ components:
           type: number
           format: double
           description: Percentage
+    GetMessageEventResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
+      description: Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
+      properties:
+        overview:
+          $ref: '#/components/schemas/GetMessageEventResponseOverview'
+        messages:
+          description: Array of information about individual message bubbles.
+          type: array
+          items:
+            $ref: '#/components/schemas/GetMessageEventResponseMessage'
+        clicks:
+          description: Array of information about opened URLs in the message.
+          type: array
+          items:
+            $ref: '#/components/schemas/GetMessageEventResponseClick'
+      type: object
+    GetRichMenuInsightSummaryResponseImpression:
+      description: Impression metrics for the whole rich menu.
+      type: object
+      required:
+      - metrics
+      properties:
+        metrics:
+          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseMetrics'
+    ErrorDetail:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
+      type: object
+      properties:
+        message:
+          type: string
+          description: Details of the error. Not included in the response under certain situations.
+        property:
+          type: string
+          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
+    GetNumberOfMessageDeliveriesResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages
+      description: Get number of message deliveries
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ready
+          - unready
+          - out_of_service
+          description: Status of the counting process.
+        broadcast:
+          format: int64
+          type: integer
+          description: Number of messages sent to all of this LINE Official Account's friends (broadcast messages).
+        targeting:
+          format: int64
+          type: integer
+          description: Number of messages sent to some of this LINE Official Account's friends, based on specific attributes (targeted messages).
+        autoResponse:
+          format: int64
+          type: integer
+          description: Number of auto-response messages sent.
+        welcomeResponse:
+          format: int64
+          type: integer
+          description: Number of greeting messages sent.
+        chat:
+          format: int64
+          type: integer
+          description: Number of messages sent from LINE Official Account Manager [Chat screen](https://www.linebiz.com/jp/manual/OfficialAccountManager/chats/) (only available in Japanese).
+        apiBroadcast:
+          format: int64
+          type: integer
+          description: Number of broadcast messages sent with the `Send broadcast message` Messaging API operation.
+        apiPush:
+          format: int64
+          type: integer
+          description: Number of push messages sent with the `Send push message` Messaging API operation.
+        apiMulticast:
+          format: int64
+          type: integer
+          description: Number of multicast messages sent with the `Send multicast message` Messaging API operation.
+        apiNarrowcast:
+          format: int64
+          type: integer
+          description: Number of narrowcast messages sent with the `Send narrowcast message` Messaging API operation.
+        apiReply:
+          format: int64
+          type: integer
+          description: Number of replies sent with the `Send reply message` Messaging API operation.
+    GetNumberOfFollowersResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
+      description: Get number of followers
+      type: object
+      properties:
+        status:
+          description: Calculation status.
+          type: string
+          enum:
+          - ready
+          - unready
+          - out_of_service
+        followers:
+          type: integer
+          format: int64
+          description: 'The number of times, as of the specified date, that a user added this LINE Official Account as a friend for the first time.
+
+            The number doesn''t decrease even if a user later blocks the account or when they delete their LINE account.
+
+            '
+        targetedReaches:
+          format: int64
+          type: integer
+          description: 'The number of users, as of the specified date, that the LINE Official Account can reach through targeted messages based on gender, age, and/or region.
+
+            This number only includes users who are active on LINE or LINE services and whose demographics have a high level of certainty.
+
+            '
+        blocks:
+          type: integer
+          format: int64
+          description: 'The number of users blocking the account as of the specified date.
+
+            The number decreases when a user unblocks the account.
+
+
+
+            '
+    GetFriendsDemographicsResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
+      description: Get friend demographics
+      type: object
+      properties:
+        available:
+          type: boolean
+          description: true if friend demographic information is available.
+        genders:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenderTile'
+          description: Percentage per gender.
+        ages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgeTile'
+          description: Percentage per age group.
+        areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/AreaTile'
+          description: Percentage per area.
+        appTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppTypeTile'
+          description: Percentage by OS.
+        subscriptionPeriods:
+          items:
+            $ref: '#/components/schemas/SubscriptionPeriodTile'
+          type: array
+          description: Percentage per friendship duration.
+    GetStatisticsPerUnitResponseOverview:
+      description: Statistics related to messages.
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
+      type: object
+      properties:
+        uniqueImpression:
+          format: int64
+          type:
+          - integer
+          - 'null'
+          description: Number of users who opened the message, meaning they displayed at least 1 bubble.
+        uniqueClick:
+          format: int64
+          type:
+          - integer
+          - 'null'
+          description: Number of users who opened any URL in the message.
+        uniqueMediaPlayed:
+          format: int64
+          type:
+          - integer
+          - 'null'
+          description: Number of users who started playing any video or audio in the message.
+        uniqueMediaPlayed100Percent:
+          format: int64
+          type:
+          - integer
+          - 'null'
+          description: Number of users who played the entirety of any video or audio in the message.
+    GetStatisticsPerUnitResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
+      description: Response object for `get statistics per unit`
+      type: object
+      properties:
+        overview:
+          $ref: '#/components/schemas/GetStatisticsPerUnitResponseOverview'
+        messages:
+          description: Array of information about individual message bubbles.
+          type: array
+          items:
+            $ref: '#/components/schemas/GetStatisticsPerUnitResponseMessage'
+        clicks:
+          description: Array of information about opened URLs in the message.
+          type: array
+          items:
+            $ref: '#/components/schemas/GetStatisticsPerUnitResponseClick'
+      required:
+      - clicks
+      - messages
+      - overview
     GetMessageEventResponseMessage:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
@@ -655,6 +943,79 @@ components:
           - integer
           - 'null'
           description: Number of users that started playing audio or video in the bubble and played 100% of the total time.
+    AgeTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
+      type: object
+      properties:
+        age:
+          type: string
+          enum:
+          - from0to14
+          - from15to19
+          - from20to24
+          - from25to29
+          - from30to34
+          - from35to39
+          - from40to44
+          - from45to49
+          - from50
+          - from50to54
+          - from55to59
+          - from60to64
+          - from65to69
+          - from70
+          - unknown
+          description: users' age
+        percentage:
+          type: number
+          format: double
+          description: Percentage
+    GetRichMenuInsightDailyResponseBounds:
+      description: Target area of the metrics, represented by the top-left coordinate, width, and height.
+      type: object
+      required:
+      - x
+      - y
+      - width
+      - height
+      properties:
+        x:
+          type: integer
+          format: int32
+          description: The x coordinate of the top-left corner of the target area.
+        y:
+          type: integer
+          format: int32
+          description: The y coordinate of the top-left corner of the target area.
+        width:
+          type: integer
+          format: int32
+          description: The width of the target area.
+        height:
+          type: integer
+          format: int32
+          description: The height of the target area.
+    SubscriptionPeriodTile:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
+      properties:
+        subscriptionPeriod:
+          type: string
+          description: 'Subscription period. Possible values: `within7days`, `within90days`, `unknown` etc.'
+          enum:
+          - within7days
+          - within30days
+          - within90days
+          - within180days
+          - within365days
+          - over365days
+          - unknown
+        percentage:
+          format: double
+          type: number
+          description: 'Percentage. Possible values: [0.0,100.0] e.g. 0, 2.9, 37.6.'
+      type: object
     GetStatisticsPerUnitResponseMessage:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
@@ -738,49 +1099,86 @@ components:
           - integer
           - 'null'
           description: Number of users that started playing audio or video in the bubble and played 100% of the total time.
-    GetStatisticsPerUnitResponseClick:
+    GetRichMenuInsightSummaryResponseMetrics:
+      description: Aggregated number of events and unique users over the whole period.
+      type: object
+      required:
+      - count
+      - uniqueUsers
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of impressions or clicks.
+        uniqueUsers:
+          type: integer
+          format: int64
+          description: Approximate number of unique users who triggered an impression or click.
+    AppTypeTile:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
+        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
+      properties:
+        appType:
+          type: string
+          enum:
+          - ios
+          - android
+          - others
+          description: users' OS
+        percentage:
+          format: double
+          type: number
+          description: Percentage
+      type: object
+    ErrorResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Message containing information about the error.
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+          description: An array of error details. If the array is empty, this property will not be included in the response.
+    GetRichMenuInsightSummaryResponseClick:
+      description: Click metrics for a single tappable area of the rich menu.
+      type: object
+      required:
+      - bounds
+      - metrics
+      properties:
+        bounds:
+          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseBounds'
+        metrics:
+          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseMetrics'
+    GetMessageEventResponseOverview:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
+      description: Summary of message statistics.
       type: object
       properties:
-        seq:
+        requestId:
+          type: string
+          description: Request ID.
+        timestamp:
           format: int64
           type: integer
-          description: The URL's serial number.
-        url:
-          type: string
-          description: URL.
-        click:
+          description: UNIX timestamp for message delivery time in seconds.
+        delivered:
           format: int64
-          type:
-          - integer
-          - 'null'
-          description: Number of times the URL in the bubble was opened.
-        uniqueClick:
-          format: int64
-          type:
-          - integer
-          - 'null'
-          description: Number of users that opened the URL in the bubble.
-        uniqueClickOfRequest:
-          format: int64
-          type:
-          - integer
-          - 'null'
-          description: 'Number of users who opened this url through any link in the message.
+          type: integer
+          description: 'Number of messages delivered.
 
-            If another message bubble contains the same URL and a user opens both links, it''s counted only once.
+            This property shows values of less than 20.
+
+            However, if all messages have not been sent, it will be null.
 
             '
-      required:
-      - seq
-      - url
-    GetStatisticsPerUnitResponseOverview:
-      description: Statistics related to messages.
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
-      type: object
-      properties:
         uniqueImpression:
           format: int64
           type:
@@ -805,7 +1203,62 @@ components:
           - integer
           - 'null'
           description: Number of users who played the entirety of any video or audio in the message.
-    GetRichMenuInsightDailyResponseBounds:
+    GetRichMenuInsightDailyResponse:
+      description: Daily impression and click statistics for a rich menu created via the Messaging API.
+      type: object
+      required:
+      - richMenuId
+      properties:
+        richMenuId:
+          type: string
+          description: Rich menu ID.
+        metricsFrom:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9]{8}$
+          example: '20260213'
+          description: 'Start date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260213).'
+        metricsTo:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9]{8}$
+          example: '20260215'
+          description: 'End date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260215).'
+        impression:
+          $ref: '#/components/schemas/GetRichMenuInsightDailyResponseImpression'
+        clicks:
+          type: array
+          description: Daily click metrics for each tappable area of the rich menu.
+          items:
+            $ref: '#/components/schemas/GetRichMenuInsightDailyResponseClick'
+    GetRichMenuInsightDailyResponseClick:
+      description: Daily click metrics for a single tappable area of the rich menu.
+      type: object
+      required:
+      - bounds
+      - metrics
+      properties:
+        bounds:
+          $ref: '#/components/schemas/GetRichMenuInsightDailyResponseBounds'
+        metrics:
+          type: array
+          description: Per-day click metrics for the target area.
+          items:
+            $ref: '#/components/schemas/GetRichMenuInsightDailyResponseDailyMetrics'
+    GetRichMenuInsightDailyResponseImpression:
+      description: Daily impression metrics for the whole rich menu.
+      type: object
+      required:
+      - metrics
+      properties:
+        metrics:
+          type: array
+          description: Per-day impression metrics.
+          items:
+            $ref: '#/components/schemas/GetRichMenuInsightDailyResponseDailyMetrics'
+    GetRichMenuInsightSummaryResponseBounds:
       description: Target area of the metrics, represented by the top-left coordinate, width, and height.
       type: object
       required:
@@ -881,469 +1334,6 @@ components:
           type: integer
           format: int64
           description: Approximate number of unique users who triggered an impression or click on this day.
-    GetRichMenuInsightDailyResponseImpression:
-      description: Daily impression metrics for the whole rich menu.
-      type: object
-      required:
-      - metrics
-      properties:
-        metrics:
-          type: array
-          description: Per-day impression metrics.
-          items:
-            $ref: '#/components/schemas/GetRichMenuInsightDailyResponseDailyMetrics'
-    GetMessageEventResponseOverview:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
-      description: Summary of message statistics.
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: Request ID.
-        timestamp:
-          format: int64
-          type: integer
-          description: UNIX timestamp for message delivery time in seconds.
-        delivered:
-          format: int64
-          type: integer
-          description: 'Number of messages delivered.
-
-            This property shows values of less than 20.
-
-            However, if all messages have not been sent, it will be null.
-
-            '
-        uniqueImpression:
-          format: int64
-          type:
-          - integer
-          - 'null'
-          description: Number of users who opened the message, meaning they displayed at least 1 bubble.
-        uniqueClick:
-          format: int64
-          type:
-          - integer
-          - 'null'
-          description: Number of users who opened any URL in the message.
-        uniqueMediaPlayed:
-          format: int64
-          type:
-          - integer
-          - 'null'
-          description: Number of users who started playing any video or audio in the message.
-        uniqueMediaPlayed100Percent:
-          format: int64
-          type:
-          - integer
-          - 'null'
-          description: Number of users who played the entirety of any video or audio in the message.
-    GetRichMenuInsightSummaryResponseClick:
-      description: Click metrics for a single tappable area of the rich menu.
-      type: object
-      required:
-      - bounds
-      - metrics
-      properties:
-        bounds:
-          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseBounds'
-        metrics:
-          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseMetrics'
-    GetRichMenuInsightSummaryResponseBounds:
-      description: Target area of the metrics, represented by the top-left coordinate, width, and height.
-      type: object
-      required:
-      - x
-      - y
-      - width
-      - height
-      properties:
-        x:
-          type: integer
-          format: int32
-          description: The x coordinate of the top-left corner of the target area.
-        y:
-          type: integer
-          format: int32
-          description: The y coordinate of the top-left corner of the target area.
-        width:
-          type: integer
-          format: int32
-          description: The width of the target area.
-        height:
-          type: integer
-          format: int32
-          description: The height of the target area.
-    GetFriendsDemographicsResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
-      description: Get friend demographics
-      type: object
-      properties:
-        available:
-          type: boolean
-          description: true if friend demographic information is available.
-        genders:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenderTile'
-          description: Percentage per gender.
-        ages:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgeTile'
-          description: Percentage per age group.
-        areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/AreaTile'
-          description: Percentage per area.
-        appTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppTypeTile'
-          description: Percentage by OS.
-        subscriptionPeriods:
-          items:
-            $ref: '#/components/schemas/SubscriptionPeriodTile'
-          type: array
-          description: Percentage per friendship duration.
-    GetRichMenuInsightSummaryResponse:
-      description: Summary of impression and click statistics for a rich menu created via the Messaging API.
-      type: object
-      required:
-      - richMenuId
-      properties:
-        richMenuId:
-          type: string
-          description: Rich menu ID.
-        metricsFrom:
-          type:
-          - string
-          - 'null'
-          pattern: ^[0-9]{8}$
-          example: '20260213'
-          description: 'Start date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260213).'
-        metricsTo:
-          type:
-          - string
-          - 'null'
-          pattern: ^[0-9]{8}$
-          example: '20260215'
-          description: 'End date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260215).'
-        impression:
-          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseImpression'
-        clicks:
-          type: array
-          description: Click metrics for each tappable area of the rich menu.
-          items:
-            $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseClick'
-    GetNumberOfMessageDeliveriesResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages
-      description: Get number of message deliveries
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - ready
-          - unready
-          - out_of_service
-          description: Status of the counting process.
-        broadcast:
-          format: int64
-          type: integer
-          description: Number of messages sent to all of this LINE Official Account's friends (broadcast messages).
-        targeting:
-          format: int64
-          type: integer
-          description: Number of messages sent to some of this LINE Official Account's friends, based on specific attributes (targeted messages).
-        autoResponse:
-          format: int64
-          type: integer
-          description: Number of auto-response messages sent.
-        welcomeResponse:
-          format: int64
-          type: integer
-          description: Number of greeting messages sent.
-        chat:
-          format: int64
-          type: integer
-          description: Number of messages sent from LINE Official Account Manager [Chat screen](https://www.linebiz.com/jp/manual/OfficialAccountManager/chats/) (only available in Japanese).
-        apiBroadcast:
-          format: int64
-          type: integer
-          description: Number of broadcast messages sent with the `Send broadcast message` Messaging API operation.
-        apiPush:
-          format: int64
-          type: integer
-          description: Number of push messages sent with the `Send push message` Messaging API operation.
-        apiMulticast:
-          format: int64
-          type: integer
-          description: Number of multicast messages sent with the `Send multicast message` Messaging API operation.
-        apiNarrowcast:
-          format: int64
-          type: integer
-          description: Number of narrowcast messages sent with the `Send narrowcast message` Messaging API operation.
-        apiReply:
-          format: int64
-          type: integer
-          description: Number of replies sent with the `Send reply message` Messaging API operation.
-    GetRichMenuInsightDailyResponseClick:
-      description: Daily click metrics for a single tappable area of the rich menu.
-      type: object
-      required:
-      - bounds
-      - metrics
-      properties:
-        bounds:
-          $ref: '#/components/schemas/GetRichMenuInsightDailyResponseBounds'
-        metrics:
-          type: array
-          description: Per-day click metrics for the target area.
-          items:
-            $ref: '#/components/schemas/GetRichMenuInsightDailyResponseDailyMetrics'
-    GetNumberOfFollowersResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers
-      description: Get number of followers
-      type: object
-      properties:
-        status:
-          description: Calculation status.
-          type: string
-          enum:
-          - ready
-          - unready
-          - out_of_service
-        followers:
-          type: integer
-          format: int64
-          description: 'The number of times, as of the specified date, that a user added this LINE Official Account as a friend for the first time.
-
-            The number doesn''t decrease even if a user later blocks the account or when they delete their LINE account.
-
-            '
-        targetedReaches:
-          format: int64
-          type: integer
-          description: 'The number of users, as of the specified date, that the LINE Official Account can reach through targeted messages based on gender, age, and/or region.
-
-            This number only includes users who are active on LINE or LINE services and whose demographics have a high level of certainty.
-
-            '
-        blocks:
-          type: integer
-          format: int64
-          description: 'The number of users blocking the account as of the specified date.
-
-            The number decreases when a user unblocks the account.
-
-
-
-            '
-    GetRichMenuInsightSummaryResponseImpression:
-      description: Impression metrics for the whole rich menu.
-      type: object
-      required:
-      - metrics
-      properties:
-        metrics:
-          $ref: '#/components/schemas/GetRichMenuInsightSummaryResponseMetrics'
-    AgeTile:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
-      type: object
-      properties:
-        age:
-          type: string
-          enum:
-          - from0to14
-          - from15to19
-          - from20to24
-          - from25to29
-          - from30to34
-          - from35to39
-          - from40to44
-          - from45to49
-          - from50
-          - from50to54
-          - from55to59
-          - from60to64
-          - from65to69
-          - from70
-          - unknown
-          description: users' age
-        percentage:
-          type: number
-          format: double
-          description: Percentage
-    AppTypeTile:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
-      properties:
-        appType:
-          type: string
-          enum:
-          - ios
-          - android
-          - others
-          description: users' OS
-        percentage:
-          format: double
-          type: number
-          description: Percentage
-      type: object
-    SubscriptionPeriodTile:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
-      properties:
-        subscriptionPeriod:
-          type: string
-          description: 'Subscription period. Possible values: `within7days`, `within90days`, `unknown` etc.'
-          enum:
-          - within7days
-          - within30days
-          - within90days
-          - within180days
-          - within365days
-          - over365days
-          - unknown
-        percentage:
-          format: double
-          type: number
-          description: 'Percentage. Possible values: [0.0,100.0] e.g. 0, 2.9, 37.6.'
-      type: object
-    GenderTile:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-demographic
-      type: object
-      properties:
-        gender:
-          type: string
-          enum:
-          - male
-          - female
-          - unknown
-          description: users' gender
-        percentage:
-          type: number
-          format: double
-          description: Percentage
-    ErrorResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Message containing information about the error.
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetail'
-          description: An array of error details. If the array is empty, this property will not be included in the response.
-    GetRichMenuInsightSummaryResponseMetrics:
-      description: Aggregated number of events and unique users over the whole period.
-      type: object
-      required:
-      - count
-      - uniqueUsers
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: Number of impressions or clicks.
-        uniqueUsers:
-          type: integer
-          format: int64
-          description: Approximate number of unique users who triggered an impression or click.
-    GetMessageEventResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response
-      description: Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
-      properties:
-        overview:
-          $ref: '#/components/schemas/GetMessageEventResponseOverview'
-        messages:
-          description: Array of information about individual message bubbles.
-          type: array
-          items:
-            $ref: '#/components/schemas/GetMessageEventResponseMessage'
-        clicks:
-          description: Array of information about opened URLs in the message.
-          type: array
-          items:
-            $ref: '#/components/schemas/GetMessageEventResponseClick'
-      type: object
-    ErrorDetail:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
-      type: object
-      properties:
-        message:
-          type: string
-          description: Details of the error. Not included in the response under certain situations.
-        property:
-          type: string
-          description: Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
-    GetStatisticsPerUnitResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response
-      description: Response object for `get statistics per unit`
-      type: object
-      properties:
-        overview:
-          $ref: '#/components/schemas/GetStatisticsPerUnitResponseOverview'
-        messages:
-          description: Array of information about individual message bubbles.
-          type: array
-          items:
-            $ref: '#/components/schemas/GetStatisticsPerUnitResponseMessage'
-        clicks:
-          description: Array of information about opened URLs in the message.
-          type: array
-          items:
-            $ref: '#/components/schemas/GetStatisticsPerUnitResponseClick'
-      required:
-      - clicks
-      - messages
-      - overview
-    GetRichMenuInsightDailyResponse:
-      description: Daily impression and click statistics for a rich menu created via the Messaging API.
-      type: object
-      required:
-      - richMenuId
-      properties:
-        richMenuId:
-          type: string
-          description: Rich menu ID.
-        metricsFrom:
-          type:
-          - string
-          - 'null'
-          pattern: ^[0-9]{8}$
-          example: '20260213'
-          description: 'Start date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260213).'
-        metricsTo:
-          type:
-          - string
-          - 'null'
-          pattern: ^[0-9]{8}$
-          example: '20260215'
-          description: 'End date (JST) of the period actually covered by the returned metrics. Format: yyyyMMdd (e.g. 20260215).'
-        impression:
-          $ref: '#/components/schemas/GetRichMenuInsightDailyResponseImpression'
-        clicks:
-          type: array
-          description: Daily click metrics for each tappable area of the rich menu.
-          items:
-            $ref: '#/components/schemas/GetRichMenuInsightDailyResponseClick'
   securitySchemes:
     Bearer:
       type: http

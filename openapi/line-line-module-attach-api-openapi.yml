@@ -83,6 +83,8 @@ paths:
                 - message:send
                 - message:receive
           description: OK
+      summary: Attach module
+      x-summary-source: derived
 components:
   schemas:
     AttachModuleResponse:

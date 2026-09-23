@@ -77,6 +77,8 @@ paths:
                 permission: READ_WRITE
                 expireTimestamp: 1629252237
                 isIfaAudience: false
+      summary: Create audience for uploading user ids
+      x-summary-source: derived
     put:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file
@@ -117,6 +119,8 @@ paths:
       responses:
         '202':
           description: OK
+      summary: Add user ids to audience
+      x-summary-source: derived
 components:
   schemas:
     CreateAudienceGroupResponse:

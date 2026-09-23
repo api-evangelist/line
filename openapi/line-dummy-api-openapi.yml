@@ -29,14 +29,10 @@ paths:
                 description: dummy response
                 type: string
                 example: OK
+      summary: Callback
+      x-summary-source: derived
 components:
   schemas:
-    EventMode:
-      type: string
-      description: Channel state.
-      enum:
-      - active
-      - standby
     Event:
       description: Webhook event
       required:
@@ -86,6 +82,15 @@ components:
           botResumed: '#/components/schemas/BotResumedEvent'
           delivery: '#/components/schemas/PnpDeliveryCompletionEvent'
           messageEdited: '#/components/schemas/MessageEditedEvent'
+    DeliveryContext:
+      type: object
+      description: webhook's delivery context information
+      required:
+      - isRedelivery
+      properties:
+        isRedelivery:
+          type: boolean
+          description: Whether the webhook event is a redelivered one or not.
     CallbackRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#request-body
@@ -116,15 +121,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Event'
-    DeliveryContext:
-      type: object
-      description: webhook's delivery context information
-      required:
-      - isRedelivery
-      properties:
-        isRedelivery:
-          type: boolean
-          description: Whether the webhook event is a redelivered one or not.
+    EventMode:
+      type: string
+      description: Channel state.
+      enum:
+      - active
+      - standby
     Source:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#source-user

@@ -26,6 +26,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Detach module
+      x-summary-source: derived
   /v2/bot/chat/{chatId}/control/acquire:
     post:
       externalDocs:
@@ -35,9 +37,7 @@ paths:
       operationId: acquireChatControl
       description: 'If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API.
 
-        The channel that was previously an Active Channel will automatically switch to a Standby Channel.
-
-        '
+        The channel that was previously an Active Channel will automatically switch to a Standby Channel.'
       parameters:
       - name: chatId
         in: path
@@ -53,6 +53,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Acquire chat control
+      x-summary-source: derived
   /v2/bot/chat/{chatId}/control/release:
     post:
       externalDocs:
@@ -60,9 +62,7 @@ paths:
       tags:
       - line-module
       operationId: releaseChatControl
-      description: 'To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
-
-        '
+      description: To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
       parameters:
       - name: chatId
         in: path
@@ -73,6 +73,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Release chat control
+      x-summary-source: derived
   /v2/bot/list:
     get:
       externalDocs:
@@ -128,6 +130,8 @@ paths:
                 - userId: Ub8ec80a14e879e9c6833fb4cee0e632b
                   basicId: '@793j...'
                   displayName: Test04
+      summary: Get modules
+      x-summary-source: derived
 components:
   schemas:
     AcquireChatControlRequest:
@@ -168,28 +172,6 @@ components:
         botId:
           description: User ID of the LINE Official Account bot attached to the module channel.
           type: string
-    GetModulesResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
-      description: List of bots to which the module is attached
-      required:
-      - bots
-      type: object
-      properties:
-        bots:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleBot'
-          description: Array of Bot list Item objects representing basic information about the bot.
-        next:
-          type: string
-          description: 'Continuation token.
-
-            Used to get the next array of basic bot information.
-
-            This property is only returned if there are more unreturned results.
-
-            '
     ModuleBot:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
@@ -215,6 +197,28 @@ components:
         pictureUrl:
           type: string
           description: Profile image URL. Image URL starting with `https://`. Not included in the response if the bot doesn't have a profile image.
+    GetModulesResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api
+      description: List of bots to which the module is attached
+      required:
+      - bots
+      type: object
+      properties:
+        bots:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleBot'
+          description: Array of Bot list Item objects representing basic information about the bot.
+        next:
+          type: string
+          description: 'Continuation token.
+
+            Used to get the next array of basic bot information.
+
+            This property is only returned if there are more unreturned results.
+
+            '
   securitySchemes:
     Bearer:
       type: http

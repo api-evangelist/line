@@ -8,14 +8,14 @@ servers:
 security:
 - Bearer: []
 tags:
-- name: shop
+- name: Shop
 paths:
   /shop/v3/mission:
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3
       tags:
-      - shop
+      - Shop
       operationId: missionStickerV3
       description: Sends a mission sticker.
       requestBody:
@@ -27,6 +27,8 @@ paths:
       responses:
         '200':
           description: Returns status code 200 and an empty response body.
+      summary: Mission sticker V3
+      x-summary-source: derived
 components:
   schemas:
     MissionStickerRequest:

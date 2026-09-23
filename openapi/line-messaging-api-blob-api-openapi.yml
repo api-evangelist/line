@@ -36,6 +36,8 @@ paths:
                 description: blob response
                 type: string
                 format: binary
+      summary: Get message content
+      x-summary-source: derived
   /v2/bot/message/{messageId}/content/preview:
     get:
       externalDocs:
@@ -62,6 +64,8 @@ paths:
                 type: string
                 format: binary
                 description: blob response
+      summary: Get message content preview
+      x-summary-source: derived
   /v2/bot/message/{messageId}/content/transcoding:
     get:
       externalDocs:
@@ -88,6 +92,8 @@ paths:
                 $ref: '#/components/schemas/GetMessageContentTranscodingResponse'
               example:
                 status: processing
+      summary: Get message content transcoding by message id
+      x-summary-source: derived
   /v2/bot/richmenu/{richMenuId}/content:
     get:
       externalDocs:
@@ -114,6 +120,8 @@ paths:
                 type: string
                 format: binary
                 description: blob response
+      summary: Get rich menu image
+      x-summary-source: derived
     post:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image
@@ -141,6 +149,8 @@ paths:
       responses:
         '200':
           description: OK
+      summary: Set rich menu image
+      x-summary-source: derived
 components:
   schemas:
     GetMessageContentTranscodingResponse:
