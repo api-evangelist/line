@@ -298,31 +298,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    IssueShortLivedChannelAccessTokenResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
-      description: Issued short-lived channel access token
-      required:
-      - access_token
-      - expires_in
-      - token_type
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: 'A short-lived channel access token. Valid for 30 days.
-
-            Note: Channel access tokens cannot be refreshed.
-
-            '
-        expires_in:
-          type: integer
-          format: int32
-          description: Time until channel access token expires in seconds from time the token is issued.
-        token_type:
-          type: string
-          default: Bearer
-          description: Token type. The value is always `Bearer`.
     IssueStatelessChannelTokenByClientSecretRequest:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
@@ -344,52 +319,10 @@ components:
         client_secret:
           type: string
           description: Channel secret.
-    VerifyChannelAccessTokenResponse:
+    IssueShortLivedChannelAccessTokenResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
-      description: Verification result
-      required:
-      - client_id
-      - expires_in
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The channel ID for which the channel access token was issued.
-        expires_in:
-          type: integer
-          format: int64
-          description: Number of seconds before the channel access token expires.
-        scope:
-          type: string
-          description: Permissions granted to the channel access token.
-    IssueStatelessChannelTokenByJWTAssertionRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
-      description: Request body to issue a new token with JWT assertion
-      type: object
-      required:
-      - grant_type
-      - client_assertion
-      - client_assertion_type
-      properties:
-        grant_type:
-          type: string
-          enum:
-          - client_credentials
-          description: client_credentials
-        client_assertion_type:
-          type: string
-          enum:
-          - urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-          description: URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
-        client_assertion:
-          type: string
-          description: A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
-    IssueStatelessChannelAccessTokenResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
-      description: Issued stateless channel access token
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token
+      description: Issued short-lived channel access token
       required:
       - access_token
       - expires_in
@@ -398,17 +331,15 @@ components:
       properties:
         access_token:
           type: string
-          description: 'A stateless channel access token.
+          description: 'A short-lived channel access token. Valid for 30 days.
 
-            The token is an opaque string which means its format is an implementation detail
-
-            and the consumer of this token should never try to use the data parsed from the token.
+            Note: Channel access tokens cannot be refreshed.
 
             '
         expires_in:
           type: integer
           format: int32
-          description: Duration in seconds after which the issued access token expires
+          description: Time until channel access token expires in seconds from time the token is issued.
         token_type:
           type: string
           default: Bearer
@@ -453,6 +384,75 @@ components:
         key_id:
           type: string
           description: Unique key ID for identifying the channel access token.
+    IssueStatelessChannelAccessTokenResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      description: Issued stateless channel access token
+      required:
+      - access_token
+      - expires_in
+      - token_type
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: 'A stateless channel access token.
+
+            The token is an opaque string which means its format is an implementation detail
+
+            and the consumer of this token should never try to use the data parsed from the token.
+
+            '
+        expires_in:
+          type: integer
+          format: int32
+          description: Duration in seconds after which the issued access token expires
+        token_type:
+          type: string
+          default: Bearer
+          description: Token type. The value is always `Bearer`.
+    VerifyChannelAccessTokenResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
+      description: Verification result
+      required:
+      - client_id
+      - expires_in
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The channel ID for which the channel access token was issued.
+        expires_in:
+          type: integer
+          format: int64
+          description: Number of seconds before the channel access token expires.
+        scope:
+          type: string
+          description: Permissions granted to the channel access token.
+    IssueStatelessChannelTokenByJWTAssertionRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      description: Request body to issue a new token with JWT assertion
+      type: object
+      required:
+      - grant_type
+      - client_assertion
+      - client_assertion_type
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+          description: client_credentials
+        client_assertion_type:
+          type: string
+          enum:
+          - urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+          description: URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
+        client_assertion:
+          type: string
+          description: A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
     ErrorResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#error-responses
