@@ -123,24 +123,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AudienceGroupType:
-      description: Audience group type
-      type: string
-      enum:
-      - UPLOAD
-      - CLICK
-      - IMP
-      - CHAT_TAG
-      - FRIEND_PATH
-      - RESERVATION
-      - APP_EVENT
-      - VIDEO_VIEW
-      - WEBTRAFFIC
-      - IMAGE_CLICK
-      - RICHMENU_IMP
-      - RICHMENU_CLICK
-      - POP_AD_IMP
-      - TRACKINGTAG_WEBTRAFFIC
     CreateAudienceGroupResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group
@@ -199,6 +181,24 @@ components:
             `false` (default): Accounts are specified with user IDs.
 
             '
+    AudienceGroupType:
+      description: Audience group type
+      type: string
+      enum:
+      - UPLOAD
+      - CLICK
+      - IMP
+      - CHAT_TAG
+      - FRIEND_PATH
+      - RESERVATION
+      - APP_EVENT
+      - VIDEO_VIEW
+      - WEBTRAFFIC
+      - IMAGE_CLICK
+      - RICHMENU_IMP
+      - RICHMENU_CLICK
+      - POP_AD_IMP
+      - TRACKINGTAG_WEBTRAFFIC
   securitySchemes:
     Bearer:
       type: http

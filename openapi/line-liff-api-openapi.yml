@@ -160,6 +160,15 @@ paths:
             '
 components:
   schemas:
+    AddLiffAppResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      required:
+      - liffId
+      properties:
+        liffId:
+          type: string
     LiffFeatures:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
@@ -176,22 +185,60 @@ components:
 
             '
           default: false
-    AddLiffAppResponse:
+    LiffApp:
       externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
       type: object
-      required:
-      - liffId
       properties:
         liffId:
           type: string
-    LiffBotPrompt:
-      type: string
-      description: "Specify the setting for bot link feature with one of the following values:\n\n`normal`: Display the option to add the LINE Official Account as a friend in the channel consent screen.\n`aggressive`: Display a screen with the option to add the LINE Official Account as a friend after the channel consent screen.\n`none`: Don't display the option to add the LINE Official Account as a friend.\n  The default value is none.\n"
-      enum:
-      - normal
-      - aggressive
-      - none
+          description: LIFF app ID
+        view:
+          $ref: '#/components/schemas/LiffView'
+        description:
+          type: string
+          description: Name of the LIFF app
+        features:
+          $ref: '#/components/schemas/LiffFeatures'
+        permanentLinkPattern:
+          type: string
+          description: 'How additional information in LIFF URLs is handled. concat is returned.
+
+            '
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiffScope'
+        botPrompt:
+          $ref: '#/components/schemas/LiffBotPrompt'
+    UpdateLiffAppRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/UpdateLiffView'
+        description:
+          type: string
+          description: 'Name of the LIFF app.
+
+
+            The LIFF app name can''t include "LINE" or similar strings, or inappropriate strings.
+
+            '
+        features:
+          $ref: '#/components/schemas/LiffFeatures'
+        permanentLinkPattern:
+          type: string
+          description: 'How additional information in LIFF URLs is handled. Specify `concat`.
+
+            '
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiffScope'
+        botPrompt:
+          $ref: '#/components/schemas/LiffBotPrompt'
     LiffScope:
       type: string
       enum:
@@ -205,6 +252,13 @@ components:
 
 
         '
+    LiffBotPrompt:
+      type: string
+      description: "Specify the setting for bot link feature with one of the following values:\n\n`normal`: Display the option to add the LINE Official Account as a friend in the channel consent screen.\n`aggressive`: Display a screen with the option to add the LINE Official Account as a friend after the channel consent screen.\n`none`: Don't display the option to add the LINE Official Account as a friend.\n  The default value is none.\n"
+      enum:
+      - normal
+      - aggressive
+      - none
     LiffView:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
@@ -247,34 +301,6 @@ components:
             When in modular mode, the action button in the header is not displayed.
 
             '
-    UpdateLiffAppRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
-      type: object
-      properties:
-        view:
-          $ref: '#/components/schemas/UpdateLiffView'
-        description:
-          type: string
-          description: 'Name of the LIFF app.
-
-
-            The LIFF app name can''t include "LINE" or similar strings, or inappropriate strings.
-
-            '
-        features:
-          $ref: '#/components/schemas/LiffFeatures'
-        permanentLinkPattern:
-          type: string
-          description: 'How additional information in LIFF URLs is handled. Specify `concat`.
-
-            '
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiffScope'
-        botPrompt:
-          $ref: '#/components/schemas/LiffBotPrompt'
     GetAllLiffAppsResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
@@ -284,62 +310,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LiffApp'
-    AddLiffAppRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
-      type: object
-      required:
-      - view
-      properties:
-        view:
-          $ref: '#/components/schemas/LiffView'
-        description:
-          type: string
-          description: 'Name of the LIFF app.
-
-
-            The LIFF app name can''t include "LINE" or similar strings, or inappropriate strings.
-
-            '
-        features:
-          $ref: '#/components/schemas/LiffFeatures'
-        permanentLinkPattern:
-          type: string
-          description: 'How additional information in LIFF URLs is handled. Specify `concat`.
-
-            '
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiffScope'
-        botPrompt:
-          $ref: '#/components/schemas/LiffBotPrompt'
-    LiffApp:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps
-      type: object
-      properties:
-        liffId:
-          type: string
-          description: LIFF app ID
-        view:
-          $ref: '#/components/schemas/LiffView'
-        description:
-          type: string
-          description: Name of the LIFF app
-        features:
-          $ref: '#/components/schemas/LiffFeatures'
-        permanentLinkPattern:
-          type: string
-          description: 'How additional information in LIFF URLs is handled. concat is returned.
-
-            '
-        scope:
-          type: array
-          items:
-            $ref: '#/components/schemas/LiffScope'
-        botPrompt:
-          $ref: '#/components/schemas/LiffBotPrompt'
     UpdateLiffView:
       externalDocs:
         url: https://developers.line.biz/en/reference/liff-server/#update-liff-app
@@ -379,6 +349,36 @@ components:
             When in modular mode, the action button in the header is not displayed.
 
             '
+    AddLiffAppRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/liff-server/#add-liff-app
+      type: object
+      required:
+      - view
+      properties:
+        view:
+          $ref: '#/components/schemas/LiffView'
+        description:
+          type: string
+          description: 'Name of the LIFF app.
+
+
+            The LIFF app name can''t include "LINE" or similar strings, or inappropriate strings.
+
+            '
+        features:
+          $ref: '#/components/schemas/LiffFeatures'
+        permanentLinkPattern:
+          type: string
+          description: 'How additional information in LIFF URLs is handled. Specify `concat`.
+
+            '
+        scope:
+          type: array
+          items:
+            $ref: '#/components/schemas/LiffScope'
+        botPrompt:
+          $ref: '#/components/schemas/LiffBotPrompt'
   securitySchemes:
     Bearer:
       type: http
