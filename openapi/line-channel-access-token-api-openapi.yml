@@ -298,6 +298,29 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    IssueStatelessChannelTokenByJWTAssertionRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      description: Request body to issue a new token with JWT assertion
+      type: object
+      required:
+      - grant_type
+      - client_assertion
+      - client_assertion_type
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+          description: client_credentials
+        client_assertion_type:
+          type: string
+          enum:
+          - urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+          description: URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
+        client_assertion:
+          type: string
+          description: A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
     ChannelAccessTokenKeyIdsResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1
@@ -311,6 +334,18 @@ components:
           type: array
           items:
             type: string
+    ErrorResponse:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
+      description: Error response of the Channel access token
+      type: object
+      properties:
+        error:
+          description: Error summary
+          type: string
+        error_description:
+          description: Details of the error. Not returned in certain situations.
+          type: string
     IssueChannelAccessTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1
@@ -363,69 +398,6 @@ components:
           type: string
           default: Bearer
           description: Token type. The value is always `Bearer`.
-    IssueStatelessChannelTokenByClientSecretRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
-      description: Request body to issue a new token with `client_id` and `client_secret`
-      type: object
-      required:
-      - grant_type
-      - client_id
-      - client_secret
-      properties:
-        grant_type:
-          type: string
-          enum:
-          - client_credentials
-          description: '`client_credentials`'
-        client_id:
-          type: string
-          description: Channel ID.
-        client_secret:
-          type: string
-          description: Channel secret.
-    IssueStatelessChannelTokenByJWTAssertionRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
-      description: Request body to issue a new token with JWT assertion
-      type: object
-      required:
-      - grant_type
-      - client_assertion
-      - client_assertion_type
-      properties:
-        grant_type:
-          type: string
-          enum:
-          - client_credentials
-          description: client_credentials
-        client_assertion_type:
-          type: string
-          enum:
-          - urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-          description: URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
-        client_assertion:
-          type: string
-          description: A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
-    VerifyChannelAccessTokenResponse:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
-      description: Verification result
-      required:
-      - client_id
-      - expires_in
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The channel ID for which the channel access token was issued.
-        expires_in:
-          type: integer
-          format: int64
-          description: Number of seconds before the channel access token expires.
-        scope:
-          type: string
-          description: Permissions granted to the channel access token.
     IssueStatelessChannelAccessTokenResponse:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
@@ -453,15 +425,43 @@ components:
           type: string
           default: Bearer
           description: Token type. The value is always `Bearer`.
-    ErrorResponse:
+    VerifyChannelAccessTokenResponse:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#error-responses
-      description: Error response of the Channel access token
+        url: https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1
+      description: Verification result
+      required:
+      - client_id
+      - expires_in
       type: object
       properties:
-        error:
-          description: Error summary
+        client_id:
           type: string
-        error_description:
-          description: Details of the error. Not returned in certain situations.
+          description: The channel ID for which the channel access token was issued.
+        expires_in:
+          type: integer
+          format: int64
+          description: Number of seconds before the channel access token expires.
+        scope:
           type: string
+          description: Permissions granted to the channel access token.
+    IssueStatelessChannelTokenByClientSecretRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token
+      description: Request body to issue a new token with `client_id` and `client_secret`
+      type: object
+      required:
+      - grant_type
+      - client_id
+      - client_secret
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+          description: '`client_credentials`'
+        client_id:
+          type: string
+          description: Channel ID.
+        client_secret:
+          type: string
+          description: Channel secret.

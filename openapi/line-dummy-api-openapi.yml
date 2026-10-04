@@ -33,6 +33,51 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    EventMode:
+      type: string
+      description: Channel state.
+      enum:
+      - active
+      - standby
+    CallbackRequest:
+      externalDocs:
+        url: https://developers.line.biz/en/reference/messaging-api/#request-body
+      description: 'The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.
+
+        '
+      type: object
+      required:
+      - destination
+      - events
+      properties:
+        destination:
+          type: string
+          description: 'User ID of a bot that should receive webhook events.
+
+            The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
+
+            '
+          pattern: ^U[0-9a-f]{32}$
+          maxLength: 33
+          minLength: 33
+        events:
+          description: 'Array of webhook event objects.
+
+            The LINE Platform may send an empty array that doesn''t include a webhook event object to confirm communication.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    DeliveryContext:
+      type: object
+      description: webhook's delivery context information
+      required:
+      - isRedelivery
+      properties:
+        isRedelivery:
+          type: boolean
+          description: Whether the webhook event is a redelivered one or not.
     Event:
       description: Webhook event
       required:
@@ -82,45 +127,6 @@ components:
           botResumed: '#/components/schemas/BotResumedEvent'
           delivery: '#/components/schemas/PnpDeliveryCompletionEvent'
           messageEdited: '#/components/schemas/MessageEditedEvent'
-    DeliveryContext:
-      type: object
-      description: webhook's delivery context information
-      required:
-      - isRedelivery
-      properties:
-        isRedelivery:
-          type: boolean
-          description: Whether the webhook event is a redelivered one or not.
-    CallbackRequest:
-      externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#request-body
-      description: 'The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.
-
-        '
-      type: object
-      required:
-      - destination
-      - events
-      properties:
-        destination:
-          type: string
-          description: 'User ID of a bot that should receive webhook events.
-
-            The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
-
-            '
-          pattern: ^U[0-9a-f]{32}$
-          maxLength: 33
-          minLength: 33
-        events:
-          description: 'Array of webhook event objects.
-
-            The LINE Platform may send an empty array that doesn''t include a webhook event object to confirm communication.
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
     Source:
       externalDocs:
         url: https://developers.line.biz/en/reference/messaging-api/#source-user
@@ -138,9 +144,3 @@ components:
           user: '#/components/schemas/UserSource'
           group: '#/components/schemas/GroupSource'
           room: '#/components/schemas/RoomSource'
-    EventMode:
-      type: string
-      description: Channel state.
-      enum:
-      - active
-      - standby
