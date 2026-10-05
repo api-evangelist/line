@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/line/line-openapi/HEAD/messaging-api.yml",
+ "requested_url": "https://raw.githubusercontent.com/line/line-openapi/HEAD/messaging-api.yml",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 190228,
+ "sha256": "41033aa8491fc67ab09c4ec322f2aab072ae7b9402297e8c4f042eda0c2dd1fc",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.973), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
