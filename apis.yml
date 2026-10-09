@@ -695,6 +695,8 @@ common:
   url: https://developers.line.biz/en/terms-and-policies/
 - type: PrivacyPolicy
   url: https://www.lycorp.co.jp/en/company/privacypolicy/
+- type: SpectralRules
+  url: https://github.com/line/line-openapi/blob/fa5577c9ea874d2dbd8fadc85a4cb3a1b29d8cbe/.spectral.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

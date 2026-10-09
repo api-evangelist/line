@@ -87,3 +87,32 @@ regional_pricing:
     url: https://lineforbusiness.com/th/service/line-oa-features/broadcast-message
   - region: Other
     url: https://www.lycbiz.jp/en/other/
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  units: []
+  plans:
+  - name: Communication Plan
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Light Plan
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Standard Plan
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
