@@ -33,42 +33,23 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EventMode:
-      type: string
-      description: Channel state.
-      enum:
-      - active
-      - standby
-    CallbackRequest:
+    Source:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#request-body
-      description: 'The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.
-
-        '
-      type: object
+        url: https://developers.line.biz/en/reference/messaging-api/#source-user
+      description: the source of the event.
       required:
-      - destination
-      - events
+      - type
+      type: object
       properties:
-        destination:
+        type:
           type: string
-          description: 'User ID of a bot that should receive webhook events.
-
-            The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
-
-            '
-          pattern: ^U[0-9a-f]{32}$
-          maxLength: 33
-          minLength: 33
-        events:
-          description: 'Array of webhook event objects.
-
-            The LINE Platform may send an empty array that doesn''t include a webhook event object to confirm communication.
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
+          description: source type
+      discriminator:
+        propertyName: type
+        mapping:
+          user: '#/components/schemas/UserSource'
+          group: '#/components/schemas/GroupSource'
+          room: '#/components/schemas/RoomSource'
     DeliveryContext:
       type: object
       description: webhook's delivery context information
@@ -127,20 +108,39 @@ components:
           botResumed: '#/components/schemas/BotResumedEvent'
           delivery: '#/components/schemas/PnpDeliveryCompletionEvent'
           messageEdited: '#/components/schemas/MessageEditedEvent'
-    Source:
+    EventMode:
+      type: string
+      description: Channel state.
+      enum:
+      - active
+      - standby
+    CallbackRequest:
       externalDocs:
-        url: https://developers.line.biz/en/reference/messaging-api/#source-user
-      description: the source of the event.
-      required:
-      - type
+        url: https://developers.line.biz/en/reference/messaging-api/#request-body
+      description: 'The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.
+
+        '
       type: object
+      required:
+      - destination
+      - events
       properties:
-        type:
+        destination:
           type: string
-          description: source type
-      discriminator:
-        propertyName: type
-        mapping:
-          user: '#/components/schemas/UserSource'
-          group: '#/components/schemas/GroupSource'
-          room: '#/components/schemas/RoomSource'
+          description: 'User ID of a bot that should receive webhook events.
+
+            The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
+
+            '
+          pattern: ^U[0-9a-f]{32}$
+          maxLength: 33
+          minLength: 33
+        events:
+          description: 'Array of webhook event objects.
+
+            The LINE Platform may send an empty array that doesn''t include a webhook event object to confirm communication.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
