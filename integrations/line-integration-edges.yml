@@ -4,6 +4,7 @@ checked:
 - https://api.nuget.org/v3
 - https://crates.io/api/v1
 - https://github.com/n8n-io/n8n/tree/860f1273ebd73fabbd668cbec2c49ed9b48a286d/packages/nodes-base/nodes/
+- https://github.com/n8n-io/n8n/tree/f73dc337f8dc61a4fd44aebe41c55faafe4f53a4/packages/nodes-base/nodes/
 - https://proxy.golang.org
 - https://pypi.org/pypi
 - https://registry.npmjs.org
@@ -35,31 +36,6 @@ edges:
     detected: '2026-10-14'
   detected_by: sweep-adtech.py
   detected: '2026-10-14'
-- partner_name: n8n
-  partner: n8n
-  partner_match: aggregator
-  type: marketplace
-  marketplace: n8n-nodes-base
-  channel: open-source-node
-  relationship: ipaas-bridge
-  direction: third-party
-  evidence: https://github.com/n8n-io/n8n/tree/860f1273ebd73fabbd668cbec2c49ed9b48a286d/packages/nodes-base/nodes/Line
-  category: null
-  contract_reference:
-    register: n8n built-in nodes (n8n-io/n8n packages/nodes-base)
-    spec_file: null
-    role: ipaas-connector:n8n-nodes-base
-    registered_name: Line
-    matched_domain: line.me
-    matched_by: domain
-    detected_by: sweep-workflow-automation.py
-    detected: '2026-10-15'
-    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
-    node_path: Line
-    trigger: false
-    builder: n8n (built-in node)
-  detected_by: sweep-workflow-automation.py
-  first_seen: '2026-10-15'
 - partner_name: Go module proxy
   partner: null
   partner_match: null
@@ -129,5 +105,30 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: n8n
+  partner: n8n
+  partner_match: aggregator
+  type: marketplace
+  marketplace: n8n-nodes-base
+  channel: open-source-node
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://github.com/n8n-io/n8n/tree/f73dc337f8dc61a4fd44aebe41c55faafe4f53a4/packages/nodes-base/nodes/Line
+  category: null
+  contract_reference:
+    register: n8n built-in nodes (n8n-io/n8n packages/nodes-base)
+    spec_file: null
+    role: ipaas-connector:n8n-nodes-base
+    registered_name: Line
+    matched_domain: line.me
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    node_path: Line
+    trigger: false
+    builder: n8n (built-in node)
+  detected_by: sweep-workflow-automation.py
+  first_seen: '2026-10-15'
 source:
 - https://github.com/n8n-io/n8n/tree/860f1273ebd73fabbd668cbec2c49ed9b48a286d/packages/nodes-base/nodes/
