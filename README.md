@@ -1,4 +1,4 @@
-# LINE (line)
+# LINE
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,161 +64,193 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LINE is a Japan-based messaging platform with over 200 million monthly active users across Japan, Taiwan, Thailand, and Indonesia, offering messaging, payments, news, and a broad ecosystem of services. The LINE Developers platform exposes public APIs for building chatbots, mini-apps, social login, and audience marketing, all documented as OpenAPI specifications. APIs use Bearer token authentication with channel access tokens issued per LINE channel.
+LINE is a Japan-based messaging platform operated by LY Corporation, with over 200 million monthly active users across Japan, Taiwan, Thailand and Indonesia, offering messaging, payments, news and a broad ecosystem of services. The LINE Developers platform exposes public APIs for building chatbots and Official Accounts (Messaging API), issuing and rotating credentials (Channel Access Token API), reading delivery and audience analytics (Insight API), building marketing audiences (Manage Audience API), running web apps inside the LINE client (LIFF), and social login via LINE Login v2.1 over OAuth 2.0 and OpenID Connect. LINE publishes nine first-party OpenAPI documents covering 111 operations at github.com/line/line-openapi and generates all six official server SDKs from them. Server API calls authenticate with a channel access token presented as an HTTP Bearer credential and scoped to a single LINE channel.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/apis.yml)
+**Areas:** Messaging · Chatbots · Social Login · Mini Apps · Marketing · Webhook · OpenID Connect · Audiences · Analytics · Japan
 
-## Scope
+## LINE on APIs.io
 
-- **Type:** Index
+Everything profiled for LINE is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/line/](https://apis.io/providers/line/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (12)
 
-- Messaging
-- Chatbots
-- Social Login
-- Mini Apps
-- Marketing
-- Japan
+- [LINE Login v2.1](https://apis.io/apis/line/line-login-api/) — End-user authentication and authorization over OAuth 2.0 authorization code grant and OpenID Connect. Authorization runs at access.line.me; token, userinfo,…
+- [LINE Channel Access Token API](https://apis.io/apis/line/line-channel-access-token-api/) — The channel-access-token API from LINE — 8 operation(s) for channel-access-token.
+- [LINE Dummy API](https://apis.io/apis/line/line-dummy-api/) — The dummy API from LINE — 1 operation(s) for dummy.
+- [LINE Insight API](https://apis.io/apis/line/line-insight-api/) — The insight API from LINE — 7 operation(s) for insight.
+- [LINE Liff API](https://apis.io/apis/line/line-liff-api/) — The liff API from LINE — 2 operation(s) for liff.
+- [LINE Module API](https://apis.io/apis/line/line-line-module-api/) — The line-module API from LINE — 4 operation(s) for line-module.
+- [LINE Module Attach API](https://apis.io/apis/line/line-line-module-attach-api/) — The line-module-attach API from LINE — 1 operation(s) for line-module-attach.
+- [LINE Manage Audience API](https://apis.io/apis/line/line-manage-audience-api/) — The manage-audience API from LINE — 8 operation(s) for manage-audience.
+- [LINE Manage Audience Blob API](https://apis.io/apis/line/line-manage-audience-blob-api/) — The manage-audience-blob API from LINE — 1 operation(s) for manage-audience-blob.
+- [LINE Messaging API](https://apis.io/apis/line/line-messaging-api-api/) — The messaging-api API from LINE — 61 operation(s) for messaging-api.
+- [LINE Messaging API Blob API](https://apis.io/apis/line/line-messaging-api-blob-api/) — The messaging-api-blob API from LINE — 4 operation(s) for messaging-api-blob.
+- [LINE Shop API](https://apis.io/apis/line/line-shop-api/) — The shop API from LINE — 1 operation(s) for shop.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-11
-- **Modified:** 2026-05-29
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### LINE Messaging API
+Event-driven and webhook contracts.
 
-Send and receive messages, manage rich menus, broadcast and narrowcast content, and handle webhooks for LINE chatbots and Official Accounts. Uses Bearer channel access tokens against api.line.me and api-data.line.me.
+- [LINE Messaging Webhook Event Surface](https://apis.io/asyncapis/line/line-messaging-webhook/)
 
-- **Human URL:** [https://developers.line.biz/en/docs/messaging-api/](https://developers.line.biz/en/docs/messaging-api/)
-- **Base URL:** `https://api.line.me`
+#### Event channels (1)
 
-#### Tags
+Individual events and webhooks the provider emits.
 
-- Messaging
-- Chatbots
-- Webhooks
-- Rich Menus
+- [/callback](https://apis.io/channels/line/callback/)
 
-#### Properties
+#### MCP servers (1)
 
-- [Documentation](https://developers.line.biz/en/reference/messaging-api/)
-- [OpenAPI](https://raw.githubusercontent.com/line/line-openapi/main/messaging-api.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Webhook  Open A P I](https://raw.githubusercontent.com/line/line-openapi/main/webhook.yml)
-- [AsyncAPI](https://raw.githubusercontent.com/api-evangelist/line/refs/heads/main/asyncapi/line-messaging-webhook.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/line.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/line.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Model Context Protocol servers that expose the API to agents.
 
-### LINE Front-end Framework (LIFF) Server API
+- [MCP Server](https://apis.io/servers/line/mcp-server/)
 
-Server API for managing LINE Front-end Framework (LIFF) apps which embed web applications inside the LINE client. Authenticated with Bearer channel access tokens.
+#### Agentic access (1)
 
-- **Human URL:** [https://developers.line.biz/en/docs/liff/](https://developers.line.biz/en/docs/liff/)
-- **Base URL:** `https://api.line.me`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Line Agentic Access](https://apis.io/agentic-access/line/line-agentic-access/)
 
-- LIFF
-- Web Apps
-- Channels
+#### Collections (5)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://developers.line.biz/en/reference/liff-server/)
-- [OpenAPI](https://raw.githubusercontent.com/line/line-openapi/main/liff.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/line.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/line.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [LINE Messaging API](https://apis.io/collections/line/open-line/)
+- [LINE Messaging Channel API](https://apis.io/collections/line/open-line-channel-api/)
+- [LINE Messaging Channel Info API](https://apis.io/collections/line/open-line-info-api/)
+- [LINE Messaging Channel Message API](https://apis.io/collections/line/open-line-message-api/)
+- [LINE Messaging Channel Profile API](https://apis.io/collections/line/open-line-profile-api/)
 
-### LINE Channel Access Token API
+#### Overlays (20)
 
-Issue, verify, and revoke channel access tokens used to authenticate requests to other LINE APIs.
+OpenAPI overlays, including conversational phrasing for each operation.
 
-- **Human URL:** [https://developers.line.biz/en/docs/messaging-api/channel-access-tokens/](https://developers.line.biz/en/docs/messaging-api/channel-access-tokens/)
-- **Base URL:** `https://api.line.me`
+- [Line Channel Access Token Api Phrasing Overlay](https://apis.io/overlays/line/line-channel-access-token-api-phrasing-overlay/)
+- [Line Channel Access Token Overlay](https://apis.io/overlays/line/line-channel-access-token-overlay/)
+- [Line Dummy Api Phrasing Overlay](https://apis.io/overlays/line/line-dummy-api-phrasing-overlay/)
+- [Line Insight Api Phrasing Overlay](https://apis.io/overlays/line/line-insight-api-phrasing-overlay/)
+- [Line Insight Overlay](https://apis.io/overlays/line/line-insight-overlay/)
+- [Line Liff Api Phrasing Overlay](https://apis.io/overlays/line/line-liff-api-phrasing-overlay/)
+- [Line Liff Overlay](https://apis.io/overlays/line/line-liff-overlay/)
+- [Line Line Module Api Phrasing Overlay](https://apis.io/overlays/line/line-line-module-api-phrasing-overlay/)
+- [Line Line Module Attach Api Phrasing Overlay](https://apis.io/overlays/line/line-line-module-attach-api-phrasing-overlay/)
+- [Line Manage Audience Api Phrasing Overlay](https://apis.io/overlays/line/line-manage-audience-api-phrasing-overlay/)
+- [Line Manage Audience Blob Api Phrasing Overlay](https://apis.io/overlays/line/line-manage-audience-blob-api-phrasing-overlay/)
+- [Line Manage Audience Overlay](https://apis.io/overlays/line/line-manage-audience-overlay/)
+- [Line Messaging Api Api Phrasing Overlay](https://apis.io/overlays/line/line-messaging-api-api-phrasing-overlay/)
+- [Line Messaging Api Blob Api Phrasing Overlay](https://apis.io/overlays/line/line-messaging-api-blob-api-phrasing-overlay/)
+- [Line Messaging Api Overlay](https://apis.io/overlays/line/line-messaging-api-overlay/)
+- [Line Module Attach Overlay](https://apis.io/overlays/line/line-module-attach-overlay/)
+- [Line Module Overlay](https://apis.io/overlays/line/line-module-overlay/)
+- [Line Shop Api Phrasing Overlay](https://apis.io/overlays/line/line-shop-api-phrasing-overlay/)
+- [Line Shop Overlay](https://apis.io/overlays/line/line-shop-overlay/)
+- [Line Webhook Overlay](https://apis.io/overlays/line/line-webhook-overlay/)
 
-#### Tags
+#### Governance rules (2)
 
-- Authentication
-- Tokens
+Spectral rulesets for the provider's contracts.
 
-#### Properties
+- [LINE — asyncapi rules](https://apis.io/rules/line/line-asyncapi-spectral-rules/)
+- [LINE — line openapi rules](https://apis.io/rules/line/line-line-openapi-spectral-rules/)
 
-- [OpenAPI](https://raw.githubusercontent.com/line/line-openapi/main/channel-access-token.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/line.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/line.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Security (3)
 
-### LINE Insight API
+Authentication, trust centre, and vulnerability disclosure.
 
-Retrieve analytics and engagement metrics for LINE Official Accounts, including message delivery, follower demographics, and reach statistics.
+- [Line Authentication](https://apis.io/security/line/line-authentication/)
+- [Line Domain Security](https://apis.io/security/line/line-domain-security/)
+- [Line Vulnerability Disclosure](https://apis.io/security/line/line-vulnerability-disclosure/)
 
-- **Human URL:** [https://developers.line.biz/en/reference/messaging-api/#get-insight](https://developers.line.biz/en/reference/messaging-api/#get-insight)
-- **Base URL:** `https://api.line.me/v2/bot/insight`
+#### OAuth scopes (1)
 
-#### Tags
+The permissions the API asks for.
 
-- Analytics
-- Insights
-- Metrics
+- [Line Scopes](https://apis.io/scopes/line/line-scopes/)
 
-#### Properties
+#### Plans and pricing (1)
 
-- [OpenAPI](https://raw.githubusercontent.com/line/line-openapi/main/insight.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/line.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/line.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published plans, tiers and prices.
 
-### LINE Manage Audience API
+- [Line Plans Pricing](https://apis.io/plans/line/line-plans-pricing/)
 
-Create and manage audience groups for targeted narrowcast messaging on LINE Official Accounts.
+#### Rate limits (1)
 
-- **Human URL:** [https://developers.line.biz/en/reference/messaging-api/#manage-audience-group](https://developers.line.biz/en/reference/messaging-api/#manage-audience-group)
-- **Base URL:** `https://api.line.me/v2/bot/audienceGroup`
+Published request limits.
 
-#### Tags
+- [Line Rate Limits](https://apis.io/rate-limits/line/line-rate-limits/)
 
-- Audiences
-- Marketing
-- Targeting
+## Where to find this API
 
-#### Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- [OpenAPI](https://raw.githubusercontent.com/line/line-openapi/main/manage-audience.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/line.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/line.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LINE Shop (Mission Stickers) API
-
-Mission Stickers API for distributing LINE stickers to users who complete specific missions, integrated with LINE Official Accounts.
-
-- **Human URL:** [https://developers.line.biz/en/docs/messaging-api/mission-stickers/](https://developers.line.biz/en/docs/messaging-api/mission-stickers/)
-- **Base URL:** `https://api.line.me/shop`
-
-#### Tags
-
-- Stickers
-- Promotions
-
-#### Properties
-
-- [OpenAPI](https://raw.githubusercontent.com/line/line-openapi/main/shop.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/line.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/line.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/linecorp)
 - [Website](https://line.me)
-- [Developer  Portal](https://developers.line.biz/en/)
 - [Documentation](https://developers.line.biz/en/docs/)
-- [Open A P I  Repository](https://github.com/line/line-openapi)
-- [GitHub Organization](https://github.com/line)
-- [Sign Up](https://developers.line.biz/console/)
-- [Pricing](https://www.linebiz.com/jp-en/service/line-account-connect/)
-- [M C P Server](https://github.com/line/line-bot-mcp-server)
-- [L L Ms Txt](https://developers.line.biz/llms.txt)
+- [Getting started](https://developers.line.biz/en/docs/messaging-api/getting-started/)
+- [API reference](https://developers.line.biz/en/reference/messaging-api/)
+- [Pricing](https://developers.line.biz/en/docs/messaging-api/pricing/)
+- [Sign up](https://developers.line.biz/console/)
+- [Support](https://developers.line.biz/en/faq/)
+- [Blog](https://techblog.lycorp.co.jp/en/)
+- [Terms of service](https://developers.line.biz/en/terms-and-policies/)
+- [Privacy policy](https://www.lycorp.co.jp/en/company/privacypolicy/)
+- [GitHub](https://github.com/line)
+- [Status](https://api.line-status.info/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 72.7** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 76.7 |
+| Contract quality | 56.0 |
+| Contract governance | 42.4 |
+| Operational transparency | 92.1 |
+| Developer ergonomics | 80.4 |
+| Access clarity | 76.3 |
+
+**Agent readiness 47.9** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 40.2** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/line/](https://apis.io/providers/line/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LINE: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/line/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
